@@ -1,0 +1,9 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+outputs/
+extracted_text/
+.pytest_cache/
+# NOTE: fixtures/mock_llm_responses/ is deliberately NOT ignored (SPEC NFR-08, AC-11).
