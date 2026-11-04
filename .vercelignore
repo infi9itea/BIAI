@@ -1,5 +1,6 @@
 tests/
-evaluation/
+evaluation/runs/
+evaluation/eval_report.md
 docs/
 scripts/
 .venv/

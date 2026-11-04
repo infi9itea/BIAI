@@ -9,7 +9,7 @@ main{max-width:920px;margin:0 auto;padding:20px 16px 48px}h1{font-size:22px;marg
 .card{background:var(--card);border:1px solid var(--bd);border-radius:10px;margin-bottom:10px}
 .hd{display:flex;gap:10px;align-items:center;padding:12px 14px;cursor:pointer;width:100%;background:none;border:0;color:inherit;font:inherit;text-align:left}
 .b{font-weight:600;font-size:12px;padding:3px 10px;border-radius:6px;color:#fff;white-space:nowrap}
-.APPROVE{background:var(--ok)}.REJECT{background:var(--no)}.NEEDS_REVIEW{background:var(--rv)}
+.APPROVE{background:var(--ok)}.REJECT{background:var(--no)}.NEEDS_REVIEW{background:#8a5300}
 .nm{font-weight:600}.rs{color:var(--mut);font-size:13px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bd{display:none;padding:0 14px 14px;border-top:1px solid var(--bd)}.open .bd{display:block}
 h3{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut);margin:14px 0 6px}
@@ -19,42 +19,68 @@ h3{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut)
 q{display:block;margin:4px 0 0 0;padding-left:8px;border-left:2px solid var(--bd);color:var(--mut);font-style:normal;quotes:none}
 .pre{white-space:pre-wrap;font-size:13px}.note{font-size:12px;color:var(--mut);margin-top:20px}
 label{font-size:13px;color:var(--mut)}
+details{margin-top:4px}summary{cursor:pointer;color:var(--mut);font-size:12px}table{border-collapse:collapse;font-size:12px}td,th{border:1px solid var(--bd);padding:3px 8px;text-align:left}.tw{overflow-x:auto}
+.m{font-size:11px;padding:2px 8px;border-radius:6px;border:1px solid var(--bd);color:var(--mut)}button:disabled,input:disabled{opacity:.5}input[type=text]{padding:4px 8px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg)}
 </style></head><body><main>
 <h1>Supplier Document Checker</h1>
-<p class="s">Aamar Garments Ltd (fictional). Pick a sample pack, or upload your own quotation PDF. The model only extracts quotes; Python verifies them and makes the decision.</p>
-<div class="card" style="padding:14px"><h3 style="margin-top:0">Sample packs (replay, no API key)</h3><div id="samples" class="sum"></div>
-<h3>Upload a PDF (live Gemini)</h3><input type="file" id="file" accept="application/pdf"> <span id="live" class="note"></span></div>
-<div id="status" class="note"></div><div id="list"></div>
-<p class="note">Not a production system: no authentication, small synthetic test set. Failures fail closed to NEEDS REVIEW.</p>
+<p class="s">Aamar Garments Ltd (fictional). The model only extracts quotes; Python verifies each quote against the PDF, recalculates the arithmetic, applies the company rules and decides. Anything uncertain goes to NEEDS REVIEW.</p>
+<div class="card" style="padding:14px"><h3 style="margin-top:0">Sample packs</h3><div id="samples" class="sum"></div>
+<label id="liveRow"><input type="checkbox" id="liveSample"> Run sample through live Gemini (default: replay of the saved extraction, no API call)</label>
+<h3>Upload a quotation PDF (live Gemini, max 4 MB)</h3><div class="note" style="margin:0 0 6px">Uploads are checked against the supplied purchase request (PR-2026-114), so an unrelated document will come back NEEDS REVIEW.</div><input type="file" id="file" accept="application/pdf"> <span id="live" class="note"></span>
+<div id="codeRow" style="display:none;margin-top:8px"><label>Access code <input type="text" id="code" autocomplete="off"></label></div>
+<div class="note">Uploaded PDFs are sent to the Gemini API for extraction and are not stored by this app.</div></div>
+<div class="card" style="padding:14px"><h3 style="margin-top:0">All packs vs manual answer key</h3>
+<button id="runAll" class="chip" style="cursor:pointer;color:inherit">Run all 10 (replay)</button>
+<div id="sumOut" class="tw" style="margin-top:8px"></div>
+<div class="note">Replay re-runs the real pipeline on saved model responses. The prompt was developed on these same packs, so this is a regression check, not a measure of accuracy.</div></div>
+<div id="status" class="note" role="status"></div><div id="list"></div>
+<p class="note">Demo only: no authentication, small synthetic test set. Failures fail closed to NEEDS REVIEW.</p>
 </main><script>
-const esc=s=>String(s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+const esc=s=>String(s??'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
 const $=id=>document.getElementById(id);
-function val(f){return f&&f.state?(f.value||f.state):null}
-function render(x){
+const val=f=>f&&f.state?(f.value??null):null;
+function fieldsOf(e){
+ const out=[],skip=['line_items','payment','penalty','claimed_without_evidence'];
+ for(const [k,v] of Object.entries(e||{})){if(skip.includes(k)||Array.isArray(v))continue;const x=val(v);if(x!==null&&x!=='')out.push([k,x])}
+ if(e.payment&&e.payment.state==='FOUND')out.push(['payment terms',e.payment.original_wording+' (anchor: '+e.payment.anchor+')']);
+ if(e.penalty&&e.penalty.state==='FOUND')out.push(['late-delivery penalty',e.penalty.original_wording]);
+ return out}
+function lines(e){const L=(e&&e.line_items)||[];if(!L.length)return'';
+ const cols=['item_code','description','quantity','unit','unit_price_bdt','line_total_bdt'];
+ return `<h3>Line items</h3><div class="tw"><table><tr>${cols.map(c=>`<th>${c.replace(/_/g,' ')}</th>`).join('')}</tr>${L.map(l=>`<tr>${cols.map(c=>`<td>${esc(val(l[c]))}</td>`).join('')}</tr>`).join('')}</table></div>`}
+const quotes=r=>(r.evidence_refs||[]).map(q=>`<q>“${esc(q.source_quote)}” (p.${q.page_number}${q.label?', '+esc(q.label):''})</q>`).join('');
+function render(x,mode){
  const d=x.decision,rules=x.rule_results.filter(r=>r.status!=='NOT_APPLICABLE'),bad=rules.filter(r=>r.status!=='PASS'),ok=rules.filter(r=>r.status==='PASS');
- const fields=Object.entries(x.extracted||{}).filter(([k,v])=>!Array.isArray(v)&&val(v)).map(([k,v])=>[k,val(v)]);
- const rr=r=>`<div class="r"><span class="st ${r.status}">${r.status}</span><b>${r.rule_id}</b> ${esc(r.description)}<div style="color:var(--mut)">${esc(r.detail)}</div>${(r.evidence_refs||[]).slice(0,2).map(q=>`<q>“${esc(q.source_quote)}” (p.${q.page_number})</q>`).join('')}</div>`;
- const el=document.createElement('div');el.className='card open';
- el.innerHTML=`<button class="hd"><span class="b ${d}">${d.replace('_',' ')}</span><span class="nm">${esc(x.pack_filename.replace('.pdf',''))}</span></button><div class="bd">
+ const rr=r=>`<div class="r"><span class="st ${r.status}">${r.status}</span><b>${r.rule_id}</b> ${esc(r.description)}<div style="color:var(--mut)">${esc(r.detail)}</div>${quotes(r)}</div>`;
+ const key=x.pack_filename+'|'+mode;document.querySelectorAll('.card[data-k]').forEach(c=>{if(c.dataset.k===key)c.remove()});
+ const el=document.createElement('div');el.className='card open';el.dataset.k=key;
+ const fl=fieldsOf(x.extracted);
+ el.innerHTML=`<button class="hd"><span class="b ${d}">${d.replace('_',' ')}</span><span class="nm">${esc(x.pack_filename.replace('.pdf',''))}</span><span class="m">${mode==='live'?'LIVE GEMINI':'REPLAY'}</span></button><div class="bd">
  <h3>Why</h3><div class="pre">${esc(x.reason)}</div>
- <h3>Extracted fields</h3><div class="f">${fields.map(([k,v])=>`<div><b>${esc(k)}</b>${esc(v)}</div>`).join('')}</div>
+ ${x.processing_status!=='OK'?`<div class="r"><span class="st FAIL">PROCESSING</span>${esc(x.processing_error_detail)}</div>`:''}
  ${bad.length?`<h3>Rules raised</h3>${bad.map(rr).join('')}`:''}
- <h3>Rules passed (${ok.length})</h3>${ok.map(r=>`<div class="r"><span class="st PASS">PASS</span><b>${r.rule_id}</b> ${esc(r.description)}</div>`).join('')}</div>`;
- el.querySelector('.hd').onclick=()=>el.classList.toggle('open');
- $('list').prepend(el);
-}
-async function go(p,opts,label){
- $('status').textContent='Checking '+label+'…';
- try{const r=await fetch(p,opts),t=await r.text();let j;try{j=JSON.parse(t)}catch{throw new Error('server returned '+r.status+': '+t.slice(0,200)+' (open /api/check?debug=1)')}
-  if(!r.ok)throw new Error(j.error||r.status);render(j.result);$('status').textContent=j.mode==='live'?'Live Gemini run.':'Replay of saved extraction.';
- }catch(e){$('status').textContent='Error: '+e.message}
-}
+ <h3>Extracted fields</h3><div class="f">${fl.map(([k,v])=>`<div><b>${esc(k.replace(/_/g,' '))}</b>${esc(v)}</div>`).join('')}</div>${lines(x.extracted)}
+ <h3>Rules passed (${ok.length}) – with evidence</h3>${ok.map(r=>`<div class="r"><span class="st PASS">PASS</span><b>${r.rule_id}</b> ${esc(r.description)}<details><summary>evidence</summary><div style="color:var(--mut)">${esc(r.detail)}</div>${quotes(r)}</details></div>`).join('')}</div>`;
+ el.querySelector('.hd').onclick=()=>el.classList.toggle('open');$('list').prepend(el)}
+const busy=b=>document.querySelectorAll('#samples button,#file').forEach(e=>e.disabled=b||(e.id==='file'&&!window.LIVE));
+async function go(p,opts,label,mode){
+ busy(true);$('status').textContent='Checking '+label+(mode==='live'?' with live Gemini (can take 10–40 s)':'')+'…';
+ opts=opts||{};opts.headers={...(opts.headers||{}),'X-Access-Code':$('code').value};
+ try{const r=await fetch(p,opts),t=await r.text();let j;try{j=JSON.parse(t)}catch{throw new Error('server returned '+r.status+': '+t.slice(0,200))}
+  if(!r.ok)throw new Error(j.error||r.status);render(j.result,j.mode);$('status').textContent='Done ('+(j.mode==='live'?'live Gemini run':'replay of saved extraction')+').';
+ }catch(e){$('status').textContent='Error: '+e.message}finally{busy(false)}}
 fetch('/api/check').then(r=>r.json()).then(j=>{
- $('samples').innerHTML=j.samples.map(s=>`<button class="chip" data-s="${s}" style="cursor:pointer;color:inherit">${s.replace('supplier-','')}</button>`).join('');
- $('samples').onclick=e=>{const s=e.target.dataset.s;if(s)go('/api/check?sample='+s,{},s)};
- $('live').textContent=j.live?'':'(live upload disabled: no API key on server)';$('file').disabled=!j.live;
+ window.LIVE=j.live;$('samples').innerHTML=j.samples.map(s=>`<button class="chip" data-s="${s}" style="cursor:pointer;color:inherit">${s.replace('supplier-','')}</button>`).join('');
+ $('samples').onclick=e=>{const s=e.target.dataset.s;if(!s)return;const live=$('liveSample').checked;go('/api/check?sample='+s+(live?'&live=1':''),{},s,live?'live':'replay')};
+ $('live').textContent=j.live?'':'(live runs disabled: no API key on server)';$('file').disabled=!j.live;$('liveSample').disabled=!j.live;
+ $('codeRow').style.display=j.needs_code?'block':'none';
 }).catch(()=>$('status').textContent='API unreachable');
+$('runAll').onclick=async()=>{const b=$('runAll');b.disabled=true;$('sumOut').textContent='Running…';
+ try{const r=await fetch('/api/check?summary=1'),j=await r.json();if(!r.ok)throw new Error(j.error);
+  const ok=j.rows.filter(x=>x.decision_match).length,rk=j.rows.filter(x=>x.rules_match).length;
+  $('sumOut').innerHTML=`<table><tr><th>pack</th><th>system</th><th>answer key</th><th>decision</th><th>rules raised</th><th>key rules</th><th>rules</th></tr>${j.rows.map(x=>`<tr><td>${esc(x.pack.replace('supplier-',''))}</td><td>${esc(x.decision)}</td><td>${esc(x.expected)}</td><td>${x.decision_match?'✓':'✗'}</td><td>${esc(x.raised.join(', ')||'–')}</td><td>${esc(x.expected_rules.join(', ')||'–')}</td><td>${x.rules_match?'✓':'✗'}</td></tr>`).join('')}</table><div class="note">Decisions matching key: ${ok}/${j.rows.length}. Rule sets matching key: ${rk}/${j.rows.length}.</div>`;
+ }catch(e){$('sumOut').textContent='Error: '+e.message}finally{b.disabled=false}};
 $('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;
  if(f.size>4*1024*1024){$('status').textContent='PDF must be under 4 MB.';return}
- go('/api/check?name='+encodeURIComponent(f.name),{method:'POST',headers:{'Content-Type':'application/pdf'},body:await f.arrayBuffer()},f.name)};
+ await go('/api/check?name='+encodeURIComponent(f.name),{method:'POST',headers:{'Content-Type':'application/pdf'},body:await f.arrayBuffer()},f.name,'live');e.target.value=''};
 </script></body></html>

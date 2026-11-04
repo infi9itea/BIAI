@@ -44,6 +44,10 @@ python main.py --pack supplier-pack-01.pdf
 
 Other options: `--output outputs/my_report.txt` (default `outputs/report.txt`) and `--data-dir <folder>` (default `assessment-data`). A summary is printed and the full report is written to the output file. Every pack appears in the report; a pack that cannot be processed is reported as NEEDS_REVIEW with an error code, never dropped and never approved by default.
 
+## Web demo (Vercel)
+
+`api/check.py` (a WSGI app) serves a small page and a JSON API; see `DEPLOY.md`. Sample packs replay the saved Gemini responses through the real pipeline (no key). Uploading a PDF, or ticking "run through live Gemini", makes a live call and needs `GEMINI_API_KEY` on the server; set `ACCESS_CODE` to require a code for live runs. "Run all 10" compares every pack with the manual answer key. Uploads are checked against the supplied purchase request only. Live demo: _add your URL here_.
+
 ## Tests
 
 Offline tests (no API key, no network; they need the supplied PDFs in `assessment-data/`):
@@ -58,7 +62,7 @@ All tests, including the one marked `integration`, which makes a live Gemini cal
 python -m pytest tests/ -v
 ```
 
-At the time of writing the offline suite is 1025 tests. It includes:
+At the time of writing the offline suite is 1045 tests (including 20 for the web layer in `tests/test_api.py`). It includes:
 
 - `tests/test_replay.py`: replays the ten saved model responses in `fixtures/mock_llm_responses/` through the real pipeline and checks each decision and rule set against `evaluation/ground_truth.json`.
 - `tests/test_injection.py`: shows that a decision key in model output is rejected and that planted text cannot change rule results. This is "the model cannot influence rule outputs", not a claim of prompt-injection immunity.

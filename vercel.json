@@ -2,7 +2,7 @@
   "functions": {
     "api/check.py": {
       "maxDuration": 60,
-      "includeFiles": "{src,assessment-data,fixtures,public}/**"
+      "includeFiles": "{src,assessment-data,fixtures,public}/**,evaluation/ground_truth.json"
     }
   }
 }

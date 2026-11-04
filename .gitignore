@@ -13,3 +13,4 @@ evaluation/runs/fixtures-*/
 # and are ignored (above). A rescore folder is derived and ignored; to publish one as a result, re-run it with
 # --out pointing at a named folder outside rescored/ and commit that.
 evaluation/runs/*/rescored/
+.vercel/

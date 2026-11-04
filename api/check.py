@@ -72,6 +72,32 @@ def _debug():
             "fixtures": ls(FIXTURES), "public": ls(ROOT / "public")}
 
 
+def _summary() -> dict:
+    """Replay all sample packs and compare with the manual answer key (evaluation/ground_truth.json)."""
+    key = {e["pack"]: e for e in json.loads((ROOT / "evaluation" / "ground_truth.json").read_text(encoding="utf-8"))}
+    st, rows = _load(), []
+    for name in _samples():
+        client = _ReplayClient((FIXTURES / f"{name}.json").read_text(encoding="utf-8"))
+        res = st["run"](DATA / f"{name}.pdf", st["pr"], client=client)
+        raised = sorted(r.rule_id for r in res.rule_results if r.status.value in ("FAIL", "UNCERTAIN"))
+        exp = key.get(f"{name}.pdf", {})
+        rows.append({"pack": name, "decision": res.decision.value, "expected": exp.get("expected_decision"),
+                     "decision_match": res.decision.value == exp.get("expected_decision"), "raised": raised,
+                     "expected_rules": sorted(exp.get("rule_ids", [])),
+                     "rules_match": raised == sorted(exp.get("rule_ids", []))})
+    return {"rows": rows}
+
+
+def _live_denied(environ):
+    """None if a live Gemini call is allowed, else (status, message). ACCESS_CODE (optional) guards the API key."""
+    if not os.getenv("GEMINI_API_KEY"):
+        return 503, "Live mode is off: GEMINI_API_KEY is not set on the server."
+    code = os.getenv("ACCESS_CODE")
+    if code and environ.get("HTTP_X_ACCESS_CODE") != code:
+        return 401, "Access code required for live runs."
+    return None
+
+
 def _app(environ, start_response):
     method, path = environ["REQUEST_METHOD"], environ.get("PATH_INFO", "/")
     q = parse_qs(environ.get("QUERY_STRING", ""))
@@ -92,21 +118,31 @@ def _app(environ, start_response):
         return _json(start_response, 200, info)
 
     if method == "GET":
+        if q.get("summary"):
+            return _json(start_response, 200, _summary())
         name = (q.get("sample") or [None])[0]
         if not name:
-            return _json(start_response, 200, {"samples": _samples(), "live": bool(os.getenv("GEMINI_API_KEY"))})
+            return _json(start_response, 200, {"samples": _samples(), "live": bool(os.getenv("GEMINI_API_KEY")),
+                                               "needs_code": bool(os.getenv("ACCESS_CODE"))})
         if name not in _samples():
             return _json(start_response, 404, {"error": "unknown sample"})
+        live = bool(q.get("live"))
+        if live:
+            denied = _live_denied(environ)
+            if denied:
+                return _json(start_response, denied[0], {"error": denied[1]})
         try:
-            client = _ReplayClient((FIXTURES / f"{name}.json").read_text(encoding="utf-8"))
+            client = None if live else _ReplayClient((FIXTURES / f"{name}.json").read_text(encoding="utf-8"))
             result = _load()["run"](DATA / f"{name}.pdf", _load()["pr"], client=client)
-            return _json(start_response, 200, {"mode": "replay", "result": json.loads(result.model_dump_json())})
+            return _json(start_response, 200, {"mode": "live" if live else "replay",
+                                               "result": json.loads(result.model_dump_json())})
         except Exception as exc:  # noqa: BLE001
             return _json(start_response, 500, {"error": f"{type(exc).__name__}: {exc}"})
 
     if method == "POST":
-        if not os.getenv("GEMINI_API_KEY"):
-            return _json(start_response, 503, {"error": "Live mode is off: GEMINI_API_KEY is not set on the server."})
+        denied = _live_denied(environ)
+        if denied:
+            return _json(start_response, denied[0], {"error": denied[1]})
         length = int(environ.get("CONTENT_LENGTH") or 0)
         if length <= 0 or length > MAX_PDF_BYTES:
             return _json(start_response, 413, {"error": "Send one PDF up to 4 MB."})
