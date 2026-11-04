@@ -45,7 +45,7 @@ function render(x){
 }
 async function go(p,opts,label){
  $('status').textContent='Checking '+label+'…';
- try{const r=await fetch(p,opts),j=await r.json();
+ try{const r=await fetch(p,opts),t=await r.text();let j;try{j=JSON.parse(t)}catch{throw new Error('server returned '+r.status+': '+t.slice(0,200)+' (open /api/check?debug=1)')}
   if(!r.ok)throw new Error(j.error||r.status);render(j.result);$('status').textContent=j.mode==='live'?'Live Gemini run.':'Replay of saved extraction.';
  }catch(e){$('status').textContent='Error: '+e.message}
 }

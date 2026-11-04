@@ -15,13 +15,22 @@ from urllib.parse import parse_qs, urlparse
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-import main as cli  # noqa: E402  (loads the purchase request)
-from src.workflow import build_error_result, run_pipeline  # noqa: E402
+import traceback  # noqa: E402
 
 DATA = ROOT / "assessment-data"
 FIXTURES = ROOT / "fixtures" / "mock_llm_responses"
 MAX_PDF_BYTES = 4 * 1024 * 1024  # Vercel request bodies are capped at ~4.5 MB
-PR = cli.load_purchase_request(DATA / cli.PR_FILE)
+_STATE: dict = {}
+
+
+def _load():
+    """Import the pipeline on first use so a failure comes back as readable JSON, not a bare 500."""
+    if not _STATE:
+        import main as cli
+        from src.workflow import build_error_result, run_pipeline
+
+        _STATE.update(pr=cli.load_purchase_request(DATA / cli.PR_FILE), run=run_pipeline, err=build_error_result)
+    return _STATE
 
 
 class _ReplayClient:
@@ -50,6 +59,20 @@ def _json(start_response, status: int, payload: dict):
 
 
 def app(environ, start_response):
+    try:
+        return _app(environ, start_response)
+    except Exception:  # noqa: BLE001
+        return _json(start_response, 500, {"error": traceback.format_exc()[-1500:]})
+
+
+def _debug():
+    def ls(d):
+        return sorted(x.name for x in d.iterdir()) if d.is_dir() else "MISSING"
+    return {"python": sys.version, "root": str(ROOT), "root_files": ls(ROOT), "assessment_data": ls(DATA),
+            "fixtures": ls(FIXTURES), "public": ls(ROOT / "public")}
+
+
+def _app(environ, start_response):
     method, path = environ["REQUEST_METHOD"], environ.get("PATH_INFO", "/")
     q = parse_qs(environ.get("QUERY_STRING", ""))
     if method == "GET" and path in ("/", "/index.html"):
@@ -59,6 +82,15 @@ def app(environ, start_response):
     if path != "/api/check":
         return _json(start_response, 404, {"error": "not found"})
 
+    if method == "GET" and q.get("debug"):
+        info = _debug()
+        try:
+            _load()
+            info["import"] = "ok"
+        except Exception:  # noqa: BLE001
+            info["import"] = traceback.format_exc()[-1500:]
+        return _json(start_response, 200, info)
+
     if method == "GET":
         name = (q.get("sample") or [None])[0]
         if not name:
@@ -67,7 +99,7 @@ def app(environ, start_response):
             return _json(start_response, 404, {"error": "unknown sample"})
         try:
             client = _ReplayClient((FIXTURES / f"{name}.json").read_text(encoding="utf-8"))
-            result = run_pipeline(DATA / f"{name}.pdf", PR, client=client)
+            result = _load()["run"](DATA / f"{name}.pdf", _load()["pr"], client=client)
             return _json(start_response, 200, {"mode": "replay", "result": json.loads(result.model_dump_json())})
         except Exception as exc:  # noqa: BLE001
             return _json(start_response, 500, {"error": f"{type(exc).__name__}: {exc}"})
@@ -86,9 +118,9 @@ def app(environ, start_response):
             pdf = Path(tmp) / "upload.pdf"
             pdf.write_bytes(data)
             try:
-                result = run_pipeline(pdf, PR)
+                result = _load()["run"](pdf, _load()["pr"])
             except Exception as exc:  # noqa: BLE001
-                result = build_error_result(name, "unexpected_error", type(exc).__name__)
+                result = _load()["err"](name, "unexpected_error", type(exc).__name__)
         out = json.loads(result.model_dump_json())
         out["pack_filename"] = name
         return _json(start_response, 200, {"mode": "live", "result": out})
