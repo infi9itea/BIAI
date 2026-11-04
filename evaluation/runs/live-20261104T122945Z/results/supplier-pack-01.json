@@ -1,0 +1,792 @@
+{
+  "pack_filename": "supplier-pack-01.pdf",
+  "processing_status": "OK",
+  "processing_error_detail": null,
+  "extracted": {
+    "supplier_name": {
+      "state": "FOUND",
+      "value": "Padma Textile Mills Ltd",
+      "evidence": {
+        "raw_value": "Padma Textile Mills Ltd",
+        "normalized_value": "Padma Textile Mills Ltd",
+        "source_quote": "Padma Textile Mills Ltd",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "tin": {
+      "state": "FOUND",
+      "value": "101458013391",
+      "evidence": {
+        "raw_value": "101458013391",
+        "normalized_value": "101458013391",
+        "source_quote": "Supplier TIN: 101458013391 BIN: 000170141-0101",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "bin": {
+      "state": "FOUND",
+      "value": "000170141-0101",
+      "evidence": {
+        "raw_value": "000170141-0101",
+        "normalized_value": "000170141-0101",
+        "source_quote": "Supplier TIN: 101458013391 BIN: 000170141-0101",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "line_items": [
+      {
+        "item_code": {
+          "state": "FOUND",
+          "value": "A",
+          "evidence": {
+            "raw_value": "A",
+            "normalized_value": "A",
+            "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+            "page_number": 1,
+            "normalization_method": "text as written",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "description": {
+          "state": "FOUND",
+          "value": "Cotton twill fabric, 280 gsm",
+          "evidence": {
+            "raw_value": "Cotton twill fabric, 280 gsm",
+            "normalized_value": "Cotton twill fabric, 280 gsm",
+            "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+            "page_number": 1,
+            "normalization_method": "text as written",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "quantity": {
+          "state": "FOUND",
+          "value": "12000",
+          "evidence": {
+            "raw_value": "12,000",
+            "normalized_value": "12000",
+            "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+            "page_number": 1,
+            "normalization_method": "decimal",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "unit": {
+          "state": "FOUND",
+          "value": "metre",
+          "evidence": {
+            "raw_value": "metre",
+            "normalized_value": "metre",
+            "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+            "page_number": 1,
+            "normalization_method": "text as written",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "unit_price_bdt": {
+          "state": "FOUND",
+          "value": "472.00",
+          "evidence": {
+            "raw_value": "472.00",
+            "normalized_value": "472.00",
+            "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+            "page_number": 1,
+            "normalization_method": "decimal",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "line_total_bdt": {
+          "state": "FOUND",
+          "value": "5664000.00",
+          "evidence": {
+            "raw_value": "5,664,000.00",
+            "normalized_value": "5664000.00",
+            "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+            "page_number": 1,
+            "normalization_method": "decimal",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "vat_included_in_price": {
+          "state": "UNKNOWN",
+          "value": null,
+          "evidence": null,
+          "absence_evidence": null
+        },
+        "item_code_match": "YES",
+        "description_match": "YES",
+        "unit_match": "YES"
+      }
+    ],
+    "subtotal_bdt": {
+      "state": "FOUND",
+      "value": "5664000.00",
+      "evidence": {
+        "raw_value": "5,664,000.00",
+        "normalized_value": "5664000.00",
+        "source_quote": "Subtotal 5,664,000.00",
+        "page_number": 1,
+        "normalization_method": "decimal",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "vat_rate_pct": {
+      "state": "FOUND",
+      "value": "15",
+      "evidence": {
+        "raw_value": "15",
+        "normalized_value": "15",
+        "source_quote": "VAT 15% 849,600.00",
+        "page_number": 1,
+        "normalization_method": "percentage points as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "vat_amount_bdt": {
+      "state": "FOUND",
+      "value": "849600.00",
+      "evidence": {
+        "raw_value": "849,600.00",
+        "normalized_value": "849600.00",
+        "source_quote": "VAT 15% 849,600.00",
+        "page_number": 1,
+        "normalization_method": "decimal",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "grand_total_bdt": {
+      "state": "FOUND",
+      "value": "6513600.00",
+      "evidence": {
+        "raw_value": "6,513,600.00",
+        "normalized_value": "6513600.00",
+        "source_quote": "Total 6,513,600.00",
+        "page_number": 1,
+        "normalization_method": "decimal",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "vat_shown_separately": {
+      "state": "FOUND",
+      "value": true,
+      "evidence": {
+        "raw_value": "yes",
+        "normalized_value": "true",
+        "source_quote": "VAT 15% 849,600.00",
+        "page_number": 1,
+        "normalization_method": "yes/no",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "vat_price_basis": {
+      "state": "FOUND",
+      "value": "subtotal",
+      "evidence": {
+        "raw_value": null,
+        "normalized_value": "subtotal",
+        "source_quote": "Subtotal 5,664,000.00 VAT 15% 849,600.00 Total 6,513,600.00",
+        "page_number": 1,
+        "normalization_method": "AMB-15: plain totals block (Subtotal row, VAT row, Total row, contiguous) read as VAT on the whole subtotal; established by layout, not by wording",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "delivery_original_wording": {
+      "state": "FOUND",
+      "value": "24 days",
+      "evidence": {
+        "raw_value": "24 days",
+        "normalized_value": "24 days",
+        "source_quote": "2. Delivery. Delivery within 24 days of receiving the purchase order.",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "delivery_days": {
+      "state": "FOUND",
+      "value": 24,
+      "evidence": {
+        "raw_value": "24 days",
+        "normalized_value": "24",
+        "source_quote": "2. Delivery. Delivery within 24 days of receiving the purchase order.",
+        "page_number": 1,
+        "normalization_method": "explicit days",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "payment": {
+      "state": "FOUND",
+      "original_wording": "Balance payable within 45 days after delivery and acceptance of goods.",
+      "min_days": 45,
+      "max_days": 45,
+      "anchor": "other",
+      "discretionary": false,
+      "evidence": {
+        "raw_value": "Balance payable within 45 days after delivery and acceptance of goods.",
+        "normalized_value": "45 to 45 days",
+        "source_quote": "Balance payable within 45 days after delivery and acceptance of goods.",
+        "page_number": 1,
+        "normalization_method": "explicit days",
+        "verification_status": "VERIFIED"
+      }
+    },
+    "advance_payment_pct": {
+      "state": "FOUND",
+      "value": "10",
+      "evidence": {
+        "raw_value": "10",
+        "normalized_value": "10",
+        "source_quote": "1. Payment. 10% advance payable with the purchase order.",
+        "page_number": 1,
+        "normalization_method": "percentage points as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "advance_original_wording": "1. Payment. 10% advance payable with the purchase order.",
+    "penalty": {
+      "state": "FOUND",
+      "original_wording": "Late delivery penalty: 1% of order value for each full week of delay.",
+      "rate_pct": "1",
+      "calculation_basis": "order value",
+      "period_unit": "week",
+      "full_weeks_only": true,
+      "evidence": {
+        "raw_value": "Late delivery penalty: 1% of order value for each full week of delay.",
+        "normalized_value": null,
+        "source_quote": "3. Delay. Late delivery penalty: 1% of order value for each full week of delay.",
+        "page_number": 1,
+        "normalization_method": "clause wording",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "validity_original_wording": {
+      "state": "FOUND",
+      "value": "45 days",
+      "evidence": {
+        "raw_value": "45 days",
+        "normalized_value": "45 days",
+        "source_quote": "4. Validity. This quotation is valid for 45 days from the date above.",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "validity_days": {
+      "state": "FOUND",
+      "value": 45,
+      "evidence": {
+        "raw_value": "45 days",
+        "normalized_value": "45",
+        "source_quote": "4. Validity. This quotation is valid for 45 days from the date above.",
+        "page_number": 1,
+        "normalization_method": "explicit days",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "claimed_without_evidence": []
+  },
+  "arithmetic_checks": [
+    {
+      "check_name": "line_recalc",
+      "item_id": "line-1",
+      "calculated": "5664000.00",
+      "printed": "5664000.00",
+      "status": "PASS",
+      "detail": "line-1 quantity × unit price: calculated 5664000.00 vs printed 5664000.00 (difference 0.00, tolerance 0.01)",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 printed line total",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        }
+      ],
+      "assumptions_applied": [
+        "AMB-09"
+      ]
+    },
+    {
+      "check_name": "independent_subtotal",
+      "item_id": null,
+      "calculated": "5664000.00",
+      "printed": "5664000.00",
+      "status": "PASS",
+      "detail": "independent subtotal (sum of recalculated lines): calculated 5664000.00 vs printed 5664000.00 (difference 0.00, tolerance 0.01)",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed subtotal",
+          "source_quote": "Subtotal 5,664,000.00",
+          "page_number": 1
+        }
+      ],
+      "assumptions_applied": [
+        "AMB-09"
+      ]
+    },
+    {
+      "check_name": "vat",
+      "item_id": null,
+      "calculated": "849600.00",
+      "printed": "849600.00",
+      "status": "PASS",
+      "detail": "VAT (independent subtotal × printed rate): calculated 849600.00 vs printed 849600.00 (difference 0.00, tolerance 0.01)",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT rate",
+          "source_quote": "VAT 15% 849,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT price basis",
+          "source_quote": "Subtotal 5,664,000.00 VAT 15% 849,600.00 Total 6,513,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT amount",
+          "source_quote": "VAT 15% 849,600.00",
+          "page_number": 1
+        }
+      ],
+      "assumptions_applied": [
+        "AMB-15",
+        "AMB-09"
+      ]
+    },
+    {
+      "check_name": "grand",
+      "item_id": null,
+      "calculated": "6513600.00",
+      "printed": "6513600.00",
+      "status": "PASS",
+      "detail": "grand total (independent subtotal + expected VAT): calculated 6513600.00 vs printed 6513600.00 (difference 0.00, tolerance 0.01)",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT rate",
+          "source_quote": "VAT 15% 849,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT price basis",
+          "source_quote": "Subtotal 5,664,000.00 VAT 15% 849,600.00 Total 6,513,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed grand total",
+          "source_quote": "Total 6,513,600.00",
+          "page_number": 1
+        }
+      ],
+      "assumptions_applied": [
+        "AMB-15",
+        "AMB-09"
+      ]
+    }
+  ],
+  "rule_results": [
+    {
+      "rule_id": "R-01",
+      "description": "Unit price is more than 3% above the maximum unit price in the purchase request.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": "line-1",
+      "detail": "line-1 (item A): supplier price 472.00 vs PR maximum 480.00; excess ratio -0.0167 (a fraction); VAT is a separate line, so the unit price is taken as VAT-exclusive",
+      "triggering_value": "472.00 BDT",
+      "evidence_refs": [
+        {
+          "label": "line-1 unit price",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT shown separately",
+          "source_quote": "VAT 15% 849,600.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-12",
+        "AMB-02",
+        "AMB-06"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-01",
+      "description": "Unit price is above the maximum, but by no more than 3%.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": "line-1",
+      "detail": "line-1 (item A): supplier price 472.00 vs PR maximum 480.00; excess ratio -0.0167 (a fraction); VAT is a separate line, so the unit price is taken as VAT-exclusive",
+      "triggering_value": "472.00 BDT",
+      "evidence_refs": [
+        {
+          "label": "line-1 unit price",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT shown separately",
+          "source_quote": "VAT 15% 849,600.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-12",
+        "AMB-02",
+        "AMB-06"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-02",
+      "description": "Quantity differs from the quantity requested by more than 5%.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": "line-1",
+      "detail": "line-1 (item A): quoted quantity 12000 vs requested 12000; difference ratio 0.0000 (a fraction)",
+      "triggering_value": "12000",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-06"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "R-02",
+      "description": "Advance payment is more than 20%.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": null,
+      "detail": "advance payment 10 percentage points vs limit 20",
+      "triggering_value": "10%",
+      "evidence_refs": [
+        {
+          "label": "advance payment",
+          "source_quote": "1. Payment. 10% advance payable with the purchase order.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "R-03",
+      "description": "The contract has no late-delivery penalty clause.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": null,
+      "detail": "a late-delivery penalty clause is present",
+      "triggering_value": null,
+      "evidence_refs": [
+        {
+          "label": "penalty clause",
+          "source_quote": "3. Delay. Late delivery penalty: 1% of order value for each full week of delay.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-04"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "R-04",
+      "description": "The supplier's TIN or BIN is missing.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": null,
+      "detail": "TIN and BIN are both present",
+      "triggering_value": null,
+      "evidence_refs": [
+        {
+          "label": "TIN",
+          "source_quote": "Supplier TIN: 101458013391 BIN: 000170141-0101",
+          "page_number": 1
+        },
+        {
+          "label": "BIN",
+          "source_quote": "Supplier TIN: 101458013391 BIN: 000170141-0101",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "R-05",
+      "description": "Delivery is promised later than 45 days after the purchase order.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": null,
+      "detail": "delivery in 24 days vs limit 45 (strictly greater rejects)",
+      "triggering_value": "24 days",
+      "evidence_refs": [
+        {
+          "label": "delivery days",
+          "source_quote": "2. Delivery. Delivery within 24 days of receiving the purchase order.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-01"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-03",
+      "description": "Payment terms are unclear, or outside 30 to 60 days after delivery.",
+      "status": "UNCERTAIN",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "payment is counted from 'other', not from delivery; the 30 to 60 day window is not evaluated",
+      "triggering_value": null,
+      "evidence_refs": [
+        {
+          "label": "payment terms",
+          "source_quote": "Balance payable within 45 days after delivery and acceptance of goods.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-13"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-04",
+      "description": "Delivery is promised in 31 to 45 days.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "delivery in 24 days vs review band 31 to 45 days (inclusive)",
+      "triggering_value": "24 days",
+      "evidence_refs": [
+        {
+          "label": "delivery days",
+          "source_quote": "2. Delivery. Delivery within 24 days of receiving the purchase order.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-01"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-05",
+      "description": "VAT is not shown separately at 15%.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "VAT shown separately at 15%",
+      "triggering_value": "15%",
+      "evidence_refs": [
+        {
+          "label": "VAT shown separately",
+          "source_quote": "VAT 15% 849,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT rate",
+          "source_quote": "VAT 15% 849,600.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-06",
+      "description": "The numbers do not add up (for example line total or subtotal is wrong).",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "all 4 arithmetic checks agree with the printed amounts",
+      "triggering_value": null,
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 printed line total",
+          "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed subtotal",
+          "source_quote": "Subtotal 5,664,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT rate",
+          "source_quote": "VAT 15% 849,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT price basis",
+          "source_quote": "Subtotal 5,664,000.00 VAT 15% 849,600.00 Total 6,513,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT amount",
+          "source_quote": "VAT 15% 849,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed grand total",
+          "source_quote": "Total 6,513,600.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-09",
+        "AMB-15"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-07",
+      "description": "The quotation is valid for less than 30 days.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "quotation valid for 45 days vs minimum 30 days",
+      "triggering_value": "45 days",
+      "evidence_refs": [
+        {
+          "label": "quotation validity",
+          "source_quote": "4. Validity. This quotation is valid for 45 days from the date above.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-08",
+      "description": "The late-delivery penalty must be at least 0.5% of order value per week of delay.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "penalty 1 percentage points per week of order value vs minimum 0.5",
+      "triggering_value": "1% per week",
+      "evidence_refs": [
+        {
+          "label": "penalty clause",
+          "source_quote": "3. Delay. Late delivery penalty: 1% of order value for each full week of delay.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-14",
+        "AMB-04"
+      ],
+      "not_applicable_reason": null
+    }
+  ],
+  "decision": "NEEDS_REVIEW",
+  "reason": "NEEDS_REVIEW: a person must check:\n- NR-03 UNCERTAIN: payment is counted from 'other', not from delivery; the 30 to 60 day window is not evaluated | evidence: \"Balance payable within 45 days after delivery and acceptance of goods.\" (page 1)",
+  "assumptions_applied": [
+    "AMB-01",
+    "AMB-02",
+    "AMB-04",
+    "AMB-06",
+    "AMB-09",
+    "AMB-12",
+    "AMB-13",
+    "AMB-14",
+    "AMB-15"
+  ]
+}

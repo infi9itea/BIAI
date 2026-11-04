@@ -1,0 +1,24 @@
+{
+  "pack": "supplier-pack-08.pdf",
+  "attempts": [
+    {
+      "requested_model": "gemini-3.5-flash-lite",
+      "contents_sha256": "afa579401e50da854a15ef897ec2736b94b64e1e23016d276a3d88912c1247e7",
+      "system_instruction_sha256": "c8998d6826a80c2fc52049918c800e5c4f2fcf207b4fa7fc5c907505f548a031",
+      "temperature": 0.0,
+      "response_mime_type": "application/json",
+      "started_utc": "2026-11-04T12:30:34.515657+00:00",
+      "ok": true,
+      "latency_s": 3.342,
+      "response_text": "{\n  \"supplier_name\": {\n    \"value\": \"Bhairab Thread and Co\",\n    \"source_quote\": \"Bhairab Thread and Co\",\n    \"page_number\": 1\n  },\n  \"tin\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"bin\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"subtotal_bdt\": {\n    \"value\": \"164,000.00\",\n    \"source_quote\": \"Subtotal 164,000.00\",\n    \"page_number\": 1\n  },\n  \"vat_rate_pct\": {\n    \"value\": \"15\",\n    \"source_quote\": \"VAT 15% 24,600.00\",\n    \"page_number\": 1\n  },\n  \"vat_amount_bdt\": {\n    \"value\": \"24,600.00\",\n    \"source_quote\": \"VAT 15% 24,600.00\",\n    \"page_number\": 1\n  },\n  \"grand_total_bdt\": {\n    \"value\": \"188,600.00\",\n    \"source_quote\": \"Total 188,600.00\",\n    \"page_number\": 1\n  },\n  \"vat_shown_separately\": {\n    \"value\": \"yes\",\n    \"source_quote\": \"VAT 15% 24,600.00\",\n    \"page_number\": 1\n  },\n  \"vat_price_basis\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"delivery_period\": {\n    \"value\": \"18 days\",\n    \"source_quote\": \"Delivery within 18 days of PO.\",\n    \"page_number\": 1\n  },\n  \"payment_terms_wording\": {\n    \"value\": \"Payment within 30 days of delivery.\",\n    \"source_quote\": \"Payment within 30 days of delivery.\",\n    \"page_number\": 1\n  },\n  \"payment_period\": {\n    \"value\": \"30 days\",\n    \"source_quote\": \"Payment within 30 days of delivery.\",\n    \"page_number\": 1\n  },\n  \"advance_payment_pct\": {\n    \"value\": \"10\",\n    \"source_quote\": \"10% advance payable with the purchase order.\",\n    \"page_number\": 1\n  },\n  \"penalty_wording\": {\n    \"value\": \"Late delivery penalty of 0.5% per week of delay.\",\n    \"source_quote\": \"Late delivery penalty of 0.5% per week of delay.\",\n    \"page_number\": 1\n  },\n  \"penalty_rate_pct\": {\n    \"value\": \"0.5\",\n    \"source_quote\": \"Late delivery penalty of 0.5% per week of delay.\",\n    \"page_number\": 1\n  },\n  \"penalty_calculation_basis\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"penalty_period\": {\n    \"value\": \"per week\",\n    \"source_quote\": \"Late delivery penalty of 0.5% per week of delay.\",\n    \"page_number\": 1\n  },\n  \"penalty_full_weeks_only\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"validity_period\": {\n    \"value\": \"30 days\",\n    \"source_quote\": \"This quotation is valid for 30 days from the date above.\",\n    \"page_number\": 1\n  },\n  \"line_items\": [\n    {\n      \"item_code\": {\n        \"value\": \"C\",\n        \"source_quote\": \"C Polyester sewing thread, cone 800 cone 205.00 164,000.00\",\n        \"page_number\": 1\n      },\n      \"description\": {\n        \"value\": \"Polyester sewing thread, cone\",\n        \"source_quote\": \"C Polyester sewing thread, cone 800 cone 205.00 164,000.00\",\n        \"page_number\": 1\n      },\n      \"quantity\": {\n        \"value\": \"800\",\n        \"source_quote\": \"C Polyester sewing thread, cone 800 cone 205.00 164,000.00\",\n        \"page_number\": 1\n      },\n      \"unit\": {\n        \"value\": \"cone\",\n        \"source_quote\": \"C Polyester sewing thread, cone 800 cone 205.00 164,000.00\",\n        \"page_number\": 1\n      },\n      \"unit_price_bdt\": {\n        \"value\": \"205.00\",\n        \"source_quote\": \"C Polyester sewing thread, cone 800 cone 205.00 164,000.00\",\n        \"page_number\": 1\n      },\n      \"line_total_bdt\": {\n        \"value\": \"164,000.00\",\n        \"source_quote\": \"C Polyester sewing thread, cone 800 cone 205.00 164,000.00\",\n        \"page_number\": 1\n      },\n      \"vat_included_in_price\": {\n        \"value\": null,\n        \"source_quote\": null,\n        \"page_number\": null\n      }\n    }\n  ]\n}",
+      "reported_model_version": "gemini-3.5-flash-lite",
+      "response_id": "aiXraoWHOIrg4t4Pq5v2qQQ",
+      "usage": {
+        "prompt_token_count": 1687,
+        "candidates_token_count": 1417,
+        "thoughts_token_count": null,
+        "total_token_count": 3104
+      }
+    }
+  ]
+}

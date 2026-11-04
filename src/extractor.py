@@ -61,7 +61,7 @@ from src.parsing import (
 load_dotenv()
 
 # The model name is configuration, not code (M3 task 2).
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
 
 # Saved fixtures may hold only short evidence excerpts (M3 task 8, checked by M7's hygiene test).
 FIXTURE_MAX_QUOTE_CHARS = 300

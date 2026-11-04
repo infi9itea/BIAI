@@ -1,0 +1,24 @@
+{
+  "pack": "supplier-pack-07.pdf",
+  "attempts": [
+    {
+      "requested_model": "gemini-3.5-flash-lite",
+      "contents_sha256": "23097d15f53d8e5ca17b722ea95096cc08cdcb316a07116914ff76a10958ca43",
+      "system_instruction_sha256": "c8998d6826a80c2fc52049918c800e5c4f2fcf207b4fa7fc5c907505f548a031",
+      "temperature": 0.0,
+      "response_mime_type": "application/json",
+      "started_utc": "2026-11-04T12:35:44.544461+00:00",
+      "ok": true,
+      "latency_s": 7.105,
+      "response_text": "{\n  \"supplier_name\": {\n    \"value\": \"Rupsha Zipper Factory\",\n    \"source_quote\": \"Rupsha Zipper Factory\",\n    \"page_number\": 1\n  },\n  \"tin\": {\n    \"value\": \"107458073391\",\n    \"source_quote\": \"Supplier TIN: 107458073391\",\n    \"page_number\": 1\n  },\n  \"bin\": {\n    \"value\": \"000770741-0101\",\n    \"source_quote\": \"BIN: 000770741-0101\",\n    \"page_number\": 1\n  },\n  \"subtotal_bdt\": {\n    \"value\": \"577,500.00\",\n    \"source_quote\": \"Subtotal 577,500.00\",\n    \"page_number\": 1\n  },\n  \"vat_rate_pct\": {\n    \"value\": \"15\",\n    \"source_quote\": \"VAT 15% 86,625.00\",\n    \"page_number\": 1\n  },\n  \"vat_amount_bdt\": {\n    \"value\": \"86,625.00\",\n    \"source_quote\": \"VAT 15% 86,625.00\",\n    \"page_number\": 1\n  },\n  \"grand_total_bdt\": {\n    \"value\": \"664,125.00\",\n    \"source_quote\": \"Total 664,125.00\",\n    \"page_number\": 1\n  },\n  \"vat_shown_separately\": {\n    \"value\": \"yes\",\n    \"source_quote\": \"VAT 15% 86,625.00\",\n    \"page_number\": 1\n  },\n  \"vat_price_basis\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"delivery_period\": {\n    \"value\": \"22 days\",\n    \"source_quote\": \"Delivery within 22 days of PO.\",\n    \"page_number\": 1\n  },\n  \"payment_terms_wording\": {\n    \"value\": \"Payment within 45 days of delivery.\",\n    \"source_quote\": \"Payment within 45 days of delivery.\",\n    \"page_number\": 1\n  },\n  \"payment_period\": {\n    \"value\": \"45 days\",\n    \"source_quote\": \"Payment within 45 days of delivery.\",\n    \"page_number\": 1\n  },\n  \"advance_payment_pct\": {\n    \"value\": \"0\",\n    \"source_quote\": \"No advance payment required.\",\n    \"page_number\": 1\n  },\n  \"penalty_wording\": {\n    \"value\": \"Late delivery penalty: 0.5% of order value per week.\",\n    \"source_quote\": \"Late delivery penalty: 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_rate_pct\": {\n    \"value\": \"0.5\",\n    \"source_quote\": \"Late delivery penalty: 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_calculation_basis\": {\n    \"value\": \"order value\",\n    \"source_quote\": \"Late delivery penalty: 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_period\": {\n    \"value\": \"per week\",\n    \"source_quote\": \"Late delivery penalty: 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_full_weeks_only\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"validity_period\": {\n    \"value\": \"35 days\",\n    \"source_quote\": \"This quotation is valid for 35 days from the date above.\",\n    \"page_number\": 1\n  },\n  \"line_items\": [\n    {\n      \"item_code\": {\n        \"value\": \"B\",\n        \"source_quote\": \"B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00\",\n        \"page_number\": 1\n      },\n      \"description\": {\n        \"value\": \"Metal zipper, 18 cm\",\n        \"source_quote\": \"B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00\",\n        \"page_number\": 1\n      },\n      \"quantity\": {\n        \"value\": \"16,500\",\n        \"source_quote\": \"B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00\",\n        \"page_number\": 1\n      },\n      \"unit\": {\n        \"value\": \"piece\",\n        \"source_quote\": \"B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00\",\n        \"page_number\": 1\n      },\n      \"unit_price_bdt\": {\n        \"value\": \"35.00\",\n        \"source_quote\": \"B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00\",\n        \"page_number\": 1\n      },\n      \"line_total_bdt\": {\n        \"value\": \"577,500.00\",\n        \"source_quote\": \"B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00\",\n        \"page_number\": 1\n      },\n      \"vat_included_in_price\": {\n        \"value\": null,\n        \"source_quote\": null,\n        \"page_number\": null\n      }\n    }\n  ]\n}",
+      "reported_model_version": "gemini-3.5-flash-lite",
+      "response_id": "oCbratfDMcWy3LUPxvacoAI",
+      "usage": {
+        "prompt_token_count": 1712,
+        "candidates_token_count": 1520,
+        "thoughts_token_count": null,
+        "total_token_count": 3232
+      }
+    }
+  ]
+}

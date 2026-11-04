@@ -1,0 +1,822 @@
+{
+  "pack_filename": "supplier-pack-08.pdf",
+  "processing_status": "OK",
+  "processing_error_detail": null,
+  "extracted": {
+    "supplier_name": {
+      "state": "FOUND",
+      "value": "Bhairab Thread and Co",
+      "evidence": {
+        "raw_value": "Bhairab Thread and Co",
+        "normalized_value": "Bhairab Thread and Co",
+        "source_quote": "Bhairab Thread and Co",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "tin": {
+      "state": "ABSENT",
+      "value": null,
+      "evidence": null,
+      "absence_evidence": {
+        "field_searched": "tin",
+        "search_terms": [
+          "TIN",
+          "Taxpayer Identification Number",
+          "Tax Identification Number",
+          "টিন"
+        ],
+        "pages_scanned": [
+          1
+        ],
+        "extraction_complete": true,
+        "contextual_excerpt": "Supplier registration details available on request.",
+        "determination_basis": "Searched the text of every page for 'TIN', 'Taxpayer Identification Number', 'Tax Identification Number', 'টিন'; none occurs, and the model did not claim a value for this field."
+      }
+    },
+    "bin": {
+      "state": "ABSENT",
+      "value": null,
+      "evidence": null,
+      "absence_evidence": {
+        "field_searched": "bin",
+        "search_terms": [
+          "BIN",
+          "Business Identification Number",
+          "বিআইএন"
+        ],
+        "pages_scanned": [
+          1
+        ],
+        "extraction_complete": true,
+        "contextual_excerpt": "Supplier registration details available on request.",
+        "determination_basis": "Searched the text of every page for 'BIN', 'Business Identification Number', 'বিআইএন'; none occurs, and the model did not claim a value for this field."
+      }
+    },
+    "line_items": [
+      {
+        "item_code": {
+          "state": "FOUND",
+          "value": "C",
+          "evidence": {
+            "raw_value": "C",
+            "normalized_value": "C",
+            "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+            "page_number": 1,
+            "normalization_method": "text as written",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "description": {
+          "state": "FOUND",
+          "value": "Polyester sewing thread, cone",
+          "evidence": {
+            "raw_value": "Polyester sewing thread, cone",
+            "normalized_value": "Polyester sewing thread, cone",
+            "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+            "page_number": 1,
+            "normalization_method": "text as written",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "quantity": {
+          "state": "FOUND",
+          "value": "800",
+          "evidence": {
+            "raw_value": "800",
+            "normalized_value": "800",
+            "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+            "page_number": 1,
+            "normalization_method": "decimal",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "unit": {
+          "state": "FOUND",
+          "value": "cone",
+          "evidence": {
+            "raw_value": "cone",
+            "normalized_value": "cone",
+            "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+            "page_number": 1,
+            "normalization_method": "text as written",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "unit_price_bdt": {
+          "state": "FOUND",
+          "value": "205.00",
+          "evidence": {
+            "raw_value": "205.00",
+            "normalized_value": "205.00",
+            "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+            "page_number": 1,
+            "normalization_method": "decimal",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "line_total_bdt": {
+          "state": "FOUND",
+          "value": "164000.00",
+          "evidence": {
+            "raw_value": "164,000.00",
+            "normalized_value": "164000.00",
+            "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+            "page_number": 1,
+            "normalization_method": "decimal",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "vat_included_in_price": {
+          "state": "UNKNOWN",
+          "value": null,
+          "evidence": null,
+          "absence_evidence": null
+        },
+        "item_code_match": "YES",
+        "description_match": "YES",
+        "unit_match": "YES"
+      }
+    ],
+    "subtotal_bdt": {
+      "state": "FOUND",
+      "value": "164000.00",
+      "evidence": {
+        "raw_value": "164,000.00",
+        "normalized_value": "164000.00",
+        "source_quote": "Subtotal 164,000.00",
+        "page_number": 1,
+        "normalization_method": "decimal",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "vat_rate_pct": {
+      "state": "FOUND",
+      "value": "15",
+      "evidence": {
+        "raw_value": "15",
+        "normalized_value": "15",
+        "source_quote": "VAT 15% 24,600.00",
+        "page_number": 1,
+        "normalization_method": "percentage points as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "vat_amount_bdt": {
+      "state": "FOUND",
+      "value": "24600.00",
+      "evidence": {
+        "raw_value": "24,600.00",
+        "normalized_value": "24600.00",
+        "source_quote": "VAT 15% 24,600.00",
+        "page_number": 1,
+        "normalization_method": "decimal",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "grand_total_bdt": {
+      "state": "FOUND",
+      "value": "188600.00",
+      "evidence": {
+        "raw_value": "188,600.00",
+        "normalized_value": "188600.00",
+        "source_quote": "Total 188,600.00",
+        "page_number": 1,
+        "normalization_method": "decimal",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "vat_shown_separately": {
+      "state": "FOUND",
+      "value": true,
+      "evidence": {
+        "raw_value": "yes",
+        "normalized_value": "true",
+        "source_quote": "VAT 15% 24,600.00",
+        "page_number": 1,
+        "normalization_method": "yes/no",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "vat_price_basis": {
+      "state": "FOUND",
+      "value": "subtotal",
+      "evidence": {
+        "raw_value": null,
+        "normalized_value": "subtotal",
+        "source_quote": "Subtotal 164,000.00 VAT 15% 24,600.00 Total 188,600.00",
+        "page_number": 1,
+        "normalization_method": "AMB-15: plain totals block (Subtotal row, VAT row, Total row, contiguous) read as VAT on the whole subtotal; established by layout, not by wording",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "delivery_original_wording": {
+      "state": "FOUND",
+      "value": "18 days",
+      "evidence": {
+        "raw_value": "18 days",
+        "normalized_value": "18 days",
+        "source_quote": "2. Delivery. Delivery within 18 days of PO.",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "delivery_days": {
+      "state": "FOUND",
+      "value": 18,
+      "evidence": {
+        "raw_value": "18 days",
+        "normalized_value": "18",
+        "source_quote": "2. Delivery. Delivery within 18 days of PO.",
+        "page_number": 1,
+        "normalization_method": "explicit days",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "payment": {
+      "state": "FOUND",
+      "original_wording": "Payment within 30 days of delivery.",
+      "min_days": 30,
+      "max_days": 30,
+      "anchor": "delivery",
+      "discretionary": false,
+      "evidence": {
+        "raw_value": "Payment within 30 days of delivery.",
+        "normalized_value": "30 to 30 days",
+        "source_quote": "1. Payment. 10% advance payable with the purchase order. Payment within 30 days of delivery.",
+        "page_number": 1,
+        "normalization_method": "explicit days",
+        "verification_status": "VERIFIED"
+      }
+    },
+    "advance_payment_pct": {
+      "state": "FOUND",
+      "value": "10",
+      "evidence": {
+        "raw_value": "10",
+        "normalized_value": "10",
+        "source_quote": "1. Payment. 10% advance payable with the purchase order.",
+        "page_number": 1,
+        "normalization_method": "percentage points as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "advance_original_wording": "1. Payment. 10% advance payable with the purchase order.",
+    "penalty": {
+      "state": "FOUND",
+      "original_wording": "Late delivery penalty of 0.5% per week of delay.",
+      "rate_pct": "0.5",
+      "calculation_basis": null,
+      "period_unit": "week",
+      "full_weeks_only": null,
+      "evidence": {
+        "raw_value": "Late delivery penalty of 0.5% per week of delay.",
+        "normalized_value": null,
+        "source_quote": "3. Delay. Late delivery penalty of 0.5% per week of delay.",
+        "page_number": 1,
+        "normalization_method": "clause wording",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "validity_original_wording": {
+      "state": "FOUND",
+      "value": "30 days",
+      "evidence": {
+        "raw_value": "30 days",
+        "normalized_value": "30 days",
+        "source_quote": "4. Validity. This quotation is valid for 30 days from the date above.",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "validity_days": {
+      "state": "FOUND",
+      "value": 30,
+      "evidence": {
+        "raw_value": "30 days",
+        "normalized_value": "30",
+        "source_quote": "4. Validity. This quotation is valid for 30 days from the date above.",
+        "page_number": 1,
+        "normalization_method": "explicit days",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "claimed_without_evidence": []
+  },
+  "arithmetic_checks": [
+    {
+      "check_name": "line_recalc",
+      "item_id": "line-1",
+      "calculated": "164000.00",
+      "printed": "164000.00",
+      "status": "PASS",
+      "detail": "line-1 quantity × unit price: calculated 164000.00 vs printed 164000.00 (difference 0.00, tolerance 0.01)",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 printed line total",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        }
+      ],
+      "assumptions_applied": [
+        "AMB-09"
+      ]
+    },
+    {
+      "check_name": "independent_subtotal",
+      "item_id": null,
+      "calculated": "164000.00",
+      "printed": "164000.00",
+      "status": "PASS",
+      "detail": "independent subtotal (sum of recalculated lines): calculated 164000.00 vs printed 164000.00 (difference 0.00, tolerance 0.01)",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed subtotal",
+          "source_quote": "Subtotal 164,000.00",
+          "page_number": 1
+        }
+      ],
+      "assumptions_applied": [
+        "AMB-09"
+      ]
+    },
+    {
+      "check_name": "vat",
+      "item_id": null,
+      "calculated": "24600.00",
+      "printed": "24600.00",
+      "status": "PASS",
+      "detail": "VAT (independent subtotal × printed rate): calculated 24600.00 vs printed 24600.00 (difference 0.00, tolerance 0.01)",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT rate",
+          "source_quote": "VAT 15% 24,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT price basis",
+          "source_quote": "Subtotal 164,000.00 VAT 15% 24,600.00 Total 188,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT amount",
+          "source_quote": "VAT 15% 24,600.00",
+          "page_number": 1
+        }
+      ],
+      "assumptions_applied": [
+        "AMB-15",
+        "AMB-09"
+      ]
+    },
+    {
+      "check_name": "grand",
+      "item_id": null,
+      "calculated": "188600.00",
+      "printed": "188600.00",
+      "status": "PASS",
+      "detail": "grand total (independent subtotal + expected VAT): calculated 188600.00 vs printed 188600.00 (difference 0.00, tolerance 0.01)",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT rate",
+          "source_quote": "VAT 15% 24,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT price basis",
+          "source_quote": "Subtotal 164,000.00 VAT 15% 24,600.00 Total 188,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed grand total",
+          "source_quote": "Total 188,600.00",
+          "page_number": 1
+        }
+      ],
+      "assumptions_applied": [
+        "AMB-15",
+        "AMB-09"
+      ]
+    }
+  ],
+  "rule_results": [
+    {
+      "rule_id": "R-01",
+      "description": "Unit price is more than 3% above the maximum unit price in the purchase request.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": "line-1",
+      "detail": "line-1 (item C): supplier price 205.00 vs PR maximum 210.00; excess ratio -0.0238 (a fraction); VAT is a separate line, so the unit price is taken as VAT-exclusive",
+      "triggering_value": "205.00 BDT",
+      "evidence_refs": [
+        {
+          "label": "line-1 unit price",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT shown separately",
+          "source_quote": "VAT 15% 24,600.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-12",
+        "AMB-02",
+        "AMB-06"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-01",
+      "description": "Unit price is above the maximum, but by no more than 3%.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": "line-1",
+      "detail": "line-1 (item C): supplier price 205.00 vs PR maximum 210.00; excess ratio -0.0238 (a fraction); VAT is a separate line, so the unit price is taken as VAT-exclusive",
+      "triggering_value": "205.00 BDT",
+      "evidence_refs": [
+        {
+          "label": "line-1 unit price",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT shown separately",
+          "source_quote": "VAT 15% 24,600.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-12",
+        "AMB-02",
+        "AMB-06"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-02",
+      "description": "Quantity differs from the quantity requested by more than 5%.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": "line-1",
+      "detail": "line-1 (item C): quoted quantity 800 vs requested 800; difference ratio 0.0000 (a fraction)",
+      "triggering_value": "800",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-06"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "R-02",
+      "description": "Advance payment is more than 20%.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": null,
+      "detail": "advance payment 10 percentage points vs limit 20",
+      "triggering_value": "10%",
+      "evidence_refs": [
+        {
+          "label": "advance payment",
+          "source_quote": "1. Payment. 10% advance payable with the purchase order.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "R-03",
+      "description": "The contract has no late-delivery penalty clause.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": null,
+      "detail": "a late-delivery penalty clause is present",
+      "triggering_value": null,
+      "evidence_refs": [
+        {
+          "label": "penalty clause",
+          "source_quote": "3. Delay. Late delivery penalty of 0.5% per week of delay.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-04"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "R-04",
+      "description": "The supplier's TIN or BIN is missing.",
+      "status": "FAIL",
+      "severity": "REJECT",
+      "item_id": null,
+      "detail": "TIN and BIN missing from the document",
+      "triggering_value": null,
+      "evidence_refs": [],
+      "absence_evidence": [
+        {
+          "field_searched": "tin",
+          "search_terms": [
+            "TIN",
+            "Taxpayer Identification Number",
+            "Tax Identification Number",
+            "টিন"
+          ],
+          "pages_scanned": [
+            1
+          ],
+          "extraction_complete": true,
+          "contextual_excerpt": "Supplier registration details available on request.",
+          "determination_basis": "Searched the text of every page for 'TIN', 'Taxpayer Identification Number', 'Tax Identification Number', 'টিন'; none occurs, and the model did not claim a value for this field."
+        },
+        {
+          "field_searched": "bin",
+          "search_terms": [
+            "BIN",
+            "Business Identification Number",
+            "বিআইএন"
+          ],
+          "pages_scanned": [
+            1
+          ],
+          "extraction_complete": true,
+          "contextual_excerpt": "Supplier registration details available on request.",
+          "determination_basis": "Searched the text of every page for 'BIN', 'Business Identification Number', 'বিআইএন'; none occurs, and the model did not claim a value for this field."
+        }
+      ],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "R-05",
+      "description": "Delivery is promised later than 45 days after the purchase order.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": null,
+      "detail": "delivery in 18 days vs limit 45 (strictly greater rejects)",
+      "triggering_value": "18 days",
+      "evidence_refs": [
+        {
+          "label": "delivery days",
+          "source_quote": "2. Delivery. Delivery within 18 days of PO.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-01"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-03",
+      "description": "Payment terms are unclear, or outside 30 to 60 days after delivery.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "payment 30 to 30 days after delivery vs acceptable 30 to 60 days (inclusive)",
+      "triggering_value": "30 to 30 days",
+      "evidence_refs": [
+        {
+          "label": "payment terms",
+          "source_quote": "1. Payment. 10% advance payable with the purchase order. Payment within 30 days of delivery.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-03",
+        "AMB-13"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-04",
+      "description": "Delivery is promised in 31 to 45 days.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "delivery in 18 days vs review band 31 to 45 days (inclusive)",
+      "triggering_value": "18 days",
+      "evidence_refs": [
+        {
+          "label": "delivery days",
+          "source_quote": "2. Delivery. Delivery within 18 days of PO.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-01"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-05",
+      "description": "VAT is not shown separately at 15%.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "VAT shown separately at 15%",
+      "triggering_value": "15%",
+      "evidence_refs": [
+        {
+          "label": "VAT shown separately",
+          "source_quote": "VAT 15% 24,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT rate",
+          "source_quote": "VAT 15% 24,600.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-06",
+      "description": "The numbers do not add up (for example line total or subtotal is wrong).",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "all 4 arithmetic checks agree with the printed amounts",
+      "triggering_value": null,
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 printed line total",
+          "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed subtotal",
+          "source_quote": "Subtotal 164,000.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT rate",
+          "source_quote": "VAT 15% 24,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT price basis",
+          "source_quote": "Subtotal 164,000.00 VAT 15% 24,600.00 Total 188,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT amount",
+          "source_quote": "VAT 15% 24,600.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed grand total",
+          "source_quote": "Total 188,600.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-09",
+        "AMB-15"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-07",
+      "description": "The quotation is valid for less than 30 days.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "quotation valid for 30 days vs minimum 30 days",
+      "triggering_value": "30 days",
+      "evidence_refs": [
+        {
+          "label": "quotation validity",
+          "source_quote": "4. Validity. This quotation is valid for 30 days from the date above.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-08",
+      "description": "The late-delivery penalty must be at least 0.5% of order value per week of delay.",
+      "status": "UNCERTAIN",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "penalty calculation basis is 'unknown', not 'order value'",
+      "triggering_value": null,
+      "evidence_refs": [
+        {
+          "label": "penalty clause",
+          "source_quote": "3. Delay. Late delivery penalty of 0.5% per week of delay.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    }
+  ],
+  "decision": "REJECT",
+  "reason": "REJECT: definite Reject rule failure(s):\n- R-04 FAIL: TIN and BIN missing from the document | evidence: absence of tin: Searched the text of every page for 'TIN', 'Taxpayer Identification Number', 'Tax Identification Number', 'টিন'; none occurs, and the model did not claim a value for this field.; absence of bin: Searched the text of every page for 'BIN', 'Business Identification Number', 'বিআইএন'; none occurs, and the model did not claim a value for this field.",
+  "assumptions_applied": [
+    "AMB-01",
+    "AMB-02",
+    "AMB-03",
+    "AMB-04",
+    "AMB-06",
+    "AMB-09",
+    "AMB-12",
+    "AMB-13",
+    "AMB-15"
+  ]
+}

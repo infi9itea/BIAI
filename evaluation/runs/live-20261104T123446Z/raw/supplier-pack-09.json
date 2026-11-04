@@ -1,0 +1,43 @@
+{
+  "pack": "supplier-pack-09.pdf",
+  "attempts": [
+    {
+      "requested_model": "gemini-3.5-flash-lite",
+      "contents_sha256": "82ba78795ff268759014429178104f3f626b19270a542f37190006b7b5408bc9",
+      "system_instruction_sha256": "c8998d6826a80c2fc52049918c800e5c4f2fcf207b4fa7fc5c907505f548a031",
+      "temperature": 0.0,
+      "response_mime_type": "application/json",
+      "started_utc": "2026-11-04T12:36:00.003071+00:00",
+      "ok": true,
+      "latency_s": 3.372,
+      "response_text": "{\n  \"supplier_name\": {\n    \"value\": \"Dhaleshwari Poly Pack\",\n    \"source_quote\": \"Dhaleshwari Poly Pack\",\n    \"page_number\": 1\n  },\n  \"tin\": {\n    \"value\": \"109458093391\",\n    \"source_quote\": \"Supplier TIN: 109458093391\",\n    \"page_number\": 1\n  },\n  \"bin\": {\n    \"value\": \"000970941-0101\",\n    \"source_quote\": \"BIN: 000970941-0101\",\n    \"page_number\": 1\n  },\n  \"subtotal_bdt\": {\n    \"value\": \"322,000.00\",\n    \"source_quote\": \"Subtotal 322,000.00\",\n    \"page_number\": 1\n  },\n  \"vat_rate_pct\": {\n    \"value\": \"15\",\n    \"source_quote\": \"VAT 15% 48,300.00\",\n    \"page_number\": 1\n  },\n  \"vat_amount_bdt\": {\n    \"value\": \"48,300.00\",\n    \"source_quote\": \"VAT 15% 48,300.00\",\n    \"page_number\": 1\n  },\n  \"grand_total_bdt\": {\n    \"value\": \"370,300.00\",\n    \"source_quote\": \"Total 370,300.00\",\n    \"page_number\": 1\n  },\n  \"vat_shown_separately\": {\n    \"value\": \"yes\",\n    \"source_quote\": \"VAT 15% 48,300.00\",\n    \"page_number\": 1\n  },\n  \"vat_price_basis\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"delivery_period\": {\n    \"value\": \"4 weeks\",\n    \"source_quote\": \"Delivery within 4 weeks of PO.\",\n    \"page_number\": 1\n  },\n  \"payment_terms_wording\": {\n    \"value\": \"Payment within 30 to 90 days as agreed by both parties.\",\n    \"source_quote\": \"Payment within 30 to 90 days as agreed by both parties.\",\n    \"page_number\": 1\n  },\n  \"payment_period\": {\n    \"value\": \"30 to 90 days\",\n    \"source_quote\": \"Payment within 30 to 90 days as agreed by both parties.\",\n    \"page_number\": 1\n  },\n  \"advance_payment_pct\": {\n    \"value\": \"5\",\n    \"source_quote\": \"1. Payment. 5% advance payable with the purchase order.\",\n    \"page_number\": 1\n  },\n  \"penalty_wording\": {\n    \"value\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"source_quote\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_rate_pct\": {\n    \"value\": \"0.5\",\n    \"source_quote\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_calculation_basis\": {\n    \"value\": \"order value\",\n    \"source_quote\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_period\": {\n    \"value\": \"per week\",\n    \"source_quote\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_full_weeks_only\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"validity_period\": {\n    \"value\": \"30 days\",\n    \"source_quote\": \"This quotation is valid for 30 days from the date above.\",\n    \"page_number\": 1\n  },\n  \"line_items\": [\n    {\n      \"item_code\": \"D\",\n      \"description\": \"Poly bag, 30 x 40 cm\",\n      \"quantity\": \"50,000\",\n      \"unit\": \"piece\",\n      \"unit_price_bdt\": \"6.40\",\n      \"line_total_bdt\": \"322,000.00\",\n      \"vat_included_in_price\": null\n    }\n  ]\n}",
+      "reported_model_version": "gemini-3.5-flash-lite",
+      "response_id": "sCbraoPXEYXJ3LUP29TQqA8",
+      "usage": {
+        "prompt_token_count": 1727,
+        "candidates_token_count": 1168,
+        "thoughts_token_count": null,
+        "total_token_count": 2895
+      }
+    },
+    {
+      "requested_model": "gemini-3.5-flash-lite",
+      "contents_sha256": "82ba78795ff268759014429178104f3f626b19270a542f37190006b7b5408bc9",
+      "system_instruction_sha256": "c8998d6826a80c2fc52049918c800e5c4f2fcf207b4fa7fc5c907505f548a031",
+      "temperature": 0.0,
+      "response_mime_type": "application/json",
+      "started_utc": "2026-11-04T12:36:05.375812+00:00",
+      "ok": true,
+      "latency_s": 3.814,
+      "response_text": "{\n  \"supplier_name\": {\n    \"value\": \"Dhaleshwari Poly Pack\",\n    \"source_quote\": \"Dhaleshwari Poly Pack\",\n    \"page_number\": 1\n  },\n  \"tin\": {\n    \"value\": \"109458093391\",\n    \"source_quote\": \"Supplier TIN: 109458093391\",\n    \"page_number\": 1\n  },\n  \"bin\": {\n    \"value\": \"000970941-0101\",\n    \"source_quote\": \"BIN: 000970941-0101\",\n    \"page_number\": 1\n  },\n  \"subtotal_bdt\": {\n    \"value\": \"322,000.00\",\n    \"source_quote\": \"Subtotal 322,000.00\",\n    \"page_number\": 1\n  },\n  \"vat_rate_pct\": {\n    \"value\": \"15\",\n    \"source_quote\": \"VAT 15% 48,300.00\",\n    \"page_number\": 1\n  },\n  \"vat_amount_bdt\": {\n    \"value\": \"48,300.00\",\n    \"source_quote\": \"VAT 15% 48,300.00\",\n    \"page_number\": 1\n  },\n  \"grand_total_bdt\": {\n    \"value\": \"370,300.00\",\n    \"source_quote\": \"Total 370,300.00\",\n    \"page_number\": 1\n  },\n  \"vat_shown_separately\": {\n    \"value\": \"yes\",\n    \"source_quote\": \"VAT 15% 48,300.00\",\n    \"page_number\": 1\n  },\n  \"vat_price_basis\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"delivery_period\": {\n    \"value\": \"4 weeks\",\n    \"source_quote\": \"Delivery within 4 weeks of PO.\",\n    \"page_number\": 1\n  },\n  \"payment_terms_wording\": {\n    \"value\": \"Payment within 30 to 90 days as agreed by both parties.\",\n    \"source_quote\": \"Payment within 30 to 90 days as agreed by both parties.\",\n    \"page_number\": 1\n  },\n  \"payment_period\": {\n    \"value\": \"30 to 90 days\",\n    \"source_quote\": \"Payment within 30 to 90 days as agreed by both parties.\",\n    \"page_number\": 1\n  },\n  \"advance_payment_pct\": {\n    \"value\": \"5\",\n    \"source_quote\": \"1. Payment. 5% advance payable with the purchase order.\",\n    \"page_number\": 1\n  },\n  \"penalty_wording\": {\n    \"value\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"source_quote\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_rate_pct\": {\n    \"value\": \"0.5\",\n    \"source_quote\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_calculation_basis\": {\n    \"value\": \"order value\",\n    \"source_quote\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_period\": {\n    \"value\": \"per week\",\n    \"source_quote\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_full_weeks_only\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"validity_period\": {\n    \"value\": \"30 days\",\n    \"source_quote\": \"This quotation is valid for 30 days from the date above.\",\n    \"page_number\": 1\n  },\n  \"line_items\": [\n    {\n      \"item_code\": \"D\",\n      \"description\": \"Poly bag, 30 x 40 cm\",\n      \"quantity\": \"50,000\",\n      \"unit\": \"piece\",\n      \"unit_price_bdt\": \"6.40\",\n      \"line_total_bdt\": \"322,000.00\",\n      \"vat_included_in_price\": null\n    }\n  ]\n}",
+      "reported_model_version": "gemini-3.5-flash-lite",
+      "response_id": "tSbrarWqMJzI1_oPy_n32Ak",
+      "usage": {
+        "prompt_token_count": 1727,
+        "candidates_token_count": 1168,
+        "thoughts_token_count": null,
+        "total_token_count": 2895
+      }
+    }
+  ]
+}

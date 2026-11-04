@@ -32,7 +32,7 @@ Rules for the run:
 ## 2. Running it
 
 ```
-python evaluation/evaluate.py live --model gemini-3.8-flash       # real API calls, all ten packs; always name the model
+python evaluation/evaluate.py live --model gemini-3.5-flash-lite       # real API calls, all ten packs; always name the model
 python evaluation/evaluate.py rescore evaluation/runs/live-<id>   # offline RESCORE of a saved live run (no API call)
 python evaluation/evaluate.py fixtures                  # code regression only
 ```
@@ -44,7 +44,7 @@ the SHA-256 of the system instruction and of each pack's full prompt, retry sett
 (and whether the tree was dirty), the last commit of each ground-truth file, and SHA-256 hashes of every input. The
 API key is never written.
 
-**Model.** M6 evaluates `gemini-3.8-flash`: the default in `src/extractor.py`, the value in `.env.example` (a test keeps
+**Model.** M6 evaluates `gemini-3.5-flash-lite`: the default in `src/extractor.py`, the value in `.env.example` (a test keeps
 the two equal) and the `--model` of the command above. Results from another model are a different experiment and are
 never combined with these. The report records both the requested model and the version the API reports.
 

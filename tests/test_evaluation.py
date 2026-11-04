@@ -659,7 +659,7 @@ def test_the_example_configuration_and_the_source_default_name_the_same_model():
                if "=" in line and not line.startswith("#"))
     source_default = re.search(r'GEMINI_MODEL\s*=\s*os\.getenv\("GEMINI_MODEL",\s*"([^"]+)"\)',
                                (ROOT / "src" / "extractor.py").read_text(encoding="utf-8")).group(1)
-    assert env["GEMINI_MODEL"] == source_default == "gemini-3.8-flash"
+    assert env["GEMINI_MODEL"] == source_default == "gemini-3.5-flash-lite"
 
 
 # --- Review item 7: the answer key is checked against the PDFs field by field ---------------------------------------
