@@ -1,0 +1,82 @@
+[
+  {
+    "pack": "supplier-pack-01.pdf",
+    "expected_decision": "NEEDS_REVIEW",
+    "rule_ids": ["NR-03"],
+    "manual_notes": "Quotation QT-2026-901, dated 2026-10-21, references PR-2026-114. Item A: Cotton twill fabric, 280 gsm. Requested and quoted quantity: 12,000 metres. Quoted unit price BDT 472.00; PR maximum BDT 480.00. Recalculation: 12,000 × 472.00 = BDT 5,664,000.00, matching the line amount and subtotal. VAT: BDT 5,664,000.00 × 15% = BDT 849,600.00. Grand total: BDT 6,513,600.00. Supplier TIN: 101458013391; BIN: 000170141-0101. Payment clause: '10% advance payable with the purchase order. Balance payable within 45 days after delivery and acceptance of goods.' The advance is within the 20% limit, but the combined payment anchor 'delivery and acceptance' is not simply 'delivery'. Under AMB-13 this makes NR-03 uncertain and requires review. Delivery clause: 'Delivery within 24 days of receiving the purchase order.' Penalty clause: 'Late delivery penalty: 1% of order value for each full week of delay.' Validity clause: 'This quotation is valid for 45 days from the date above.' No other rule is triggered. NEEDS_REVIEW due to NR-03.",
+    "confidence": "HIGH",
+    "ambiguities_noted": ["AMB-13"]
+  },
+  {
+    "pack": "supplier-pack-02.pdf",
+    "expected_decision": "APPROVE",
+    "rule_ids": [],
+    "manual_notes": "Quotation QT-2026-902, dated 2026-10-22, references PR-2026-114. Item B: Metal zipper, 18 cm. Requested and quoted quantity: 20,000 pieces. Quoted unit price BDT 36.00; PR maximum BDT 38.00. Recalculation: 20,000 × 36.00 = BDT 720,000.00, matching the line amount and subtotal. VAT: BDT 720,000.00 × 15% = BDT 108,000.00. Grand total: BDT 828,000.00. Supplier TIN: 102458023391; BIN: 000270241-0101. Payment clause: 'No advance payment required. Full payment within 30 days of delivery.' Payment is clear and within the permitted period. Delivery clause: 'Goods will be delivered at your factory within 21 days from the date of PO.' Penalty clause: 'For late delivery the supplier shall pay 0.75% of the order value per week of delay.' Validity clause: 'This quotation is valid for 30 days from the date above.' No rule is triggered. APPROVE.",
+    "confidence": "HIGH",
+    "ambiguities_noted": []
+  },
+  {
+    "pack": "supplier-pack-03.pdf",
+    "expected_decision": "REJECT",
+    "rule_ids": ["R-01"],
+    "manual_notes": "Quotation QT-2026-903, dated 2026-10-23, references PR-2026-114. Item C: Polyester sewing thread, cone. Requested and quoted quantity: 800 cones. Quoted unit price BDT 229.00; PR maximum BDT 210.00. Price excess = (229.00 − 210.00) / 210.00 × 100 = 9.0476%, strictly more than 3%, triggering R-01. Recalculation: 800 × 229.00 = BDT 183,200.00, matching the line amount and subtotal. VAT: BDT 183,200.00 × 15% = BDT 27,480.00. Grand total: BDT 210,680.00. Supplier TIN: 103458033391; BIN: 000370341-0101. Payment clause: '15% advance payable with the purchase order. Balance within 40 days of delivery.' The advance is within the 20% limit and the balance period is within 30–60 days. Delivery clause: 'Delivery within 20 days of PO.' Penalty clause: 'Delay in delivery will attract a penalty of 0.5% of order value per week.' Validity clause: 'This quotation is valid for 30 days from the date above.' No additional rule is triggered. REJECT due to R-01.",
+    "confidence": "HIGH",
+    "ambiguities_noted": []
+  },
+  {
+    "pack": "supplier-pack-04.pdf",
+    "expected_decision": "NEEDS_REVIEW",
+    "rule_ids": ["NR-01"],
+    "manual_notes": "Quotation QT-2026-904, dated 2026-10-24, references PR-2026-114. Item D: Poly bag, 30 x 40 cm. Requested and quoted quantity: 50,000 pieces. Quoted unit price BDT 6.65; PR maximum BDT 6.50. Price excess = (6.65 − 6.50) / 6.50 × 100 = 2.3077%. This is above the maximum but within 3%, triggering NR-01. Recalculation: 50,000 × 6.65 = BDT 332,500.00, matching the line amount and subtotal. VAT: BDT 332,500.00 × 15% = BDT 49,875.00. Grand total: BDT 382,375.00. Supplier TIN: 104458043391; BIN: 000470441-0101. Payment clause: '10% advance payable with the purchase order. Payment within 30 days after delivery.' Delivery clause: 'Delivery within 28 days of PO.' Penalty clause: 'Late delivery penalty of 0.6% of order value per week.' Validity clause: 'This quotation is valid for 40 days from the date above.' No other rule is triggered. NEEDS_REVIEW due to NR-01.",
+    "confidence": "HIGH",
+    "ambiguities_noted": []
+  },
+  {
+    "pack": "supplier-pack-05.pdf",
+    "expected_decision": "REJECT",
+    "rule_ids": ["R-02", "NR-03"],
+    "manual_notes": "Quotation QT-2026-905, dated 2026-10-25, references PR-2026-114. Item E: Carton box, 5-ply. Requested and quoted quantity: 3,000 pieces. Quoted unit price BDT 92.00; PR maximum BDT 95.00. Recalculation: 3,000 × 92.00 = BDT 276,000.00, matching the line amount and subtotal. VAT: BDT 276,000.00 × 15% = BDT 41,400.00. Grand total: BDT 317,400.00. Supplier TIN: 105458053391; BIN: 000570541-0101. Payment clause: '40% advance payable with the purchase order. 40% advance with the purchase order, balance 60% within 30 days of delivery.' The stated 40% advance exceeds the 20% limit, triggering R-02 regardless of interpretation. NR-03 is a judgment call: the second '40% advance' could be a duplicate/editing error or a separate advance. If the two advances are separate, they total 80% upfront and, together with the stated 60% balance, total 140%; the duplicate wording therefore makes the payment terms unclear. Delivery clause: 'Delivery within 25 days of PO.' Penalty clause: 'Late delivery penalty of 1% of order value per week.' Validity clause: 'This quotation is valid for 30 days from the date above.' REJECT due to R-02; NR-03 is also recorded for the unclear payment wording.",
+    "confidence": "HIGH",
+    "ambiguities_noted": []
+  },
+  {
+    "pack": "supplier-pack-06.pdf",
+    "expected_decision": "REJECT",
+    "rule_ids": ["R-03"],
+    "manual_notes": "Quotation QT-2026-906, dated 2026-10-26, references PR-2026-114. The full one-page quotation, including all terms and conditions, was checked. Item A: Cotton twill fabric, 280 gsm. Requested and quoted quantity: 12,000 metres. Quoted unit price BDT 465.00; PR maximum BDT 480.00. Recalculation: 12,000 × 465.00 = BDT 5,580,000.00, matching the line amount and subtotal. VAT: BDT 5,580,000.00 × 15% = BDT 837,000.00. Grand total: BDT 6,417,000.00. Supplier TIN: 106458063391; BIN: 000670641-0101. Payment clause: '10% advance payable with the purchase order. Balance within 60 days of delivery.' Delivery clause: 'Delivery within 27 days of PO.' Validity clause: 'This quotation is valid for 30 days from the date above.' The document contains no late-delivery penalty clause anywhere. The absence triggers R-03; NR-08 is not separately triggered because there is no penalty clause to evaluate. REJECT due to R-03.",
+    "confidence": "HIGH",
+    "ambiguities_noted": []
+  },
+  {
+    "pack": "supplier-pack-07.pdf",
+    "expected_decision": "NEEDS_REVIEW",
+    "rule_ids": ["NR-02"],
+    "manual_notes": "Quotation QT-2026-907, dated 2026-10-20, references PR-2026-114. Item B: Metal zipper, 18 cm. PR quantity is 20,000 pieces; quoted quantity is 16,500 pieces. Quantity shortfall = (20,000 − 16,500) / 20,000 × 100 = 17.5%, exceeding 5% and triggering NR-02. Quoted unit price BDT 35.00; PR maximum BDT 38.00. Recalculation: 16,500 × 35.00 = BDT 577,500.00, matching the line amount and subtotal. VAT: BDT 577,500.00 × 15% = BDT 86,625.00. Grand total: BDT 664,125.00. Supplier TIN: 107458073391; BIN: 000770741-0101. Payment clause: 'No advance payment required. Payment within 45 days of delivery.' Delivery clause: 'Delivery within 22 days of PO.' Penalty clause: 'Late delivery penalty: 0.5% of order value per week.' Validity clause: 'This quotation is valid for 35 days from the date above.' No other rule is triggered. NEEDS_REVIEW due to NR-02.",
+    "confidence": "HIGH",
+    "ambiguities_noted": []
+  },
+  {
+    "pack": "supplier-pack-08.pdf",
+    "expected_decision": "REJECT",
+    "rule_ids": ["R-04", "NR-08"],
+    "manual_notes": "Quotation QT-2026-908, dated 2026-10-21, references PR-2026-114. Item C: Polyester sewing thread, cone. Requested and quoted quantity: 800 cones. Quoted unit price BDT 205.00; PR maximum BDT 210.00. Recalculation: 800 × 205.00 = BDT 164,000.00, matching the line amount and subtotal. VAT: BDT 164,000.00 × 15% = BDT 24,600.00. Grand total: BDT 188,600.00. Supplier identification wording: 'Supplier registration details available on request.' No supplier TIN or BIN number is stated, triggering R-04. Payment clause: '10% advance payable with the purchase order. Payment within 30 days of delivery.' Delivery clause: 'Delivery within 18 days of PO.' Penalty clause: 'Late delivery penalty of 0.5% per week of delay.' The rate is stated as 0.5% per week, but the calculation basis ('of order value') is not stated. I treat the missing basis as unclear rather than silently assuming it means order value; under SPEC §5.2 an unclear penalty calculation basis makes NR-08 uncertain and requires review. This does not change the REJECT decision because R-04 applies. Validity clause: 'This quotation is valid for 30 days from the date above.' REJECT due to R-04; NR-08 is also recorded as an uncertainty.",
+    "confidence": "MEDIUM",
+    "ambiguities_noted": []
+  },
+  {
+    "pack": "supplier-pack-09.pdf",
+    "expected_decision": "NEEDS_REVIEW",
+    "rule_ids": ["NR-03", "NR-06"],
+    "manual_notes": "Quotation QT-2026-909, dated 2026-10-22, references PR-2026-114. Item D: Poly bag, 30 x 40 cm. Requested and quoted quantity: 50,000 pieces. Quoted unit price BDT 6.40; PR maximum BDT 6.50. Recalculated line total: 50,000 × 6.40 = BDT 320,000.00, but the quotation states BDT 322,000.00. This discrepancy triggers NR-06. The stated subtotal is BDT 322,000.00, VAT is BDT 48,300.00, and total is BDT 370,300.00. Those latter values add up based on the stated subtotal, but the subtotal conflicts with the unit-price calculation. Correct figures from the quoted quantity and unit price are subtotal BDT 320,000.00, VAT at 15% BDT 48,000.00, and grand total BDT 368,000.00. Supplier TIN: 109458093391; BIN: 000970941-0101. Payment clause: '5% advance payable with the purchase order. Payment within 30 to 90 days as agreed by both parties.' The range extends beyond 60 days and the phrase 'as agreed by both parties' makes the final payment timing discretionary; this triggers NR-03. Delivery clause: 'Delivery within 4 weeks of PO.' Under AMB-10, 4 weeks is normalized to 28 days, so no delivery timing rule is triggered. Penalty clause: 'Late delivery penalty of 0.5% of order value per week.' Validity clause: 'This quotation is valid for 30 days from the date above.' NEEDS_REVIEW due to NR-03 and NR-06.",
+    "confidence": "HIGH",
+    "ambiguities_noted": ["AMB-10"]
+  },
+  {
+    "pack": "supplier-pack-10.pdf",
+    "expected_decision": "REJECT",
+    "rule_ids": ["R-05", "NR-05"],
+    "manual_notes": "Quotation QT-2026-910, dated 2026-10-23, references PR-2026-114. Item E: Carton box, 5-ply. Requested and quoted quantity: 3,000 pieces. The unit price heading says 'Unit price (BDT, VAT included)' and the quoted price is BDT 94.00; the PR maximum is BDT 95.00. Numerically 94.00 is below 95.00, but the VAT bases are not directly comparable because the PR maximum's VAT basis is unstated and the supplier explicitly includes VAT. This is recorded as AMB-12; no VAT adjustment is guessed. Recalculation: 3,000 × 94.00 = BDT 282,000.00, matching the stated total. The quotation says 'Total (all taxes included) 282,000.00' and does not show VAT separately at 15%, triggering NR-05. Supplier TIN: 110458103391; BIN: 001071041-0101. Payment clause: '10% advance payable with the purchase order. Payment within 45 days of delivery.' Delivery clause: 'Delivery within 60 days of PO.' Sixty days is later than 45 days after PO, triggering R-05. Penalty clause: 'Late delivery penalty of 0.5% of order value per week.' Validity clause: 'This quotation is valid for 30 days from the date above.' REJECT due to R-05; NR-05 and the AMB-12 pricing-basis ambiguity are also recorded.",
+    "confidence": "HIGH",
+    "ambiguities_noted": ["AMB-12"]
+  }
+]
