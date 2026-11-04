@@ -6,8 +6,11 @@ A command-line tool that reads each supplier quotation PDF, compares it with the
 LangGraph was used for a fixed seven-node sequential pipeline. It makes each stage explicit and gives known failures (unreadable PDF, failed extraction) a defined path to a NEEDS_REVIEW result. There is no agent loop.
 
 ## How it was tested
-- **Offline tests (1025):** unit tests for every stage, edge and boundary cases, injection-structure tests, and a replay of ten saved model responses through the real pipeline. The replay matches all ten decisions and rule sets. It checks the code, not the model.
+- **Offline tests (1045, 20 of them for the web layer):** unit tests for every stage, edge and boundary cases, injection-structure tests, and a replay of ten saved model responses through the real pipeline. The replay matches all ten decisions and rule sets. It checks the code, not the model.
 - **Live runs on all ten packs:** five runs of `gemini-3.5-flash-lite`, all kept with raw responses and metadata.
+
+## Demo
+A small Vercel app serves the page and an API. Sample packs replay the saved model responses through the real pipeline (no API key); uploading a PDF or ticking the live box makes a real Gemini call. A "Run all 10" table compares every pack with my answer key (10/10 decisions and rule sets). Replay is a regression check, not an accuracy measure.
 
 ## Results
 No official answer key was supplied. The decision key was made by hand from the PDFs and was committed before the pipeline existed in the repository, though git cannot prove how the labels were produced. The per-field key was drafted by an AI assistant.
