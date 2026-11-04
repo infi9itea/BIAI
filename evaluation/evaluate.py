@@ -2,7 +2,7 @@
 
     python evaluation/evaluate.py live                     # REAL Gemini calls on all ten packs (needs GEMINI_API_KEY)
     python evaluation/evaluate.py live --packs 01 09       # a partial run (reported as partial, never as N/10)
-    python evaluation/evaluate.py live --model gemini-3.8-flash   # the M6 run: always name the model explicitly
+    python evaluation/evaluate.py live --model gemini-3.5-flash-lite   # the M6 run: always name the model explicitly
     python evaluation/evaluate.py rescore evaluation/runs/live-<id>   # re-score a saved live run offline
     python evaluation/evaluate.py fixtures                 # offline regression of the saved fixtures (NOT an LLM accuracy measure)
 
@@ -538,7 +538,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command", required=True)
     live = sub.add_parser("live", help="real Gemini calls (needs GEMINI_API_KEY); never uses fixtures")
     live.add_argument("--packs", nargs="+", metavar="NN", help="pack numbers, e.g. 01 09 (partial run)")
-    live.add_argument("--model", help="model for this run (recorded in metadata); the M6 run uses gemini-3.8-flash")
+    live.add_argument("--model", help="model for this run (recorded in metadata); the M6 run uses gemini-3.5-flash-lite")
     rescore = sub.add_parser("rescore", help="re-score a saved live run offline")
     rescore.add_argument("run_dir")
     rescore.add_argument("--out", help="output folder (default: <run_dir>/rescored)")

@@ -46,7 +46,7 @@ API key is never written.
 
 **Model.** M6 evaluates `gemini-3.5-flash-lite`: the default in `src/extractor.py`, the value in `.env.example` (a test keeps
 the two equal) and the `--model` of the command above. Results from another model are a different experiment and are
-never combined with these. The report records both the requested model and the version the API reports.
+never combined with these. The report records both the requested model and the version the API reports. `gemini-3.5-flash-lite` was chosen deliberately by the project owner; this differs from the review's recommendation of `gemini-3.8-flash`, and no result in this report says anything about `gemini-3.8-flash`.
 
 **Rescore is not a live run.** It replays the raw responses of a saved live run through the pipeline and scorer, is
 labelled `RESCORE` (never `LIVE RUN`), and names the original run, model and prompt hash. Before replaying it compares
@@ -60,17 +60,22 @@ rescore folder, and the current prompt hash is recorded beside it.
 **Run artifacts.** A `live-*` folder (raw responses, prompt, metadata, scores, report) is the evidence for every
 reported number and is committed. `fixtures-*` and `*/rescored/` are regenerable and ignored by `.gitignore`.
 
-Before the live run, check Checkpoint G ordering in the real repository, which this archive cannot show (it has no
-`.git`): `git log --follow evaluation/ground_truth.json` must predate the first real-pack pipeline run.
+Checkpoint G ordering was checked against the real git history (see section 3). Result: the decision key was committed
+after the ten M3 live-response fixtures, so git alone cannot show that it predates all model output on these packs.
 
 ## 3. Ground truth and its provenance
 
-* **`ground_truth.json` (decisions).** Established manually at Checkpoint G, from the PDFs and `company-rules.md`, before
-  the pipeline was first run on the real packs, without an official answer key. Not edited in M6. If an error is found
+* **`ground_truth.json` (decisions).** Established manually at Checkpoint G, from the PDFs and `company-rules.md`, without an
+  official answer key. Git history (`git log --follow`): first committed 2026-11-04T06:11:55Z (`efcf6a6`), revised in four
+  later commits, last 2026-11-04T07:58:10Z (`2d61058`); not edited in M6. **Ordering caveat:** the ten M3 live Gemini
+  response fixtures for these same packs were committed earlier, at 05:17:27Z (`a2fe74c`). So the key does *not* predate
+  all model output on the real packs by commit order. That it was made from the PDFs and not from model output rests on the
+  author's statement (and on the commit message of `d4a5f98`), not on git. Treat the in-sample caveat accordingly. If an error is found
   later, correct it in a separate commit and record the change and reason here; never adjust it to match output.
 * **`field_ground_truth.json` (fields and arithmetic), added in M6.** The decision ground truth holds rules and prose, not
   per-field values, so a field-level key was needed. It was drafted on 2026-11-04 by an AI assistant (Claude) from the PDF
-  text, committed on its own **before** the harness and before any live run. It has **not yet been reviewed by the
+  text, committed in the same commit as the M6 harness (`7ddc6c6`, 2026-11-04T15:36:07+06:00), not on its own; it was committed
+  before any live run (the first live run started 2026-11-04T12:22Z). It has **not yet been reviewed by the
   project owner**. Disclosure: before drafting it the assistant had viewed the first 3,500 characters of the pack-01
   fixture while inspecting the data format; every pack-01 value was re-read from the PDF text. A test confirms each
   non-null value appears in its PDF. Review it against the PDFs before quoting results; any correction goes in its own
