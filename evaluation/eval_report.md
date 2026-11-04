@@ -1,8 +1,9 @@
 # M6 Evaluation Report
 
-**Status: harness complete and tested; live evaluation NOT YET RUN.** No live accuracy figure exists yet, and none is
-stated anywhere in this file. The build environment had no `GEMINI_API_KEY` and its network policy blocks the Gemini
-endpoint, so no real call could be made. Nothing below substitutes fixtures for that run.
+**Status: harness complete and tested; five live runs recorded** (four baseline runs without a response schema, then
+one run with it; section 5). All figures below are copied from the saved run folders. Every live figure is in-sample,
+on ten synthetic packs, scored against a field key that the project owner has not yet reviewed (sections 3 and 6).
+No fixture was substituted for any live call.
 
 ## 1. What is measured
 
@@ -60,18 +61,25 @@ rescore folder, and the current prompt hash is recorded beside it.
 **Run artifacts.** A `live-*` folder (raw responses, prompt, metadata, scores, report) is the evidence for every
 reported number and is committed. `fixtures-*` and `*/rescored/` are regenerable and ignored by `.gitignore`.
 
-Checkpoint G ordering was checked against the real git history (see section 3). Result: the decision key was committed
-after the ten M3 live-response fixtures, so git alone cannot show that it predates all model output on these packs.
+Checkpoint G ordering was checked against the real git history (see section 3).
 
 ## 3. Ground truth and its provenance
 
 * **`ground_truth.json` (decisions).** Established manually at Checkpoint G, from the PDFs and `company-rules.md`, without an
   official answer key. Git history (`git log --follow`): first committed 2026-11-04T06:11:55Z (`efcf6a6`), revised in four
-  later commits, last 2026-11-04T07:58:10Z (`2d61058`); not edited in M6. **Ordering caveat:** the ten M3 live Gemini
-  response fixtures for these same packs were committed earlier, at 05:17:27Z (`a2fe74c`). So the key does *not* predate
-  all model output on the real packs by commit order. That it was made from the PDFs and not from model output rests on the
-  author's statement (and on the commit message of `d4a5f98`), not on git. Treat the in-sample caveat accordingly. If an error is found
-  later, correct it in a separate commit and record the change and reason here; never adjust it to match output.
+  later commits, last 2026-11-04T07:58:10Z (`2d61058`); not edited in M6.
+  **Ordering.** The plan's gate (Checkpoint G) is that the key is committed before the first Milestone 4 execution of
+  `run_pipeline` on a real pack. It does not require the key to predate the M3 extraction fixtures. `run_pipeline`
+  first appears in commit `1d0276e` ("M4: LangGraph sequential workflow", 2026-11-04T14:35:49+06:00 = 08:35:49Z). Every
+  commit of `ground_truth.json` precedes it: first `efcf6a6` (06:11:55Z), last `2d61058` (07:58:10Z), 37 minutes before
+  the M4 commit, and the file was not changed afterwards. Git records when the pipeline code was committed, not when it
+  was first executed, so this shows the key was committed before the pipeline existed in the repository, not that no
+  uncommitted local run happened. **Remaining
+  disclosure:** the ten M3 live Gemini response fixtures for these same packs were committed earlier, at 05:17:27Z
+  (`a2fe74c`), so by commit order the key does not predate all model output on the real packs. That the key was made
+  from the PDFs and not from model output rests on the author's statement (and on the commit message of `d4a5f98`),
+  not on git. Treat the in-sample caveat accordingly. If an error is found later, correct it in a separate commit and
+  record the change and reason here; never adjust it to match output.
 * **`field_ground_truth.json` (fields and arithmetic), added in M6.** The decision ground truth holds rules and prose, not
   per-field values, so a field-level key was needed. It was drafted on 2026-11-04 by an AI assistant (Claude) from the PDF
   text, committed in the same commit as the M6 harness (`7ddc6c6`, 2026-11-04T15:36:07+06:00), not on its own; it was committed
@@ -92,8 +100,9 @@ invalid JSON) to show the scorer reports each of them.
 
 ## 5. Live results
 
-Everything in 5.1 and 5.2 is copied from `evaluation/runs/live-*/scores.json` and `metadata.json`; none of it is
-restated from memory. All four runs are kept as the **baseline**. They are reported together, not as a best run.
+Everything in 5.1 to 5.3 is copied from `evaluation/runs/live-*/scores.json` and `metadata.json`; none of it is
+restated from memory. The first four runs are kept as the **baseline** and are reported together, not as a best run. The
+fifth run is a separate experiment (5.3) and is never merged into the baseline.
 
 ### 5.1 Baseline: four runs, `gemini-3.5-flash-lite`, no response schema
 
@@ -175,13 +184,13 @@ Each failure was checked from its saved `raw/` responses and its `results/` erro
   `{value, source_quote, page_number}` object, but its line-item paragraph says the `source_quote` is "the ENTIRE table
   row", which can be read as one quote per row. The model's flat output matches that reading. The prompt was
   deliberately left unchanged (5.3).
-* **No answer-key problem and no rule-engine problem** was found in any run: the mismatches are the failed packs.
+* **For the baseline decision mismatches**, the investigated root cause was extraction failure; no rule-engine defect was identified in those cases.
 * **Line-item pairing.** Packs are matched to both answer keys by filename. Line items within a pack are paired by
   position (line n of the response with line n of the key). For all 33 well-shaped responses in the four runs the
   returned `item_code` sequence equals the key's, so positional pairing did not affect any result; it would score a
   reordered response as wrong, never as right.
 
-### 5.3 After the response schema (pending, reported separately)
+### 5.3 After the response schema (one run, reported separately)
 
 **Change.** Every request now carries a response schema (`src/extractor.py`, `RESPONSE_SCHEMA`) built from
 `RawExtraction`, requiring `{value, source_quote, page_number}` for every field including each line-item field. The
@@ -190,22 +199,60 @@ and the model are unchanged, so the run differs from the baseline in this one re
 the schema hash in `metadata.json` (`generation_config.response_schema_sha256`) and per call, and replay flags a
 changed schema as drift.
 
-**Procedure.** Commit; confirm a clean tree; run `python evaluation/evaluate.py live --model gemini-3.5-flash-lite`;
-keep the folder as its own run. Do not merge it with the baseline runs and do not drop any baseline run. Compare
-processing reliability (failed pack-runs of 10) and decision agreement against the baseline spread of 1 to 3 failed
-packs and 7/10 to 9/10 decisions. One post-fix run is a small sample; repeat it if the comparison matters. Investigate
-any failure from its `raw/` files before drawing a conclusion.
+**Protocol followed.** The change was committed and the working tree confirmed clean (`dirty: False` in the metadata).
+`python evaluation/evaluate.py live --model gemini-3.5-flash-lite` was then run once on all ten packs and its folder
+kept as its own run. It was not merged with the baseline runs and no baseline run was dropped. Processing reliability
+(failed pack-runs of 10) and decision agreement were compared with the baseline spread of 1 to 3 failed packs and
+7/10 to 9/10 decisions, and the one missed field was investigated from its `raw/` file before drawing a conclusion.
+One post-fix run is a small sample and has not been repeated.
 
-**Results.** *None yet. No post-fix run has been made.*
+**Run.** `live-20261104T184944Z`, commit `3614742` (tree clean, ground truth unmodified), model requested and reported
+`gemini-3.5-flash-lite`, started 2026-11-04T18:49:44Z. Compared with run 4 the recorded metadata differs only in
+`response_schema_sha256` (`499bfba0...`), the commit, and two source files: `src/extractor.py` (the only pipeline file
+that changed) and `evaluation/evaluate.py` (schema hash recording). The system-instruction hash (`c8998d68...`),
+model, temperature, MIME type and retry setting are identical.
+
+| | Baseline, runs 1 to 4 (no schema) | Run 5 (response schema) |
+|---|---|---|
+| Packs ending in a processing failure | 7 of 40 (1 to 3 per run) | 0 of 10 |
+| Decision agreement (failures counted wrong) | 7/10 to 9/10 per run | 10/10 |
+| Exact rule set | 7/10 to 9/10 | 9/10 |
+| Extraction fields correct, model view | 193/260 to 239/260 | 259/260 |
+| Extraction fields correct, after verification | 186/253 to 230/251 | 249/250 |
+| Quotes verbatim on the cited page | all of those that parsed | 211/211 |
+| Quotes passing the automated support check | all of those that parsed | 211/211 |
+| Verifier false accepts / false rejects | 0 / 0 | 0 / 0 |
+| Fabricated line items | 0 | 0 of 10 returned |
+| Arithmetic status agrees | 28/37 to 36/37 | 37/37 |
+
+**Shape of the responses.** All ten saved final responses have each line-item field in the required nested
+`{value, source_quote, page_number}` form; none uses the flat-string form that caused all 14 failed attempts in 5.2.
+
+**Remaining error: pack 08.** The model returned nothing for `delivery_days`, although the PDF states "Delivery within 18
+days of PO". The pipeline therefore raised two extra uncertain results, R-05 and NR-04 (delivery time not established),
+on top of the expected R-04 and NR-08. The decision was still REJECT because R-04 independently establishes the missing
+TIN and BIN. This is a right decision with a wrong intermediate result and is not evidence of correct extraction for that
+pack. It is the single missed value in the run (value recall 221/222, value precision 221/221).
+
+**Transient API errors.** The first call for packs 03, 05 and 06 returned HTTP 503 (model under high demand, 2.5 to 4.7 s
+latency). Each succeeded on the single retry, so no pack ended in failure. These 503s are a different failure from the
+baseline's schema failures: the retry recovered them, whereas it did not recover the flat-shape responses.
+
+**What this supports, and what it does not.** In this one run the response schema removed the flat-string failure: 0 of
+10 packs failed against 1 to 3 of 10 in every baseline run, and the retry was needed only for 503s. It does not show that
+processing will always succeed. One run of ten packs is a small sample, the 503 retries show the service can still fail,
+and a failure rate near the baseline's 17.5% cannot be excluded by 10 pack-runs. Repeat the run before quoting a
+reliability figure. The 259/260 and 249/250 figures are against the unreviewed field key, and the quote-support figure is
+the heuristic check of section 6.
 
 ## 6. Limitations
 
 * **Not held out.** The extraction prompt was developed against these same ten packs in M3, so live results are
   in-sample for the prompt. They show the pipeline works on this assessment set, not how it generalises.
 * **Small and synthetic.** Ten one-page, single-line-item packs. Percentages carry wide uncertainty; one pack is 10 points.
-* **One model, four baseline runs.** Temperature 0 is not a determinism guarantee: runs 2 and 3 used identical code
+* **One model, five runs (four baseline, one with the schema).** Temperature 0 is not a determinism guarantee: runs 2 and 3 used identical code
   and differ by 17 points of field accuracy and 2 of 10 decisions, purely through which packs failed. Report the spread,
-  not the best run. Four runs of one model say nothing about other models.
+  not the best run. The single post-schema run is too small to estimate reliability. Runs of one model say nothing about other models.
 * **Single-annotator ground truth.** The field key is AI-drafted and unreviewed (section 3). The decision key is a single
   person's manual reading, and pack 08 is rated MEDIUM confidence.
 * **Evidence "supports" check is heuristic.** It uses number, period and keyword matching, and is not defined for a few

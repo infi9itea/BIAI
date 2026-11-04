@@ -305,10 +305,10 @@ Never hardcode the model name in application logic. Read it from the `GEMINI_MOD
 
 ```python
 import os
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
 ```
 
-The `.env.example` file shows `GEMINI_MODEL=gemini-3.8-flash`. This allows model updates without changing application code. If Gemini updates or retires a model, update `.env` only.
+The `.env.example` file shows `GEMINI_MODEL=gemini-3.5-flash-lite`. This allows model updates without changing application code. If Gemini updates or retires a model, update `.env` only.
 
 ---
 
@@ -483,7 +483,7 @@ If stuck, describe what was attempted and what failed. Do not skip ahead.
 | PR in prompt | Item codes + descriptions only. No quantities or price ceilings. |
 | Google SDK | google-genai only. Not google-generativeai. |
 | Model name | From GEMINI_MODEL env var. Never hardcoded. |
-| Model (default) | gemini-3.8-flash (configurable via .env). |
+| Model (default) | gemini-3.5-flash-lite (configurable via .env). |
 | Prompt structure | system_instruction (API) + delimiter tags. Never concatenated. |
 | Injection tests | Offline and deterministic: schema forbids `decision`; rules never read LLM decisions; results unchanged by injected text. Not immunity. |
 | PDF smoke tests | All 10 packs. Failures reported individually. |

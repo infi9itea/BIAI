@@ -297,7 +297,7 @@ biai-supplier-checker/
    ```
    # Copy this file to .env and fill in your values. Never commit .env.
    GEMINI_API_KEY=your_key_here
-   GEMINI_MODEL=gemini-3.8-flash
+   GEMINI_MODEL=gemini-3.5-flash-lite
    ```
 
 5. Add `.gitignore`:
@@ -613,9 +613,9 @@ fixtures/
 2. **Model configuration:** Read the model name from the `GEMINI_MODEL` environment variable, not from a hardcoded string:
    ```python
    import os
-   GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
+   GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
    ```
-   This allows changing the model without editing application code. The `.env.example` file shows `GEMINI_MODEL=gemini-3.8-flash`.
+   This allows changing the model without editing application code. The `.env.example` file shows `GEMINI_MODEL=gemini-3.5-flash-lite`.
 
 3. **Raw extraction layer.** In `src/extractor.py`, write `call_llm(pdf_result: dict, pr: PurchaseRequest) -> RawExtraction`:
 
