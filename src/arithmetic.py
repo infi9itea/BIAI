@@ -19,7 +19,9 @@ AND of every FOUND input the calculation used, so NR-06 can show a complete audi
 from decimal import ROUND_HALF_UP, Context, Decimal, InvalidOperation
 from typing import Any
 
-from src.models import ArithmeticCheckResult, EvidenceRef, ExtractedDocument, is_usable
+from src.models import AMB_VAT_SUBTOTAL, ArithmeticCheckResult, EvidenceRef, ExtractedDocument, is_usable
+
+AMB_ARITHMETIC_ROUNDING = "AMB-09"  # [A] rounding (ROUND_HALF_UP, 2 dp) and tolerance; recorded on every computed result
 
 ARITHMETIC_TOLERANCE_BDT = Decimal("0.01")  # [A] AMB-09: ±0.01 BDT, inclusive (0.01 off passes, 0.02 off fails)
 VAT_BASIS_SUBTOTAL = "subtotal"  # [A] canonical vat_price_basis that permits the VAT check (M1 review decision 4)
@@ -43,12 +45,22 @@ def _ref(label: str, field: Any) -> EvidenceRef:
     return EvidenceRef(label=label, source_quote=evidence.source_quote, page_number=evidence.page_number)
 
 
+def _with_printed(refs: list[EvidenceRef], label: str, field: Any) -> list[EvidenceRef]:
+    """refs plus the printed field's own quote, whenever that field is usable. A result that shows a printed value
+    must show where it came from, even when the calculation itself is UNKNOWN."""
+    return [*refs, _ref(label, field)] if _known(field) is not None else list(refs)
+
+
 def _q2(value: Decimal) -> Decimal:
     return value.quantize(_CENT, rounding=ROUND_HALF_UP, context=_CTX)
 
 
 def _line_amount(quantity: Decimal, unit_price: Decimal) -> Decimal:
     return _q2(_CTX.multiply(quantity, unit_price))
+
+
+def _unique(items: list[str]) -> list[str]:
+    return list(dict.fromkeys(items))
 
 
 def _result(
@@ -59,6 +71,7 @@ def _result(
     calculated: Decimal | None = None,
     printed: Decimal | None = None,
     refs: list[EvidenceRef] | None = None,
+    assumptions: list[str] | None = None,
 ) -> ArithmeticCheckResult:
     return ArithmeticCheckResult(
         check_name=check_name,
@@ -68,6 +81,7 @@ def _result(
         status=status,  # type: ignore[arg-type]
         detail=detail,
         evidence_refs=list(refs or []),
+        assumptions_applied=_unique([*(assumptions or []), *([AMB_ARITHMETIC_ROUNDING] if calculated is not None else [])]),
     )
 
 
@@ -79,6 +93,7 @@ def _compare(
     printed_field: Any,
     printed_label: str,
     input_refs: list[EvidenceRef],
+    assumptions: list[str] | None = None,
 ) -> ArithmeticCheckResult:
     """PASS/FAIL only when the printed value is usable too; otherwise UNKNOWN (SPEC §9)."""
     printed = _known(printed_field)
@@ -86,7 +101,7 @@ def _compare(
         return _result(
             check_name, item_id, "UNKNOWN",
             f"{label}: {printed_label} is not usable (unknown, absent or unverified); calculated {calculated}",
-            calculated=calculated, refs=input_refs,
+            calculated=calculated, refs=input_refs, assumptions=assumptions,
         )
     refs = [*input_refs, _ref(printed_label, printed_field)]
     difference = _CTX.abs(_CTX.subtract(calculated, printed))
@@ -95,7 +110,8 @@ def _compare(
         f"{label}: calculated {calculated} vs printed {printed} "
         f"(difference {difference}, tolerance {ARITHMETIC_TOLERANCE_BDT})"
     )
-    return _result(check_name, item_id, status, detail, calculated=calculated, printed=printed, refs=refs)
+    return _result(check_name, item_id, status, detail, calculated=calculated, printed=printed, refs=refs,
+                   assumptions=assumptions)
 
 
 # ---------------------------------------------------------------------------------------------
@@ -165,6 +181,16 @@ def _independent_subtotal(doc: ExtractedDocument) -> tuple[Decimal | None, list[
 # ---------------------------------------------------------------------------------------------
 
 
+def _basis_assumptions(doc: ExtractedDocument) -> list[str]:
+    """['AMB-15'] when the usable VAT basis was established by the totals-block layout and not by words (the verifier
+    records this in the evidence's normalization_method). The VAT and grand-total checks rest on it, so they say so."""
+    basis = doc.vat_price_basis
+    if _known(basis) is None:
+        return []
+    method = basis.evidence.normalization_method or ""
+    return [AMB_VAT_SUBTOTAL] if method.startswith(AMB_VAT_SUBTOTAL) else []
+
+
 def _expected_vat(
     doc: ExtractedDocument, subtotal: Decimal | None, subtotal_problems: list[str], subtotal_refs: list[EvidenceRef]
 ) -> tuple[Decimal | None, list[EvidenceRef], list[str]]:
@@ -203,27 +229,30 @@ def run_arithmetic_checks(doc: ExtractedDocument) -> list[ArithmeticCheckResult]
         results.append(_result(
             "independent_subtotal", None, "UNKNOWN",
             "independent subtotal cannot be calculated: " + "; ".join(subtotal_problems),
-            printed=printed_subtotal, refs=subtotal_refs,
+            printed=printed_subtotal, refs=_with_printed(subtotal_refs, "printed subtotal", doc.subtotal_bdt),
         ))
     else:
         results.append(_compare("independent_subtotal", None, "independent subtotal (sum of recalculated lines)",
                                 subtotal, doc.subtotal_bdt, "printed subtotal", subtotal_refs))
 
     expected_vat, vat_refs, vat_problems = _expected_vat(doc, subtotal, subtotal_problems, subtotal_refs)
+    assumptions = _basis_assumptions(doc)  # decided BEFORE the early return: an UNKNOWN result still used the basis
     if expected_vat is None:
         results.append(_result(
             "vat", None, "UNKNOWN", "VAT check cannot be calculated: " + "; ".join(vat_problems),
-            printed=_known(doc.vat_amount_bdt), refs=vat_refs,
+            printed=_known(doc.vat_amount_bdt), refs=_with_printed(vat_refs, "printed VAT amount", doc.vat_amount_bdt),
+            assumptions=assumptions,
         ))
         results.append(_result(
             "grand", None, "UNKNOWN", "grand total cannot be calculated: expected VAT unavailable",
-            printed=_known(doc.grand_total_bdt), refs=vat_refs,
+            printed=_known(doc.grand_total_bdt), refs=_with_printed(vat_refs, "printed grand total", doc.grand_total_bdt),
+            assumptions=assumptions,
         ))
         return results
 
     results.append(_compare("vat", None, "VAT (independent subtotal × printed rate)", expected_vat,
-                            doc.vat_amount_bdt, "printed VAT amount", vat_refs))
+                            doc.vat_amount_bdt, "printed VAT amount", vat_refs, assumptions))
     expected_grand = _CTX.add(subtotal, expected_vat)
     results.append(_compare("grand", None, "grand total (independent subtotal + expected VAT)", expected_grand,
-                            doc.grand_total_bdt, "printed grand total", vat_refs))
+                            doc.grand_total_bdt, "printed grand total", vat_refs, assumptions))
     return results

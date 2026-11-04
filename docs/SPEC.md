@@ -466,7 +466,7 @@ Additionally, per line item:
 | Field | Type after normalization | Notes |
 |-------|--------------------------|-------|
 | `vat_shown_separately` | bool (or ABSENT / UNKNOWN) | `[E]` Whether VAT appears as its own line item. Carries its own `Evidence`, or an `AbsenceEvidence` when ABSENT (document says nothing about VAT; see NR-05, §5.2). |
-| `vat_price_basis` | str (or UNKNOWN) | `[A]` What the VAT applies to (e.g., "subtotal", "select items", unclear). Record original wording if unclear. |
+| `vat_price_basis` | str (or UNKNOWN) | `[A]` What the VAT applies to (e.g., "subtotal", "select items", unclear). Record original wording if unclear. `"subtotal"` is set only by AMB-15 (§13): by words, or by the plain Subtotal → VAT → Total layout with its three real rows as evidence and `AMB-15` in `normalization_method`. |
 
 **VAT basis and price comparison `[A]` AMB-12:** `purchase-request.csv` gives a plain "Maximum unit price (BDT)" and does not say whether that maximum includes VAT. The system therefore never silently treats a VAT-inclusive supplier price as comparable with it. Per line item, before R-01 and NR-01 compare prices:
 
@@ -576,7 +576,7 @@ If `independent_subtotal` and `vat_rate_pct` are both available, and `vat_price_
 expected_vat = independent_subtotal × (vat_rate_pct / Decimal("100"))
 ```
 Compare to printed `vat_amount_bdt`. Mismatch → check FAIL.
-If `vat_price_basis` is UNKNOWN, this check produces UNKNOWN (not FAIL) and a note is added.
+If `vat_price_basis` is UNKNOWN, this check produces UNKNOWN (not FAIL) and a note is added. The formula itself is unchanged whichever route (AMB-15) established the basis; when the layout route did, the VAT and grand-total results carry `AMB-15` in `assumptions_applied` and NR-06 reports it.
 
 > `[A]` **Printed rate, not required rate.** `vat_rate_pct` is the rate **printed in the document**, whatever it is. This check never substitutes the required 15%. Example: a document that prints 10% VAT and shows exactly 10% of the subtotal passes this check (NR-06 PASS) and fails NR-05, because the rate is not 15%. If the printed rate is UNKNOWN, this check is UNKNOWN.
 
@@ -681,6 +681,8 @@ Supplier documents are **untrusted input**. `[E]`
 
 All assumptions are labelled `[A]` in the spec and in system output.
 
+> `[A]` **Where each assumption is recorded.** A result carries the AMB IDs it rested on, and the pack-level `assumptions_applied` is their union. AMB-01 (R-05, NR-04), AMB-02 and AMB-06 (R-01, NR-01; AMB-06 also NR-02), AMB-03 (NR-03), AMB-04 (R-03, NR-08), AMB-05 (R-02 when UNKNOWN), AMB-09 (every arithmetic check that calculated a value, hence NR-06), AMB-12 (compared prices), AMB-13 (NR-03), AMB-14 (NR-08), AMB-15 (VAT and grand-total checks, hence NR-06, even when they are UNKNOWN). An ID is recorded only when the rule actually evaluated the thing it governs. AMB-07 and AMB-10 are recorded in the evidence's `normalization_method` or verifier logic, and AMB-08 and AMB-11 are process/report-level decisions, not per-result assumptions.
+
 | ID | Question | Assumption `[A]` |
 |----|----------|-----------------|
 | AMB-01 | Is exactly 45 days delivery a Reject or Needs Review? | Exactly 45 days → NEEDS_REVIEW. Only strictly > 45 → REJECT (R-05). |
@@ -697,6 +699,7 @@ All assumptions are labelled `[A]` in the spec and in system output.
 | AMB-12 | The PR maximum does not state whether it includes VAT. How are supplier prices compared with it? | The PR maximum is treated as a VAT-exclusive unit price, and only for supplier prices established as VAT-exclusive (§8.4). A VAT-inclusive supplier price, or one whose basis cannot be determined, is not compared → that item's R-01/NR-01 UNCERTAIN → NEEDS_REVIEW. VAT is never silently stripped or added. The assumption is recorded in the output. |
 | AMB-13 | NR-03 counts payment days "after delivery". What if payment is counted from another event? | Only `payment_anchor = delivery` is evaluated against the 30–60 day window. Any other anchor, a combined anchor ("delivery and acceptance"), or an UNKNOWN anchor → NR-03 UNCERTAIN → NEEDS_REVIEW. The anchor wording is always preserved. |
 | AMB-14 | NR-08's 0.5% threshold is per week. What if the penalty is stated per day or another period? | Conservative default: the rate is compared only when `penalty_period_unit = week`; any other or UNKNOWN period → NR-08 UNCERTAIN → NEEDS_REVIEW. No period conversion is implemented; one may be added only with a clearly defined rule and tests (§5.2). |
+| AMB-15 | When is `vat_price_basis` established as `subtotal`? | `[A]` **Two routes, and only these.** (1) *By words:* the quote says VAT is calculated on the subtotal ("VAT @ 15% on the subtotal"). (2) *By layout (the assumption this ID records):* the document contains a **contiguous, unqualified totals block** — a plain **Subtotal** row, then a plain **VAT** row (label, optional rate, amount, nothing else), then a plain **Total** row, on adjacent PDF lines — and the VAT is then read as applying to the **entire** subtotal. The layout route applies only if **all** of these hold: exactly one such block (the same block printed twice is one block); no other VAT row anywhere in the document; no VAT sentence anywhere that limits scope ("selected items", "only", "part of", "except", "exempt" …); nothing says prices already include VAT. Otherwise the basis is **UNKNOWN** — never a guessed value. Explicit scope-limiting wording **always overrides** the layout. The model is asked only for the wording as written and never to infer the basis from row order; the **verifier** applies the layout route deterministically, with the block's three real PDF rows as the VERIFIED evidence quote and `AMB-15` in the evidence's `normalization_method`. The VAT and grand-total arithmetic checks and NR-06 then list `AMB-15` in `assumptions_applied` (so it reaches the pack-level union). Layouts: Subtotal → VAT 15% → Total = `subtotal`; VAT on selected items / part of the subtotal, a VAT row with no preceding Subtotal, Subtotal and VAT separated by other rows, a second block or VAT row, or a VAT-inclusive total (e.g. supplier-pack-10) = UNKNOWN. This is a documented reading of the supplied quotation format, not a claim that every VAT row in every document applies to the whole subtotal. Known limit: a scope-limiting statement that is not a VAT sentence (it never mentions VAT or value added tax), or text that is not extractable, is not detected. The words-route has no document-wide scan: a quote that states "on the subtotal" is trusted as written. |
 
 ---
 
@@ -725,3 +728,4 @@ The system is considered complete when all of the following are true:
 | AC-17 | `[A]` | Raw LLM strings and normalized values are separate layers: `ExtractedDocument` holds `Decimal`, `int`, `bool` and `str` values only; conversion happens before the verifier, `arithmetic.py` and `rule_engine.py`; those components never parse raw LLM strings. `Evidence.raw_value` and `Evidence.normalized_value` preserve both forms for audit. |
 | AC-18 | `[A]` | R-01, NR-01 and NR-02 produce one `RuleResult` per quoted line item with `item_id` and `detail`; global rules produce one result each; NR-06 retains evidence for every failed arithmetic check. |
 | AC-19 | `[A]` | A penalty rate stated per day or any non-weekly period yields NR-08 UNCERTAIN (AMB-14); no period conversion is performed. |
+| AC-20 | `[A]` | AMB-15: `vat_price_basis = "subtotal"` is established only by words stating it, or by a unique, plain, contiguous Subtotal → VAT → Total block with no scope-limiting or VAT-inclusive wording anywhere in the document. The evidence quote holds the block's three real rows and its `normalization_method` names `AMB-15`; NR-06 and the pack-level `assumptions_applied` list `AMB-15` whenever the layout route was used. Regression tests cover every layout in the AMB-15 row and all ten supplied PDFs (packs 01–09 → `subtotal`; pack 10 → UNKNOWN). |

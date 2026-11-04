@@ -161,7 +161,8 @@ biai-supplier-checker/
        min_days: int | None
        max_days: int | None
        anchor: str | None             # delivery | acceptance | invoice | purchase_order | other | None (UNKNOWN)
-       discretionary: bool
+       discretionary: bool | None = None   # None = UNKNOWN; never defaulted to False ("not discretionary" is a
+                                           # positive claim that needs verified wording; NR-03 never PASSes on None)
        evidence: Evidence | None
    ```
 
@@ -215,8 +216,14 @@ biai-supplier-checker/
        evidence_refs: list[EvidenceRef] = Field(default_factory=list)
                                       # verified quote/page of the printed value AND of each FOUND input
                                       # used; copied by arithmetic.py so NR-06 stays traceable
-                                      # without the rule engine recomputing
+                                      # without the rule engine recomputing; an UNKNOWN result that shows a
+                                      # printed value also carries that value's quote
+       assumptions_applied: list[str] = Field(default_factory=list)
+                                      # assumption IDs the calculation rested on: "AMB-09" (rounding/tolerance)
+                                      # whenever a value was calculated, "AMB-15" when the VAT basis came from
+                                      # the totals layout (also on UNKNOWN VAT/grand results). NR-06 copies them.
    ```
+   > `[A]` `models.py` also defines the shared constant `AMB_VAT_SUBTOTAL = "AMB-15"`, imported by `verifier.py`, `arithmetic.py` and `rule_engine.py`, so the three agree on the ID.
    > `[A]` Produced by `src/arithmetic.py` and passed into the rule engine (M1). `rule_engine.py` never recomputes arithmetic. A check is FAIL only when every input and the printed value are FOUND; otherwise UNKNOWN.
 
    **`RuleStatus`** — Enum: `PASS`, `FAIL`, `UNCERTAIN`, `NOT_APPLICABLE`.
@@ -364,7 +371,7 @@ tests/
    - **Printed VAT rate 10%, VAT amount exactly 10% of the subtotal, grand total consistent → VAT and grand checks PASS** (arithmetic uses the printed rate; the NR-05 failure is tested in `test_rule_engine.py`).
    - Printed VAT rate 15% but VAT amount computed at 10% → VAT check FAIL.
    - Printed VAT rate UNKNOWN → VAT check UNKNOWN.
-   - `vat_price_basis` UNKNOWN → VAT check UNKNOWN (not FAIL, not silently converted).
+   - `vat_price_basis` UNKNOWN → VAT check UNKNOWN (not FAIL, not silently converted). When the basis was established by the totals layout (AMB-15; the verifier records `AMB-15` in the evidence's `normalization_method`), the VAT and grand-total results carry `assumptions_applied=["AMB-15"]` and NR-06 copies it onto its own result; the formula is unchanged.
    - Printed value UNKNOWN (unverified) → that check UNKNOWN, not FAIL.
    - Other missing inputs → UNKNOWN, no crash.
    - **Empty line-item list → subtotal, VAT and grand checks all UNKNOWN (subtotal is never 0).**
@@ -658,7 +665,10 @@ fixtures/
    - Conflict detection → UNKNOWN (CONFLICT). **Conflict compares parsed values, not the number of quotes: the same value quoted twice is not a CONFLICT.**
    - A field that is UNVERIFIED or CONFLICT becomes UNKNOWN with typed `value` cleared to `None`; its `Evidence` (including `raw_value`) is kept for audit. When a line-item `item_code`, `unit` or `description` is downgraded, the matching `*_match` field is reset to `"UNKNOWN"`.
    - Payment anchor `[A]` AMB-13: if the verified payment quote names more than one event (e.g., "delivery and acceptance"), set `payment_anchor` to `other`; if it names only delivery, `delivery`.
+   - **`[A]` VAT basis, AMB-15 (SPEC §13):** the prompt asks only for the wording as written for `vat_price_basis` and forbids inferring it from row order. The verifier then reads the PDF's own lines: a unique, plain, contiguous Subtotal → VAT → Total block, with no other VAT row, no scope-limiting VAT sentence and no VAT-inclusive wording anywhere, sets `vat_price_basis = "subtotal"` with the block's three real rows as the VERIFIED quote and `AMB-15` in `normalization_method`. Anything else leaves it UNKNOWN. Never overrides a basis verified from words, a quote-less claim, or a failed claim of other wording. Tests: `tests/test_verifier_amb15.py`.
    - ABSENT determination: only after full-document extraction succeeded and a field-specific search found nothing. Create an `AbsenceEvidence` record (document-level fields and line-item sub-fields alike); fall back to UNKNOWN if in doubt.
+   - **`[A]` Claim provenance (M3 review fix):** a value the model *supplied* is a claim even when it has no quote. `normalize_extraction` records such fields in `ExtractedDocument.claimed_without_evidence` (document fields, `penalty`, `payment`, and `line-<n>.<field>`); the verifier never makes a claimed field ABSENT. It stays UNKNOWN. Only a field the model never claimed, and that the independent document search cannot find, may be ABSENT. No placeholder quote is ever created.
+   - **`[A]` Clause-specific verification (M3 review fix):** a quote that merely contains the right number does not verify a field. Delivery needs delivery wording, the period and a PO anchor in one clause; validity needs a *quotation*-validity clause; payment needs payment/balance wording with the period; a penalty needs late-delivery wording and a financial consequence. The candidate must also agree with the one value the document-wide scan finds for that field. Clauses end at a full stop **or a semicolon**, for both the support check and the document-wide scan, so a period or anchor is never borrowed from the next clause; the payment anchor is derived only from payment/balance clauses. `vat_price_basis = subtotal` needs an established relationship (SPEC AMB-15), not just the words "subtotal" and "VAT". A failed `--force` fixture refresh keeps the old file untouched and prints `REFRESH FAILED — previous fixture NOT replaced` (exit code 1).
 
 6. In `tests/test_extractor.py` (mocked — no real API calls):
    - Valid JSON → correct `RawExtraction`, and `normalize_extraction` gives a correct typed `ExtractedDocument` with FOUND fields.
@@ -685,6 +695,7 @@ fixtures/
    - Payment quote "after delivery" → anchor `delivery`; "after delivery and acceptance of goods" → anchor `other`.
    - AbsenceEvidence is created (not fabricated Evidence) when a field is ABSENT — including a line-item sub-field.
    - Downgrading a line item's unit resets `unit_match` to `UNKNOWN`.
+   - (Review fix, `tests/test_verifier_provenance.py`, `tests/test_fixture_check.py`) An unquoted claim (document field, penalty, line-item sub-field) is UNKNOWN, never ABSENT; wrong-clause quotes for payment, delivery, validity and penalty do not verify; the fixture script verifies before saving and fails on a claimed value that does not verify, while legitimately null fields are not failures.
 
 8. **Fixtures for offline replay — all 10 packs `[A]`:** After running live extraction on all 10 supplier packs, save the JSON object returned by the model (the `RawExtraction`) for each pack to `fixtures/mock_llm_responses/supplier-pack-NN.json`. The offline evaluation in Milestone 7 requires all 10 fixtures.
    - **Include only:** raw extracted value strings, the minimal `source_quote` evidence excerpts, and `page_number`s.

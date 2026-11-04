@@ -193,6 +193,12 @@ class RawExtraction(BaseModel):
 # --------------------------------------------------------------------------------------
 
 
+# [A] AMB-15 (SPEC §13): the assumption ID recorded when a VAT basis of 'subtotal' was established by the document's
+# totals-block layout rather than by words. Shared by the verifier (which applies it), the arithmetic checks and the
+# rule engine (which report it), so the three can never drift apart.
+AMB_VAT_SUBTOTAL = "AMB-15"
+
+
 class Evidence(BaseModel):
     """Evidence for a FOUND field. raw_value / normalized_value are audit-only (SPEC §7.1)."""
 
@@ -520,6 +526,12 @@ class ExtractedDocument(BaseModel):
     penalty: PenaltyClause = Field(default_factory=PenaltyClause)
     validity_original_wording: FieldRecord[str] = Field(default_factory=FieldRecord[str])
     validity_days: FieldRecord[StrictInt] = Field(default_factory=FieldRecord[StrictInt])
+    # Claim provenance (SPEC §3.1, §6). Names of fields for which the model SUPPLIED a value but normalization could
+    # not keep any evidence (no source quote, so no Evidence record can exist). Such a field is UNKNOWN, and the
+    # verifier must never turn it into ABSENT: "the model claimed it" and "the model never mentioned it" are
+    # different facts. Names: a document field ("tin", "penalty", "payment", "delivery_days", ...) or
+    # "line-<n>.<field>". Set only by normalize_extraction(); the verifier reads it and keeps it for audit.
+    claimed_without_evidence: list[str] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def _advance_never_absent(self) -> "ExtractedDocument":
@@ -559,6 +571,9 @@ class ArithmeticCheckResult(BaseModel):
     status: Literal["PASS", "FAIL", "UNKNOWN"]
     detail: str
     evidence_refs: list[EvidenceRef] = Field(default_factory=list)
+    # Assumption IDs the calculation RESTED ON (e.g. ["AMB-15"] when the VAT basis came from the totals layout).
+    # NR-06 carries them into its own assumptions_applied; they are never used to compute anything.
+    assumptions_applied: list[str] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def _check(self) -> "ArithmeticCheckResult":

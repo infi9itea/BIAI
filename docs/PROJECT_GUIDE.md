@@ -275,7 +275,7 @@ Never ask the LLM to check arithmetic. Python performs all four checks in `src/a
 
 1. `recalculated_line = quantity × unit_price` per item. Runs for **every** line; a line with an unusable quantity, price or printed total is `UNKNOWN` (with `item_id`), never omitted.
 2. `independent_subtotal = sum(recalculated_line for all quoted line items)` — **not** the sum of printed line totals. If **any** quoted line item has an UNKNOWN or unverified quantity or unit price, the subtotal check is **UNKNOWN**: never compare an incomplete sum with the supplier's full subtotal. An empty line-item list gives an UNKNOWN subtotal, never 0.
-3. `expected_vat = independent_subtotal × (vat_rate_pct / Decimal("100"))` — using the rate **printed in the document**, and only when `vat_price_basis` is known.
+3. `expected_vat = independent_subtotal × (vat_rate_pct / Decimal("100"))` — using the rate **printed in the document**, and only when `vat_price_basis` is known. The basis is `subtotal` only by words or by the AMB-15 totals layout (SPEC §13 AMB-15); the VAT and grand-total results then list `AMB-15` in `assumptions_applied` and NR-06 reports it.
 4. `expected_grand = independent_subtotal + expected_vat`.
 
 Never silently correct a printed amount. Record both calculated and printed values (as `Decimal`). A check is FAIL only when every input and the printed value are FOUND; otherwise UNKNOWN. Each `ArithmeticCheckResult` carries `evidence_refs` for the printed value and the inputs used, so NR-06 can retain the evidence of every failed check. If `vat_price_basis` is UNKNOWN, the VAT check is UNKNOWN (not silently assumed from the subtotal).

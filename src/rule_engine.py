@@ -62,7 +62,12 @@ QTY_REVIEW_THRESHOLD_RATIO = Decimal("0.05")  # > 5% → REVIEW
 VAT_REQUIRED_RATE_PCT = Decimal("15")  # VAT must be shown separately at exactly 15 percentage points
 
 # Assumption IDs recorded in RuleResult.assumptions_applied (SPEC §7.3, §13)
+AMB_DELIVERY_BOUNDARY = "AMB-01"  # exactly 45 days is NEEDS_REVIEW; only strictly > 45 is REJECT
+AMB_PRICE_BOUNDARY = "AMB-02"  # a price at or below the PR maximum fires nothing; the review band is (max, max x 1.03]
+AMB_PAYMENT_WINDOW = "AMB-03"  # 30 and 60 days are both inclusive
+AMB_PENALTY_BELOW_MIN = "AMB-04"  # a present clause below 0.5% is NEEDS_REVIEW; only an absent clause is REJECT
 AMB_ADVANCE_UNKNOWN = "AMB-05"
+AMB_PER_ITEM = "AMB-06"  # price and quantity rules are judged per item, never as an average
 AMB_VAT_BASIS = "AMB-12"
 AMB_PAYMENT_ANCHOR = "AMB-13"
 AMB_PENALTY_PERIOD = "AMB-14"
@@ -291,7 +296,8 @@ def _price_results(
         if excess > _mul(PRICE_REVIEW_EXCESS_RATIO, maximum) and excess <= _mul(PRICE_REJECT_EXCESS_RATIO, maximum)
         else RuleStatus.PASS
     )
-    kw: dict[str, Any] = dict(triggering_value=f"{price} BDT", evidence_refs=refs, assumptions=[AMB_VAT_BASIS])
+    kw: dict[str, Any] = dict(triggering_value=f"{price} BDT", evidence_refs=refs,
+              assumptions=[AMB_VAT_BASIS, AMB_PRICE_BOUNDARY, AMB_PER_ITEM])
     return (
         build_rule_result("R-01", r01_status, detail, item_id=item_id, **kw),
         build_rule_result("NR-01", nr01_status, detail, item_id=item_id, **kw),
@@ -323,7 +329,7 @@ def _quantity_result(item: LineItem, item_id: str, label: str, pr_item: PRItem |
     )
     return build_rule_result(
         "NR-02", status, detail, item_id=item_id, triggering_value=str(quantity),
-        evidence_refs=[_ref(f"{item_id} quantity", item.quantity)],
+        evidence_refs=[_ref(f"{item_id} quantity", item.quantity)], assumptions=[AMB_PER_ITEM],
     )
 
 
@@ -352,10 +358,11 @@ def _r03(doc: ExtractedDocument) -> RuleResult:
     penalty = doc.penalty
     if _absent_complete(penalty):
         return build_rule_result("R-03", RuleStatus.FAIL, "no late-delivery penalty clause found in the document",
-                                 absence_evidence=[penalty.absence_evidence])
+                                 absence_evidence=[penalty.absence_evidence],
+                                 assumptions=[AMB_PENALTY_BELOW_MIN])
     if is_usable(penalty):
         return build_rule_result("R-03", RuleStatus.PASS, "a late-delivery penalty clause is present",
-                                 evidence_refs=[_ref("penalty clause", penalty)])
+                                 evidence_refs=[_ref("penalty clause", penalty)], assumptions=[AMB_PENALTY_BELOW_MIN])
     return build_rule_result("R-03", RuleStatus.UNCERTAIN, _not_established("the late-delivery penalty clause"))
 
 
@@ -381,6 +388,7 @@ def _r05(doc: ExtractedDocument) -> RuleResult:
     return build_rule_result(
         "R-05", status, f"delivery in {days} days vs limit {DELIVERY_REJECT_DAYS} (strictly greater rejects)",
         triggering_value=f"{days} days", evidence_refs=[_ref("delivery days", doc.delivery_days)],
+        assumptions=[AMB_DELIVERY_BOUNDARY],
     )
 
 
@@ -418,16 +426,16 @@ def _nr03(doc: ExtractedDocument) -> RuleResult:
     triggering = f"{pay.min_days} to {pay.max_days} days"
     if outside:
         return build_rule_result("NR-03", RuleStatus.FAIL, detail, triggering_value=triggering,
-                                 evidence_refs=[clause_ref], assumptions=[AMB_PAYMENT_ANCHOR])
+                                 evidence_refs=[clause_ref], assumptions=[AMB_PAYMENT_WINDOW, AMB_PAYMENT_ANCHOR])
     # (4) acceptable bounds: PASS only if the clause is KNOWN not to be discretionary. Unknown is never assumed False.
     if pay.discretionary is None:
         return build_rule_result(
             "NR-03", RuleStatus.UNCERTAIN,
             f"{detail}; but whether the payment terms are discretionary was not determined; not assumed to be false",
-            triggering_value=triggering, evidence_refs=[clause_ref], assumptions=[AMB_PAYMENT_ANCHOR],
+            triggering_value=triggering, evidence_refs=[clause_ref], assumptions=[AMB_PAYMENT_WINDOW, AMB_PAYMENT_ANCHOR],
         )
     return build_rule_result("NR-03", RuleStatus.PASS, detail, triggering_value=triggering,
-                             evidence_refs=[clause_ref], assumptions=[AMB_PAYMENT_ANCHOR])
+                             evidence_refs=[clause_ref], assumptions=[AMB_PAYMENT_WINDOW, AMB_PAYMENT_ANCHOR])
 
 
 def _nr04(doc: ExtractedDocument) -> RuleResult:
@@ -439,6 +447,7 @@ def _nr04(doc: ExtractedDocument) -> RuleResult:
         "NR-04", RuleStatus.FAIL if in_band else RuleStatus.PASS,
         f"delivery in {days} days vs review band {DELIVERY_REVIEW_MIN_DAYS} to {DELIVERY_REJECT_DAYS} days (inclusive)",
         triggering_value=f"{days} days", evidence_refs=[_ref("delivery days", doc.delivery_days)],
+        assumptions=[AMB_DELIVERY_BOUNDARY],
     )
 
 
@@ -480,19 +489,24 @@ def _nr06(checks: list[ArithmeticCheckResult]) -> RuleResult:
     def name(check: ArithmeticCheckResult) -> str:
         return f"{check.check_name}[{check.item_id}]" if check.item_id else check.check_name
 
+    # Assumptions the arithmetic RESTED ON (e.g. AMB-15) are reported on the rule, whatever its status, so a reader of
+    # a PASS or a FAIL can see that the VAT basis came from the totals layout. Only read here, never recomputed.
+    assumptions = [a for c in checks for a in c.assumptions_applied]
     failed = [c for c in checks if c.status == "FAIL"]
     if failed:
         return build_rule_result(
             "NR-06", RuleStatus.FAIL, "arithmetic mismatch: " + " | ".join(f"{name(c)}: {c.detail}" for c in failed),
             triggering_value=", ".join(name(c) for c in failed),
             evidence_refs=[ref for c in failed for ref in c.evidence_refs],  # EVERY failed check's refs
+            assumptions=assumptions,
         )
     unknown = [c for c in checks if c.status == "UNKNOWN"]
     if unknown:
         return build_rule_result("NR-06", RuleStatus.UNCERTAIN,
-                                 "arithmetic could not be fully verified: " + " | ".join(f"{name(c)}: {c.detail}" for c in unknown))
+                                 "arithmetic could not be fully verified: " + " | ".join(f"{name(c)}: {c.detail}" for c in unknown),
+                                 assumptions=assumptions)
     return build_rule_result("NR-06", RuleStatus.PASS, f"all {len(checks)} arithmetic checks agree with the printed amounts",
-                             evidence_refs=[ref for c in checks for ref in c.evidence_refs])
+                             evidence_refs=[ref for c in checks for ref in c.evidence_refs], assumptions=assumptions)
 
 
 def _nr07(doc: ExtractedDocument) -> RuleResult:
@@ -534,7 +548,8 @@ def _nr08(doc: ExtractedDocument) -> RuleResult:
     return build_rule_result(
         "NR-08", status,
         f"penalty {penalty.rate_pct} percentage points per week of {PENALTY_REQUIRED_BASIS} vs minimum {PENALTY_MIN_RATE_PCT}",
-        triggering_value=f"{penalty.rate_pct}% per week", evidence_refs=[clause_ref], assumptions=[AMB_PENALTY_PERIOD],
+        triggering_value=f"{penalty.rate_pct}% per week", evidence_refs=[clause_ref],
+        assumptions=[AMB_PENALTY_PERIOD, AMB_PENALTY_BELOW_MIN],
     )
 
 

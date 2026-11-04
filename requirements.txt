@@ -1,6 +1,8 @@
 # Tested with Python 3.13.18
-# Pins are the versions actually installed together, with `pip check` clean and the M0 suite passing.
+# Pins are the versions actually installed together, with `pip check` clean and the full offline suite passing.
 # Pinning procedure: IMPLEMENTATION_PLAN.md M0 task 3. Re-run it whenever a dependency is added.
 pydantic==2.14.2
 pytest==9.2.0
 pdfplumber==0.11.10
+python-dotenv==1.2.4
+google-genai==2.34.0
