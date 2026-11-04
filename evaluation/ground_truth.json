@@ -74,7 +74,7 @@
   {
     "pack": "supplier-pack-10.pdf",
     "expected_decision": "REJECT",
-    "rule_ids": ["R-05", "NR-05"],
+    "rule_ids": ["R-05", "NR-05", "R-01", "NR-01"],
     "manual_notes": "Quotation QT-2026-910, dated 2026-10-23, references PR-2026-114. Item E: Carton box, 5-ply. Requested and quoted quantity: 3,000 pieces. The unit price heading says 'Unit price (BDT, VAT included)' and the quoted price is BDT 94.00; the PR maximum is BDT 95.00. Numerically 94.00 is below 95.00, but the VAT bases are not directly comparable because the PR maximum's VAT basis is unstated and the supplier explicitly includes VAT. This is recorded as AMB-12; no VAT adjustment is guessed. Recalculation: 3,000 × 94.00 = BDT 282,000.00, matching the stated total. The quotation says 'Total (all taxes included) 282,000.00' and does not show VAT separately at 15%, triggering NR-05. Supplier TIN: 110458103391; BIN: 001071041-0101. Payment clause: '10% advance payable with the purchase order. Payment within 45 days of delivery.' Delivery clause: 'Delivery within 60 days of PO.' Sixty days is later than 45 days after PO, triggering R-05. Penalty clause: 'Late delivery penalty of 0.5% of order value per week.' Validity clause: 'This quotation is valid for 30 days from the date above.' REJECT due to R-05; NR-05 and the AMB-12 pricing-basis ambiguity are also recorded.",
     "confidence": "HIGH",
     "ambiguities_noted": ["AMB-12"]
