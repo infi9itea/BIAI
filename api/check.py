@@ -1,4 +1,4 @@
-"""Vercel serverless endpoint.
+"""Vercel Python app (WSGI). Serves the page at / and the API at /api/check.
 
 GET  /api/check                      -> list of sample packs
 GET  /api/check?sample=supplier-pack-03  -> replay saved Gemini extraction (no API key, no network)
@@ -8,7 +8,6 @@ import json
 import os
 import sys
 import tempfile
-from http.server import BaseHTTPRequestHandler
 from pathlib import Path
 from types import SimpleNamespace
 from urllib.parse import parse_qs, urlparse
@@ -40,46 +39,58 @@ def _samples() -> list[str]:
     return sorted(p.stem for p in FIXTURES.glob("supplier-pack-*.json"))
 
 
-class handler(BaseHTTPRequestHandler):
-    def _send(self, status: int, payload: dict) -> None:
-        body = json.dumps(payload).encode()
-        self.send_response(status)
-        self.send_header("Content-Type", "application/json")
-        self.send_header("Cache-Control", "no-store")
-        self.end_headers()
-        self.wfile.write(body)
+PAGE = ROOT / "public" / "index.html"
 
-    def do_GET(self):
-        q = parse_qs(urlparse(self.path).query)
+
+def _json(start_response, status: int, payload: dict):
+    body = json.dumps(payload).encode()
+    start_response(f"{status} OK", [("Content-Type", "application/json"), ("Cache-Control", "no-store"),
+                                    ("Content-Length", str(len(body)))])
+    return [body]
+
+
+def app(environ, start_response):
+    method, path = environ["REQUEST_METHOD"], environ.get("PATH_INFO", "/")
+    q = parse_qs(environ.get("QUERY_STRING", ""))
+    if method == "GET" and path in ("/", "/index.html"):
+        body = PAGE.read_bytes()
+        start_response("200 OK", [("Content-Type", "text/html; charset=utf-8"), ("Content-Length", str(len(body)))])
+        return [body]
+    if path != "/api/check":
+        return _json(start_response, 404, {"error": "not found"})
+
+    if method == "GET":
         name = (q.get("sample") or [None])[0]
         if not name:
-            return self._send(200, {"samples": _samples(), "live": bool(os.getenv("GEMINI_API_KEY"))})
+            return _json(start_response, 200, {"samples": _samples(), "live": bool(os.getenv("GEMINI_API_KEY"))})
         if name not in _samples():
-            return self._send(404, {"error": "unknown sample"})
+            return _json(start_response, 404, {"error": "unknown sample"})
         try:
             client = _ReplayClient((FIXTURES / f"{name}.json").read_text(encoding="utf-8"))
             result = run_pipeline(DATA / f"{name}.pdf", PR, client=client)
-            self._send(200, {"mode": "replay", "result": json.loads(result.model_dump_json())})
+            return _json(start_response, 200, {"mode": "replay", "result": json.loads(result.model_dump_json())})
         except Exception as exc:  # noqa: BLE001
-            self._send(500, {"error": f"{type(exc).__name__}: {exc}"})
+            return _json(start_response, 500, {"error": f"{type(exc).__name__}: {exc}"})
 
-    def do_POST(self):
+    if method == "POST":
         if not os.getenv("GEMINI_API_KEY"):
-            return self._send(503, {"error": "Live mode is off: GEMINI_API_KEY is not set on the server."})
-        length = int(self.headers.get("Content-Length") or 0)
+            return _json(start_response, 503, {"error": "Live mode is off: GEMINI_API_KEY is not set on the server."})
+        length = int(environ.get("CONTENT_LENGTH") or 0)
         if length <= 0 or length > MAX_PDF_BYTES:
-            return self._send(413, {"error": "Send one PDF up to 4 MB."})
-        data = self.rfile.read(length)
+            return _json(start_response, 413, {"error": "Send one PDF up to 4 MB."})
+        data = environ["wsgi.input"].read(length)
         if not data.startswith(b"%PDF"):
-            return self._send(400, {"error": "That is not a PDF file."})
-        name = (parse_qs(urlparse(self.path).query).get("name") or ["upload.pdf"])[0][:80]
+            return _json(start_response, 400, {"error": "That is not a PDF file."})
+        name = (q.get("name") or ["upload.pdf"])[0][:80]
         with tempfile.TemporaryDirectory() as tmp:
-            path = Path(tmp) / "upload.pdf"
-            path.write_bytes(data)
+            pdf = Path(tmp) / "upload.pdf"
+            pdf.write_bytes(data)
             try:
-                result = run_pipeline(path, PR)
+                result = run_pipeline(pdf, PR)
             except Exception as exc:  # noqa: BLE001
-                result = build_error_result(name, "unexpected_error", f"{type(exc).__name__}")
+                result = build_error_result(name, "unexpected_error", type(exc).__name__)
         out = json.loads(result.model_dump_json())
         out["pack_filename"] = name
-        self._send(200, {"mode": "live", "result": out})
+        return _json(start_response, 200, {"mode": "live", "result": out})
+
+    return _json(start_response, 405, {"error": "method not allowed"})

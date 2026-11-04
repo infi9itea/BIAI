@@ -2,8 +2,7 @@
   "functions": {
     "api/check.py": {
       "maxDuration": 60,
-      "includeFiles": "{src,assessment-data,fixtures}/**"
+      "includeFiles": "{src,assessment-data,fixtures,public}/**"
     }
-  },
-  "outputDirectory": "public"
+  }
 }

@@ -5,4 +5,4 @@
 3. Settings -> Environment Variables: `GEMINI_API_KEY` (and optionally `GEMINI_MODEL`). Redeploy.
 4. Open the deployment URL. Sample packs work without a key; PDF upload needs it.
 
-Local test: `npm i -g vercel && vercel dev`
+Local test: `pip install -r requirements.txt && vercel dev`
