@@ -7,3 +7,9 @@ outputs/
 extracted_text/
 .pytest_cache/
 # NOTE: fixtures/mock_llm_responses/ is deliberately NOT ignored (SPEC NFR-08, AC-11).
+evaluation/runs/fixtures-*/
+# M6 run artifacts. Decision (review item 5): a LIVE run folder is the evidence behind every reported number (raw
+# model responses, prompt, metadata, scores, report) and is COMMITTED. Fixture runs are regenerable regression output
+# and are ignored (above). A rescore folder is derived and ignored; to publish one as a result, re-run it with
+# --out pointing at a named folder outside rescored/ and commit that.
+evaluation/runs/*/rescored/

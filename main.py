@@ -85,6 +85,10 @@ def load_purchase_request(path: str | os.PathLike[str]) -> PurchaseRequest:
         raise InputError(f"{path} is not valid UTF-8 text: {exc}") from exc
     if not rows:
         raise InputError(f"{path} has no rows")
+    for number, row in enumerate(rows, start=2):
+        if row.get(None):  # DictReader files surplus fields under the key None; never ignore them
+            raise InputError(f"{PR_FILE} row {number}: {len(row[None])} extra value(s) beyond the "
+                             f"{len(_PR_COLUMNS)} columns: {row[None]}")
 
     numbers = {_cell(row, "pr", n) for n, row in enumerate(rows, start=2)}  # row 1 is the header
     if len(numbers) != 1:

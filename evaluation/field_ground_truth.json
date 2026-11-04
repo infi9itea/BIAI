@@ -1,0 +1,634 @@
+{
+  "_provenance": {
+    "purpose": "Field-level answer key for the M6 live-extraction evaluation. Complements evaluation/ground_truth.json (decision-level, Checkpoint G).",
+    "method": "Each value was read from the text of the corresponding PDF in assessment-data/ (the pdf_reader text of each pack) against company-rules.md. No fixture, LLM output or pipeline output was used to create or check a value. The arithmetic block is plain Decimal arithmetic on the printed line values (quantity x unit price; VAT = recalculated subtotal x printed rate; total = recalculated subtotal + VAT), not the output of src/arithmetic.py.",
+    "author_note": "Drafted by an AI assistant (Claude), not by a human reading the PDFs, and NOT yet independently reviewed by the project owner. Review every value against the PDFs before treating it as authoritative. Disclosure: before drafting, the assistant had viewed the first 3,500 characters of fixtures/mock_llm_responses/supplier-pack-01.json while inspecting the data format; every pack-01 value here was re-read from the PDF text.",
+    "null_meaning": "null means the PDF does not state the value, so the correct extraction is 'not found' (null / UNKNOWN / ABSENT). A model that returns a value for a null field is scored SPURIOUS.",
+    "penalty_present": "true = a late-delivery penalty clause exists; false = the PDF has none (the correct state is ABSENT).",
+    "line_totals": "line_total_bdt, subtotal_bdt, vat_amount_bdt and grand_total_bdt are the PRINTED values, even where they are arithmetically wrong (pack 09).",
+    "units": "money as decimal strings; percentages as percentage points ('15' = 15%); periods in days; payment_min_days/payment_max_days are the balance/full-payment period (a range for pack 09).",
+    "arithmetic_scope": "Pack 10 prints no Subtotal/VAT/Total-with-VAT rows (all taxes included), so only line_recalc is scored for it.",
+    "created": "2026-11-04"
+  },
+  "packs": {
+    "supplier-pack-01.pdf": {
+      "fields": {
+        "supplier_name": "Padma Textile Mills Ltd",
+        "tin": "101458013391",
+        "bin": "000170141-0101",
+        "subtotal_bdt": "5664000.00",
+        "vat_rate_pct": "15",
+        "vat_amount_bdt": "849600.00",
+        "grand_total_bdt": "6513600.00",
+        "vat_shown_separately": true,
+        "vat_price_basis": null,
+        "delivery_days": 24,
+        "payment_min_days": 45,
+        "payment_max_days": 45,
+        "advance_payment_pct": "10",
+        "penalty_present": true,
+        "penalty_rate_pct": "1",
+        "penalty_calculation_basis": "order value",
+        "penalty_period_unit": "week",
+        "penalty_full_weeks_only": true,
+        "validity_days": 45
+      },
+      "line_items": [
+        {
+          "item_code": "A",
+          "description": "Cotton twill fabric, 280 gsm",
+          "quantity": "12000",
+          "unit": "metre",
+          "unit_price_bdt": "472.00",
+          "line_total_bdt": "5664000.00",
+          "vat_included_in_price": null
+        }
+      ],
+      "arithmetic": [
+        {
+          "check_name": "line_recalc",
+          "item_id": "line-1",
+          "expected_status": "PASS",
+          "expected_calculated": "5664000.00",
+          "expected_printed": "5664000.00"
+        },
+        {
+          "check_name": "independent_subtotal",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "5664000.00",
+          "expected_printed": "5664000.00"
+        },
+        {
+          "check_name": "vat",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "849600.00",
+          "expected_printed": "849600.00"
+        },
+        {
+          "check_name": "grand",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "6513600.00",
+          "expected_printed": "6513600.00"
+        }
+      ]
+    },
+    "supplier-pack-02.pdf": {
+      "fields": {
+        "supplier_name": "Jamuna Trims and Accessories",
+        "tin": "102458023391",
+        "bin": "000270241-0101",
+        "subtotal_bdt": "720000.00",
+        "vat_rate_pct": "15",
+        "vat_amount_bdt": "108000.00",
+        "grand_total_bdt": "828000.00",
+        "vat_shown_separately": true,
+        "vat_price_basis": null,
+        "delivery_days": 21,
+        "payment_min_days": 30,
+        "payment_max_days": 30,
+        "advance_payment_pct": "0",
+        "penalty_present": true,
+        "penalty_rate_pct": "0.75",
+        "penalty_calculation_basis": "order value",
+        "penalty_period_unit": "week",
+        "penalty_full_weeks_only": null,
+        "validity_days": 30
+      },
+      "line_items": [
+        {
+          "item_code": "B",
+          "description": "Metal zipper, 18 cm",
+          "quantity": "20000",
+          "unit": "piece",
+          "unit_price_bdt": "36.00",
+          "line_total_bdt": "720000.00",
+          "vat_included_in_price": null
+        }
+      ],
+      "arithmetic": [
+        {
+          "check_name": "line_recalc",
+          "item_id": "line-1",
+          "expected_status": "PASS",
+          "expected_calculated": "720000.00",
+          "expected_printed": "720000.00"
+        },
+        {
+          "check_name": "independent_subtotal",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "720000.00",
+          "expected_printed": "720000.00"
+        },
+        {
+          "check_name": "vat",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "108000.00",
+          "expected_printed": "108000.00"
+        },
+        {
+          "check_name": "grand",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "828000.00",
+          "expected_printed": "828000.00"
+        }
+      ]
+    },
+    "supplier-pack-03.pdf": {
+      "fields": {
+        "supplier_name": "Karnaphuli Yarn Traders",
+        "tin": "103458033391",
+        "bin": "000370341-0101",
+        "subtotal_bdt": "183200.00",
+        "vat_rate_pct": "15",
+        "vat_amount_bdt": "27480.00",
+        "grand_total_bdt": "210680.00",
+        "vat_shown_separately": true,
+        "vat_price_basis": null,
+        "delivery_days": 20,
+        "payment_min_days": 40,
+        "payment_max_days": 40,
+        "advance_payment_pct": "15",
+        "penalty_present": true,
+        "penalty_rate_pct": "0.5",
+        "penalty_calculation_basis": "order value",
+        "penalty_period_unit": "week",
+        "penalty_full_weeks_only": null,
+        "validity_days": 30
+      },
+      "line_items": [
+        {
+          "item_code": "C",
+          "description": "Polyester sewing thread, cone",
+          "quantity": "800",
+          "unit": "cone",
+          "unit_price_bdt": "229.00",
+          "line_total_bdt": "183200.00",
+          "vat_included_in_price": null
+        }
+      ],
+      "arithmetic": [
+        {
+          "check_name": "line_recalc",
+          "item_id": "line-1",
+          "expected_status": "PASS",
+          "expected_calculated": "183200.00",
+          "expected_printed": "183200.00"
+        },
+        {
+          "check_name": "independent_subtotal",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "183200.00",
+          "expected_printed": "183200.00"
+        },
+        {
+          "check_name": "vat",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "27480.00",
+          "expected_printed": "27480.00"
+        },
+        {
+          "check_name": "grand",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "210680.00",
+          "expected_printed": "210680.00"
+        }
+      ]
+    },
+    "supplier-pack-04.pdf": {
+      "fields": {
+        "supplier_name": "Surma Packaging Industries",
+        "tin": "104458043391",
+        "bin": "000470441-0101",
+        "subtotal_bdt": "332500.00",
+        "vat_rate_pct": "15",
+        "vat_amount_bdt": "49875.00",
+        "grand_total_bdt": "382375.00",
+        "vat_shown_separately": true,
+        "vat_price_basis": null,
+        "delivery_days": 28,
+        "payment_min_days": 30,
+        "payment_max_days": 30,
+        "advance_payment_pct": "10",
+        "penalty_present": true,
+        "penalty_rate_pct": "0.6",
+        "penalty_calculation_basis": "order value",
+        "penalty_period_unit": "week",
+        "penalty_full_weeks_only": null,
+        "validity_days": 40
+      },
+      "line_items": [
+        {
+          "item_code": "D",
+          "description": "Poly bag, 30 x 40 cm",
+          "quantity": "50000",
+          "unit": "piece",
+          "unit_price_bdt": "6.65",
+          "line_total_bdt": "332500.00",
+          "vat_included_in_price": null
+        }
+      ],
+      "arithmetic": [
+        {
+          "check_name": "line_recalc",
+          "item_id": "line-1",
+          "expected_status": "PASS",
+          "expected_calculated": "332500.00",
+          "expected_printed": "332500.00"
+        },
+        {
+          "check_name": "independent_subtotal",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "332500.00",
+          "expected_printed": "332500.00"
+        },
+        {
+          "check_name": "vat",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "49875.00",
+          "expected_printed": "49875.00"
+        },
+        {
+          "check_name": "grand",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "382375.00",
+          "expected_printed": "382375.00"
+        }
+      ]
+    },
+    "supplier-pack-05.pdf": {
+      "fields": {
+        "supplier_name": "Meghna Carton Works",
+        "tin": "105458053391",
+        "bin": "000570541-0101",
+        "subtotal_bdt": "276000.00",
+        "vat_rate_pct": "15",
+        "vat_amount_bdt": "41400.00",
+        "grand_total_bdt": "317400.00",
+        "vat_shown_separately": true,
+        "vat_price_basis": null,
+        "delivery_days": 25,
+        "payment_min_days": 30,
+        "payment_max_days": 30,
+        "advance_payment_pct": "40",
+        "penalty_present": true,
+        "penalty_rate_pct": "1",
+        "penalty_calculation_basis": "order value",
+        "penalty_period_unit": "week",
+        "penalty_full_weeks_only": null,
+        "validity_days": 30
+      },
+      "line_items": [
+        {
+          "item_code": "E",
+          "description": "Carton box, 5-ply",
+          "quantity": "3000",
+          "unit": "piece",
+          "unit_price_bdt": "92.00",
+          "line_total_bdt": "276000.00",
+          "vat_included_in_price": null
+        }
+      ],
+      "arithmetic": [
+        {
+          "check_name": "line_recalc",
+          "item_id": "line-1",
+          "expected_status": "PASS",
+          "expected_calculated": "276000.00",
+          "expected_printed": "276000.00"
+        },
+        {
+          "check_name": "independent_subtotal",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "276000.00",
+          "expected_printed": "276000.00"
+        },
+        {
+          "check_name": "vat",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "41400.00",
+          "expected_printed": "41400.00"
+        },
+        {
+          "check_name": "grand",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "317400.00",
+          "expected_printed": "317400.00"
+        }
+      ]
+    },
+    "supplier-pack-06.pdf": {
+      "fields": {
+        "supplier_name": "Teesta Fabrics Ltd",
+        "tin": "106458063391",
+        "bin": "000670641-0101",
+        "subtotal_bdt": "5580000.00",
+        "vat_rate_pct": "15",
+        "vat_amount_bdt": "837000.00",
+        "grand_total_bdt": "6417000.00",
+        "vat_shown_separately": true,
+        "vat_price_basis": null,
+        "delivery_days": 27,
+        "payment_min_days": 60,
+        "payment_max_days": 60,
+        "advance_payment_pct": "10",
+        "penalty_present": false,
+        "penalty_rate_pct": null,
+        "penalty_calculation_basis": null,
+        "penalty_period_unit": null,
+        "penalty_full_weeks_only": null,
+        "validity_days": 30
+      },
+      "line_items": [
+        {
+          "item_code": "A",
+          "description": "Cotton twill fabric, 280 gsm",
+          "quantity": "12000",
+          "unit": "metre",
+          "unit_price_bdt": "465.00",
+          "line_total_bdt": "5580000.00",
+          "vat_included_in_price": null
+        }
+      ],
+      "arithmetic": [
+        {
+          "check_name": "line_recalc",
+          "item_id": "line-1",
+          "expected_status": "PASS",
+          "expected_calculated": "5580000.00",
+          "expected_printed": "5580000.00"
+        },
+        {
+          "check_name": "independent_subtotal",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "5580000.00",
+          "expected_printed": "5580000.00"
+        },
+        {
+          "check_name": "vat",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "837000.00",
+          "expected_printed": "837000.00"
+        },
+        {
+          "check_name": "grand",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "6417000.00",
+          "expected_printed": "6417000.00"
+        }
+      ]
+    },
+    "supplier-pack-07.pdf": {
+      "fields": {
+        "supplier_name": "Rupsha Zipper Factory",
+        "tin": "107458073391",
+        "bin": "000770741-0101",
+        "subtotal_bdt": "577500.00",
+        "vat_rate_pct": "15",
+        "vat_amount_bdt": "86625.00",
+        "grand_total_bdt": "664125.00",
+        "vat_shown_separately": true,
+        "vat_price_basis": null,
+        "delivery_days": 22,
+        "payment_min_days": 45,
+        "payment_max_days": 45,
+        "advance_payment_pct": "0",
+        "penalty_present": true,
+        "penalty_rate_pct": "0.5",
+        "penalty_calculation_basis": "order value",
+        "penalty_period_unit": "week",
+        "penalty_full_weeks_only": null,
+        "validity_days": 35
+      },
+      "line_items": [
+        {
+          "item_code": "B",
+          "description": "Metal zipper, 18 cm",
+          "quantity": "16500",
+          "unit": "piece",
+          "unit_price_bdt": "35.00",
+          "line_total_bdt": "577500.00",
+          "vat_included_in_price": null
+        }
+      ],
+      "arithmetic": [
+        {
+          "check_name": "line_recalc",
+          "item_id": "line-1",
+          "expected_status": "PASS",
+          "expected_calculated": "577500.00",
+          "expected_printed": "577500.00"
+        },
+        {
+          "check_name": "independent_subtotal",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "577500.00",
+          "expected_printed": "577500.00"
+        },
+        {
+          "check_name": "vat",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "86625.00",
+          "expected_printed": "86625.00"
+        },
+        {
+          "check_name": "grand",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "664125.00",
+          "expected_printed": "664125.00"
+        }
+      ]
+    },
+    "supplier-pack-08.pdf": {
+      "fields": {
+        "supplier_name": "Bhairab Thread and Co",
+        "tin": null,
+        "bin": null,
+        "subtotal_bdt": "164000.00",
+        "vat_rate_pct": "15",
+        "vat_amount_bdt": "24600.00",
+        "grand_total_bdt": "188600.00",
+        "vat_shown_separately": true,
+        "vat_price_basis": null,
+        "delivery_days": 18,
+        "payment_min_days": 30,
+        "payment_max_days": 30,
+        "advance_payment_pct": "10",
+        "penalty_present": true,
+        "penalty_rate_pct": "0.5",
+        "penalty_calculation_basis": null,
+        "penalty_period_unit": "week",
+        "penalty_full_weeks_only": null,
+        "validity_days": 30
+      },
+      "line_items": [
+        {
+          "item_code": "C",
+          "description": "Polyester sewing thread, cone",
+          "quantity": "800",
+          "unit": "cone",
+          "unit_price_bdt": "205.00",
+          "line_total_bdt": "164000.00",
+          "vat_included_in_price": null
+        }
+      ],
+      "arithmetic": [
+        {
+          "check_name": "line_recalc",
+          "item_id": "line-1",
+          "expected_status": "PASS",
+          "expected_calculated": "164000.00",
+          "expected_printed": "164000.00"
+        },
+        {
+          "check_name": "independent_subtotal",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "164000.00",
+          "expected_printed": "164000.00"
+        },
+        {
+          "check_name": "vat",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "24600.00",
+          "expected_printed": "24600.00"
+        },
+        {
+          "check_name": "grand",
+          "item_id": null,
+          "expected_status": "PASS",
+          "expected_calculated": "188600.00",
+          "expected_printed": "188600.00"
+        }
+      ]
+    },
+    "supplier-pack-09.pdf": {
+      "fields": {
+        "supplier_name": "Dhaleshwari Poly Pack",
+        "tin": "109458093391",
+        "bin": "000970941-0101",
+        "subtotal_bdt": "322000.00",
+        "vat_rate_pct": "15",
+        "vat_amount_bdt": "48300.00",
+        "grand_total_bdt": "370300.00",
+        "vat_shown_separately": true,
+        "vat_price_basis": null,
+        "delivery_days": 28,
+        "payment_min_days": 30,
+        "payment_max_days": 90,
+        "advance_payment_pct": "5",
+        "penalty_present": true,
+        "penalty_rate_pct": "0.5",
+        "penalty_calculation_basis": "order value",
+        "penalty_period_unit": "week",
+        "penalty_full_weeks_only": null,
+        "validity_days": 30
+      },
+      "line_items": [
+        {
+          "item_code": "D",
+          "description": "Poly bag, 30 x 40 cm",
+          "quantity": "50000",
+          "unit": "piece",
+          "unit_price_bdt": "6.40",
+          "line_total_bdt": "322000.00",
+          "vat_included_in_price": null
+        }
+      ],
+      "arithmetic": [
+        {
+          "check_name": "line_recalc",
+          "item_id": "line-1",
+          "expected_status": "FAIL",
+          "expected_calculated": "320000.00",
+          "expected_printed": "322000.00"
+        },
+        {
+          "check_name": "independent_subtotal",
+          "item_id": null,
+          "expected_status": "FAIL",
+          "expected_calculated": "320000.00",
+          "expected_printed": "322000.00"
+        },
+        {
+          "check_name": "vat",
+          "item_id": null,
+          "expected_status": "FAIL",
+          "expected_calculated": "48000.00",
+          "expected_printed": "48300.00"
+        },
+        {
+          "check_name": "grand",
+          "item_id": null,
+          "expected_status": "FAIL",
+          "expected_calculated": "368000.00",
+          "expected_printed": "370300.00"
+        }
+      ]
+    },
+    "supplier-pack-10.pdf": {
+      "fields": {
+        "supplier_name": "Kushiyara Box Industries",
+        "tin": "110458103391",
+        "bin": "001071041-0101",
+        "subtotal_bdt": null,
+        "vat_rate_pct": null,
+        "vat_amount_bdt": null,
+        "grand_total_bdt": "282000.00",
+        "vat_shown_separately": false,
+        "vat_price_basis": null,
+        "delivery_days": 60,
+        "payment_min_days": 45,
+        "payment_max_days": 45,
+        "advance_payment_pct": "10",
+        "penalty_present": true,
+        "penalty_rate_pct": "0.5",
+        "penalty_calculation_basis": "order value",
+        "penalty_period_unit": "week",
+        "penalty_full_weeks_only": null,
+        "validity_days": 30
+      },
+      "line_items": [
+        {
+          "item_code": "E",
+          "description": "Carton box, 5-ply",
+          "quantity": "3000",
+          "unit": "piece",
+          "unit_price_bdt": "94.00",
+          "line_total_bdt": "282000.00",
+          "vat_included_in_price": true
+        }
+      ],
+      "arithmetic": [
+        {
+          "check_name": "line_recalc",
+          "item_id": "line-1",
+          "expected_status": "PASS",
+          "expected_calculated": "282000.00",
+          "expected_printed": "282000.00"
+        }
+      ]
+    }
+  }
+}

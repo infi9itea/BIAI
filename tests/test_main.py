@@ -105,6 +105,18 @@ def test_pr_loader_turns_every_bad_value_into_input_error(tmp_path, row, expecte
         main.load_purchase_request(bad)
 
 
+@pytest.mark.parametrize("surplus", [",oops", ",,", ",12000"])
+def test_pr_loader_and_cli_reject_surplus_csv_fields(data_dir, tmp_path, monkeypatch, capsys, surplus):
+    """A row with more fields than the header (e.g. an unquoted comma in a description) must not load silently."""
+    (data_dir / "purchase-request.csv").write_text(
+        HEADER + "PR-1,A,x,metre,1,1\n" + f"PR-1,B,y,metre,2,2{surplus}\n", encoding="utf-8")
+    with pytest.raises(main.InputError, match=r"row 3: .*extra value"):
+        main.load_purchase_request(data_dir / "purchase-request.csv")
+    monkeypatch.setattr(main, "run_pipeline", lambda *a, **k: pytest.fail("pipeline must not run"))
+    assert main.main(["--data-dir", str(data_dir), "--output", str(tmp_path / "x.txt")]) == 2
+    assert "row 3" in capsys.readouterr().err
+
+
 def test_pr_loader_rejects_duplicate_item_and_mixed_pr_numbers(tmp_path):
     dup = tmp_path / "dup.csv"
     dup.write_text(HEADER + "PR-1,A,x,metre,1,1\nPR-1,A,y,metre,2,2\n", encoding="utf-8")
