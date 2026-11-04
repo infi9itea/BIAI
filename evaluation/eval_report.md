@@ -92,41 +92,120 @@ invalid JSON) to show the scorer reports each of them.
 
 ## 5. Live results
 
-*Pending. Fill from `evaluation/runs/live-<id>/report.md` after the run; copy the numbers, do not restate them from memory.*
+Everything in 5.1 and 5.2 is copied from `evaluation/runs/live-*/scores.json` and `metadata.json`; none of it is
+restated from memory. All four runs are kept as the **baseline**. They are reported together, not as a best run.
 
-| Measure | Result |
-|---|---|
-| Model requested / reported by API | |
-| Extraction, model view | |
-| Extraction, after verification | |
-| Evidence verbatim / supports correct value / supports claimed value | |
-| Verifier false accepts / false rejects | |
-| Fabricated line items | |
-| Arithmetic status agrees / printed value agrees | |
-| Exact rule set / including line attribution | |
-| Decision agreement (N/10, failures counted wrong) | |
-| Right decision, wrong intermediate | |
+### 5.1 Baseline: four runs, `gemini-3.5-flash-lite`, no response schema
 
-### Failure analysis
+All four runs used the same model, the same system prompt (SHA-256 `c8998d68...`), temperature 0, JSON mime type, and
+one retry. Runs 2 and 3 are marked dirty only because `src/extractor.py` differed from run 1 by a single line, the
+default model name (`gemini-3.8-flash` to `gemini-3.5-flash-lite`). That line cannot change a run that passes `--model`.
+By the recorded source hashes, runs 2 and 3 ran identical code (no file differs) and still scored 9/10 and 7/10 on
+decisions. Run 4 differs from run 2 only in `evaluation/evaluate.py` (text edits to the model name in help strings); no
+pipeline file differs between runs 2, 3 and 4.
 
-*Pending.* The run's `report.md` lists every discrepancy by pack under these categories; the root cause for each
-mismatch belongs here once it has been investigated: `API_FAILURE`, `INVALID_JSON`, `PDF_READ_FAILURE`, `WRONG_VALUE`,
-`MISSED_VALUE`, `SPURIOUS_VALUE`, `SPURIOUS_LINE`, `QUOTE_NOT_VERBATIM_ON_PAGE`, `QUOTE_WRONG_PAGE`,
-`QUOTE_DOES_NOT_SUPPORT_VALUE`, `QUOTE_DOES_NOT_SUPPORT_CLAIMED_VALUE`, `VERIFIER_FALSE_ACCEPT`,
-`VERIFIER_REJECTED_CORRECT_VALUE`, `VERIFIED_WRONG_VALUE`, `ABSENCE_NOT_ESTABLISHED`, `ARITHMETIC_INHERITED_FROM_EXTRACTION`,
-`ARITHMETIC_MISMATCH`, `RULES_DIFFER_AFTER_UPSTREAM_ERROR`, `RULES_DIFFER_NO_UPSTREAM_ERROR`,
-`RULE_ATTRIBUTED_TO_WRONG_ITEM`, `DECISION_MISMATCH`,
-`RIGHT_DECISION_WRONG_INTERMEDIATE`. The categories are assigned mechanically; a person must confirm each root cause.
-`VERIFIED_WRONG_VALUE` (a wrong value that passed verification) and `RULES_DIFFER_NO_UPSTREAM_ERROR` (a rule-engine
-or ground-truth problem) deserve attention first.
+| | Run 1 | Run 2 | Run 3 | Run 4 |
+|---|---|---|---|---|
+| Run id | `20261104T122226Z` | `20261104T122945Z` | `20261104T123446Z` | `20261104T124853Z` |
+| Commit / tree | `7ddc6c6` clean | `7ddc6c6` dirty | `7ddc6c6` dirty | `63db0d0` clean |
+| Model reported by API | gemini-3.5-flash-lite | gemini-3.5-flash-lite | gemini-3.5-flash-lite | gemini-3.5-flash-lite |
+| Packs that failed extraction | 03, 09 | 09 | 05, 09, 10 | 10 |
+| Decision agreement (failures counted wrong) | 8/10 | 9/10 | 7/10 | 9/10 |
+| Extraction fields correct, model view | 214/260 | 237/260 | 193/260 | 239/260 |
+| Extraction fields correct, after verification | 206/252 | 228/251 | 186/253 | 230/251 |
+| Value precision (values returned that were correct) | 176/176 | 199/199 | 155/155 | 201/201 |
+| Quotes verbatim on the claimed page | 168/168 | 190/190 | 148/148 | 192/192 |
+| Quotes supporting the correct value | 168/168 | 190/190 | 148/148 | 192/192 |
+| Quotes supporting the value the model claimed | 168/168 | 190/190 | 148/148 | 192/192 |
+| Verifier false accepts / false rejects | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+| Fabricated (spurious) line items | 0 | 0 | 0 | 0 |
+| Arithmetic status agrees | 29/37 | 33/37 | 28/37 | 36/37 |
+| Exact rule set | 8/10 | 9/10 | 7/10 | 9/10 |
+| Right decision, wrong intermediate | 0 | 0 | 0 | 0 |
+
+Arithmetic and rule counts include the packs that failed extraction, which score as wrong; evidence counts cover only
+the packs that parsed. This is why the denominators of the evidence rows change from run to run.
+
+**Processing reliability.** 7 of 40 pack-runs (17.5%) ended in a processing failure after the retry (observed
+reliability 82.5%). Per run: 2, 1, 3 and 1 of 10. Pack 09 failed in runs 1 to 3 and processed in run 4 (on the retry);
+pack 10 failed in runs 3 and 4; packs 03 and 05 failed once each. Which packs fail changes from run to run at
+temperature 0, so the failure set of a single run is not a property of a pack.
+
+**Conditional quality.** On every pack that parsed, in every run: every value returned was correct (value precision
+100% in all four runs), every quote was verbatim and supported the claimed value, there were no verifier false accepts
+or rejects, and no fabricated line items. All arithmetic checks, rule sets and decisions agreed with the key for those
+packs. These statements are conditional on the pack having parsed, and they are in-sample (section 6).
+
+**Decision accuracy versus processing reliability.** A failed pack is fail-closed to NEEDS_REVIEW, which is a safe
+outcome but not a classification. The scorer counts every failed pack as a decision mismatch, even pack 09, where the
+key itself expects NEEDS_REVIEW, because the pipeline never examined the document. That is an end-to-end mismatch caused
+by a processing failure, not evidence that the rule engine judged any pack wrongly. In every run the only decision
+mismatches are the packs that failed extraction. Run 4: 9/10, the mismatch being pack 10
+(expected REJECT, returned NEEDS_REVIEW after the failed extraction).
+
+**Pack 09** (printed line total 322,000 against 50,000 x 6.40 = 320,000) is the deliberate arithmetic trap. It first
+processed in run 4 and was fully right: NEEDS_REVIEW, exactly the expected rules NR-03 and NR-06, with the mismatch
+reported as 320,000.00 calculated against 322,000.00 printed.
+
+### 5.2 Failure analysis: all seven failed pack-runs
+
+Each failure was checked from its saved `raw/` responses and its `results/` error, not inferred from another pack.
+
+| Run | Pack | Attempts | What the response was | Validation errors at |
+|---|---|---|---|---|
+| 1 | 03 | 2 | valid JSON, line item is a flat object of strings | `line_items.*` only |
+| 1 | 09 | 2 | same | `line_items.*` only |
+| 2 | 09 | 2 | same | `line_items.*` only |
+| 3 | 05 | 2 | same | `line_items.*` only |
+| 3 | 09 | 2 | same | `line_items.*` only |
+| 3 | 10 | 2 | same | `line_items.*` only |
+| 4 | 10 | 2 | same | `line_items.*` only |
+
+* **All 14 attempts** (7 failures x 2) returned valid JSON. Re-validating each against `RawExtraction` gave errors under
+  `line_items` only, with none outside it. The model
+  wrote each line item as one object of plain strings with a single `source_quote` for the row, instead of one
+  `{value, source_quote, page_number}` object per field. No top-level field failed validation in any failed attempt.
+* **The error label is a misnomer.** The pipeline reports these as `extraction_invalid_json` (and the scorer as
+  `INVALID_JSON`), but they are schema-conformance failures of well-formed JSON. The code was left unchanged; read it as
+  "response did not match the required structure".
+* **The retry helps sometimes.** 10 of the 33 successful pack-runs needed their second call. On the 7 failed pack-runs
+  the second attempt had the same flat shape (the two attempts for pack 09 in run 3 were byte-identical). So the retry
+  recovers some failures and cannot be relied on to recover them all.
+* **Probable contributing cause (a hypothesis, not established).** The system prompt says every field is a
+  `{value, source_quote, page_number}` object, but its line-item paragraph says the `source_quote` is "the ENTIRE table
+  row", which can be read as one quote per row. The model's flat output matches that reading. The prompt was
+  deliberately left unchanged (5.3).
+* **No answer-key problem and no rule-engine problem** was found in any run: the mismatches are the failed packs.
+* **Line-item pairing.** Packs are matched to both answer keys by filename. Line items within a pack are paired by
+  position (line n of the response with line n of the key). For all 33 well-shaped responses in the four runs the
+  returned `item_code` sequence equals the key's, so positional pairing did not affect any result; it would score a
+  reordered response as wrong, never as right.
+
+### 5.3 After the response schema (pending, reported separately)
+
+**Change.** Every request now carries a response schema (`src/extractor.py`, `RESPONSE_SCHEMA`) built from
+`RawExtraction`, requiring `{value, source_quote, page_number}` for every field including each line-item field. The
+Pydantic validation, the single retry, the fail-closed NEEDS_REVIEW result, the system prompt (hash pinned by a test)
+and the model are unchanged, so the run differs from the baseline in this one request setting. The evaluator records
+the schema hash in `metadata.json` (`generation_config.response_schema_sha256`) and per call, and replay flags a
+changed schema as drift.
+
+**Procedure.** Commit; confirm a clean tree; run `python evaluation/evaluate.py live --model gemini-3.5-flash-lite`;
+keep the folder as its own run. Do not merge it with the baseline runs and do not drop any baseline run. Compare
+processing reliability (failed pack-runs of 10) and decision agreement against the baseline spread of 1 to 3 failed
+packs and 7/10 to 9/10 decisions. One post-fix run is a small sample; repeat it if the comparison matters. Investigate
+any failure from its `raw/` files before drawing a conclusion.
+
+**Results.** *None yet. No post-fix run has been made.*
 
 ## 6. Limitations
 
 * **Not held out.** The extraction prompt was developed against these same ten packs in M3, so live results are
   in-sample for the prompt. They show the pipeline works on this assessment set, not how it generalises.
 * **Small and synthetic.** Ten one-page, single-line-item packs. Percentages carry wide uncertainty; one pack is 10 points.
-* **One model, one run.** Temperature 0 is not a determinism guarantee for the API. A single run does not show run-to-run
-  variation; repeat it before drawing conclusions about small differences.
+* **One model, four baseline runs.** Temperature 0 is not a determinism guarantee: runs 2 and 3 used identical code
+  and differ by 17 points of field accuracy and 2 of 10 decisions, purely through which packs failed. Report the spread,
+  not the best run. Four runs of one model say nothing about other models.
 * **Single-annotator ground truth.** The field key is AI-drafted and unreviewed (section 3). The decision key is a single
   person's manual reading, and pack 08 is rated MEDIUM confidence.
 * **Evidence "supports" check is heuristic.** It uses number, period and keyword matching, and is not defined for a few

@@ -68,6 +68,16 @@ def _setting(config, name):
     return config.get(name) if isinstance(config, dict) else getattr(config, name, None)
 
 
+def _schema_sha(schema) -> str | None:
+    """SHA-256 of a response schema in canonical JSON, or None when no schema is set. Runs before the response-schema
+    change carry no such setting, so None means 'no schema was sent', not 'unknown'."""
+    if schema is None:
+        return None
+    if hasattr(schema, "model_dump"):
+        schema = schema.model_dump(mode="json", exclude_none=True)
+    return _sha(json.dumps(schema, sort_keys=True))
+
+
 class _Response:
     """What extractor._generate reads from a response: only ``.text``."""
 
@@ -89,6 +99,7 @@ class RecordingClient:
                   "system_instruction_sha256": _sha(_setting(config, "system_instruction") or ""),
                   "temperature": _setting(config, "temperature"),
                   "response_mime_type": _setting(config, "response_mime_type"),
+                  "response_schema_sha256": _schema_sha(_setting(config, "response_schema")),
                   "started_utc": datetime.now(timezone.utc).isoformat()}
         start = time.monotonic()
         try:
@@ -127,6 +138,12 @@ class ReplayClient:
                  _sha(_setting(config, "system_instruction") or ""))):
             if recorded is not None and recorded != now:
                 self.drift.append({"call": call, "what": what, "recorded": recorded, "now": now})
+        # The response schema is part of the request: a recorded run that sent one must be replayed against the same
+        # one. Older runs and fixtures recorded none (key absent), so they are not compared.
+        if "response_schema_sha256" in record:
+            recorded, now = record["response_schema_sha256"], _schema_sha(_setting(config, "response_schema"))
+            if recorded != now:
+                self.drift.append({"call": call, "what": "response_schema_sha256", "recorded": recorded, "now": now})
 
     def generate_content(self, *, model, config, contents):
         if self._next >= len(self.attempts):
@@ -228,7 +245,9 @@ def collect_metadata(mode: str, packs: list[Path], all_attempts: dict[str, list[
             "note": ("model and version were not recorded when these fixtures were captured" if mode == FIXTURES else None),
         },
         "generation_config": {"temperature": 0, "response_mime_type": "application/json",
-                              "system_instruction_sha256": _sha(system_instruction), "max_attempts": extractor.MAX_ATTEMPTS,
+                              "system_instruction_sha256": _sha(system_instruction),
+                              "response_schema_sha256": _schema_sha(extractor.RESPONSE_SCHEMA),
+                              "max_attempts": extractor.MAX_ATTEMPTS,
                               "retry_delay_s": extractor.RETRY_DELAY_SECONDS},
         "prompt": {"system_instruction_sha256": _sha(system_instruction),
                    "contents_sha256_per_pack": {p: sorted({a["contents_sha256"] for a in att if "contents_sha256" in a})

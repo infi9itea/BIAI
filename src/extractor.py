@@ -171,6 +171,41 @@ def build_prompt(pdf_result: dict[str, Any], pr: PurchaseRequest) -> tuple[str, 
     return SYSTEM_INSTRUCTION, contents
 
 
+# The response schema sent with every call (post-M6 change). In the first four live runs 7 of 40 pack-runs failed
+# because the model returned each line item as one flat object of plain strings instead of one
+# {value, source_quote, page_number} object per field. Every one of those responses was valid JSON that failed the
+# RawExtraction validation below. The schema asks the API to produce the right shape. It replaces nothing: the
+# Pydantic validation, the single retry and the fail-closed NEEDS_REVIEW behaviour are unchanged, and the system
+# prompt is unchanged, so a run with and without the schema differs in this one request setting.
+# Built from the models, so it cannot drift from them (tests/test_extractor_schema.py checks this).
+_RAW_FIELD_TYPES = {"value": "STRING", "source_quote": "STRING", "page_number": "INTEGER"}
+
+
+def _raw_field_schema() -> dict[str, Any]:
+    names = list(RawField.model_fields)
+    return {
+        "type": "OBJECT",
+        "properties": {name: {"type": _RAW_FIELD_TYPES[name], "nullable": True} for name in names},
+        "required": names,  # absent fields are explicit nulls, as the system prompt already asks
+    }
+
+
+def build_response_schema() -> dict[str, Any]:
+    line_names = list(RawLineItem.model_fields)
+    line = {
+        "type": "OBJECT",
+        "properties": {name: _raw_field_schema() for name in line_names},
+        "required": line_names,
+    }
+    names = list(RawExtraction.model_fields)
+    properties = {name: (_raw_field_schema() if name != "line_items" else {"type": "ARRAY", "items": line})
+                  for name in names}
+    return {"type": "OBJECT", "properties": properties, "required": names}
+
+
+RESPONSE_SCHEMA = build_response_schema()
+
+
 def _get_client() -> Any:
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
@@ -181,7 +216,8 @@ def _get_client() -> Any:
 
 
 def _generate(client: Any, system_instruction: str, contents: str) -> str:
-    settings = dict(system_instruction=system_instruction, response_mime_type="application/json", temperature=0)
+    settings = dict(system_instruction=system_instruction, response_mime_type="application/json", temperature=0,
+                    response_schema=RESPONSE_SCHEMA)
     try:
         from google.genai import types
 
