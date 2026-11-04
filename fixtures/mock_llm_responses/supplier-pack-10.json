@@ -1,0 +1,136 @@
+{
+  "supplier_name": {
+    "value": "Kushiyara Box Industries",
+    "source_quote": "Kushiyara Box Industries",
+    "page_number": 1
+  },
+  "tin": {
+    "value": "110458103391",
+    "source_quote": "TIN: 110458103391",
+    "page_number": 1
+  },
+  "bin": {
+    "value": "001071041-0101",
+    "source_quote": "BIN: 001071041-0101",
+    "page_number": 1
+  },
+  "line_items": [
+    {
+      "item_code": {
+        "value": "E",
+        "source_quote": "E Carton box, 5-ply 3,000 piece 94.00 282,000.00",
+        "page_number": 1
+      },
+      "description": {
+        "value": "Carton box, 5-ply",
+        "source_quote": "E Carton box, 5-ply 3,000 piece 94.00 282,000.00",
+        "page_number": 1
+      },
+      "quantity": {
+        "value": "3,000",
+        "source_quote": "E Carton box, 5-ply 3,000 piece 94.00 282,000.00",
+        "page_number": 1
+      },
+      "unit": {
+        "value": "piece",
+        "source_quote": "E Carton box, 5-ply 3,000 piece 94.00 282,000.00",
+        "page_number": 1
+      },
+      "unit_price_bdt": {
+        "value": "94.00",
+        "source_quote": "E Carton box, 5-ply 3,000 piece 94.00 282,000.00",
+        "page_number": 1
+      },
+      "line_total_bdt": {
+        "value": "282,000.00",
+        "source_quote": "E Carton box, 5-ply 3,000 piece 94.00 282,000.00",
+        "page_number": 1
+      },
+      "vat_included_in_price": {
+        "value": "yes",
+        "source_quote": "VAT included",
+        "page_number": 1
+      }
+    }
+  ],
+  "subtotal_bdt": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "vat_rate_pct": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "vat_amount_bdt": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "grand_total_bdt": {
+    "value": "282,000.00",
+    "source_quote": "Total (all taxes included) 282,000.00",
+    "page_number": 1
+  },
+  "vat_shown_separately": {
+    "value": "no",
+    "source_quote": "Total (all taxes included)",
+    "page_number": 1
+  },
+  "vat_price_basis": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "delivery_period": {
+    "value": "60 days",
+    "source_quote": "Delivery within 60 days of PO.",
+    "page_number": 1
+  },
+  "payment_terms_wording": {
+    "value": "Payment within 45 days of delivery.",
+    "source_quote": "Payment within 45 days of delivery.",
+    "page_number": 1
+  },
+  "payment_period": {
+    "value": "45 days",
+    "source_quote": "Payment within 45 days of delivery.",
+    "page_number": 1
+  },
+  "advance_payment_pct": {
+    "value": "10",
+    "source_quote": "10% advance payable with the purchase order.",
+    "page_number": 1
+  },
+  "penalty_wording": {
+    "value": "Late delivery penalty of 0.5% of order value per week.",
+    "source_quote": "Late delivery penalty of 0.5% of order value per week.",
+    "page_number": 1
+  },
+  "penalty_rate_pct": {
+    "value": "0.5",
+    "source_quote": "Late delivery penalty of 0.5% of order value per week.",
+    "page_number": 1
+  },
+  "penalty_calculation_basis": {
+    "value": "order value",
+    "source_quote": "Late delivery penalty of 0.5% of order value per week.",
+    "page_number": 1
+  },
+  "penalty_period": {
+    "value": "per week",
+    "source_quote": "Late delivery penalty of 0.5% of order value per week.",
+    "page_number": 1
+  },
+  "penalty_full_weeks_only": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "validity_period": {
+    "value": "30 days",
+    "source_quote": "This quotation is valid for 30 days from the date above.",
+    "page_number": 1
+  }
+}

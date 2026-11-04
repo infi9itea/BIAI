@@ -1,0 +1,136 @@
+{
+  "supplier_name": {
+    "value": "Surma Packaging Industries",
+    "source_quote": "Surma Packaging Industries",
+    "page_number": 1
+  },
+  "tin": {
+    "value": "104458043391",
+    "source_quote": "TIN: 104458043391",
+    "page_number": 1
+  },
+  "bin": {
+    "value": "000470441-0101",
+    "source_quote": "BIN: 000470441-0101",
+    "page_number": 1
+  },
+  "line_items": [
+    {
+      "item_code": {
+        "value": "D",
+        "source_quote": "D Poly bag, 30 x 40 cm 50,000 piece 6.65 332,500.00",
+        "page_number": 1
+      },
+      "description": {
+        "value": "Poly bag, 30 x 40 cm",
+        "source_quote": "D Poly bag, 30 x 40 cm 50,000 piece 6.65 332,500.00",
+        "page_number": 1
+      },
+      "quantity": {
+        "value": "50,000",
+        "source_quote": "D Poly bag, 30 x 40 cm 50,000 piece 6.65 332,500.00",
+        "page_number": 1
+      },
+      "unit": {
+        "value": "piece",
+        "source_quote": "D Poly bag, 30 x 40 cm 50,000 piece 6.65 332,500.00",
+        "page_number": 1
+      },
+      "unit_price_bdt": {
+        "value": "6.65",
+        "source_quote": "D Poly bag, 30 x 40 cm 50,000 piece 6.65 332,500.00",
+        "page_number": 1
+      },
+      "line_total_bdt": {
+        "value": "332,500.00",
+        "source_quote": "D Poly bag, 30 x 40 cm 50,000 piece 6.65 332,500.00",
+        "page_number": 1
+      },
+      "vat_included_in_price": {
+        "value": null,
+        "source_quote": null,
+        "page_number": null
+      }
+    }
+  ],
+  "subtotal_bdt": {
+    "value": "332,500.00",
+    "source_quote": "Subtotal 332,500.00",
+    "page_number": 1
+  },
+  "vat_rate_pct": {
+    "value": "15",
+    "source_quote": "VAT 15% 49,875.00",
+    "page_number": 1
+  },
+  "vat_amount_bdt": {
+    "value": "49,875.00",
+    "source_quote": "VAT 15% 49,875.00",
+    "page_number": 1
+  },
+  "grand_total_bdt": {
+    "value": "382,375.00",
+    "source_quote": "Total 382,375.00",
+    "page_number": 1
+  },
+  "vat_shown_separately": {
+    "value": "yes",
+    "source_quote": "VAT 15% 49,875.00",
+    "page_number": 1
+  },
+  "vat_price_basis": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "delivery_period": {
+    "value": "28 days",
+    "source_quote": "Delivery within 28 days of PO.",
+    "page_number": 1
+  },
+  "payment_terms_wording": {
+    "value": "Payment within 30 days after delivery.",
+    "source_quote": "Payment within 30 days after delivery.",
+    "page_number": 1
+  },
+  "payment_period": {
+    "value": "30 days",
+    "source_quote": "Payment within 30 days after delivery.",
+    "page_number": 1
+  },
+  "advance_payment_pct": {
+    "value": "10",
+    "source_quote": "10% advance payable with the purchase order.",
+    "page_number": 1
+  },
+  "penalty_wording": {
+    "value": "Late delivery penalty of 0.6% of order value per week.",
+    "source_quote": "Late delivery penalty of 0.6% of order value per week.",
+    "page_number": 1
+  },
+  "penalty_rate_pct": {
+    "value": "0.6",
+    "source_quote": "Late delivery penalty of 0.6% of order value per week.",
+    "page_number": 1
+  },
+  "penalty_calculation_basis": {
+    "value": "order value",
+    "source_quote": "Late delivery penalty of 0.6% of order value per week.",
+    "page_number": 1
+  },
+  "penalty_period": {
+    "value": "per week",
+    "source_quote": "Late delivery penalty of 0.6% of order value per week.",
+    "page_number": 1
+  },
+  "penalty_full_weeks_only": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "validity_period": {
+    "value": "40 days",
+    "source_quote": "This quotation is valid for 40 days from the date above.",
+    "page_number": 1
+  }
+}

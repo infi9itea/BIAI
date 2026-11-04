@@ -1,0 +1,136 @@
+{
+  "supplier_name": {
+    "value": "Bhairab Thread and Co",
+    "source_quote": "Bhairab Thread and Co",
+    "page_number": 1
+  },
+  "tin": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "bin": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "line_items": [
+    {
+      "item_code": {
+        "value": "C",
+        "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+        "page_number": 1
+      },
+      "description": {
+        "value": "Polyester sewing thread, cone",
+        "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+        "page_number": 1
+      },
+      "quantity": {
+        "value": "800",
+        "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+        "page_number": 1
+      },
+      "unit": {
+        "value": "cone",
+        "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+        "page_number": 1
+      },
+      "unit_price_bdt": {
+        "value": "205.00",
+        "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+        "page_number": 1
+      },
+      "line_total_bdt": {
+        "value": "164,000.00",
+        "source_quote": "C Polyester sewing thread, cone 800 cone 205.00 164,000.00",
+        "page_number": 1
+      },
+      "vat_included_in_price": {
+        "value": null,
+        "source_quote": null,
+        "page_number": null
+      }
+    }
+  ],
+  "subtotal_bdt": {
+    "value": "164,000.00",
+    "source_quote": "Subtotal 164,000.00",
+    "page_number": 1
+  },
+  "vat_rate_pct": {
+    "value": "15",
+    "source_quote": "VAT 15% 24,600.00",
+    "page_number": 1
+  },
+  "vat_amount_bdt": {
+    "value": "24,600.00",
+    "source_quote": "VAT 15% 24,600.00",
+    "page_number": 1
+  },
+  "grand_total_bdt": {
+    "value": "188,600.00",
+    "source_quote": "Total 188,600.00",
+    "page_number": 1
+  },
+  "vat_shown_separately": {
+    "value": "yes",
+    "source_quote": "VAT 15% 24,600.00",
+    "page_number": 1
+  },
+  "vat_price_basis": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "delivery_period": {
+    "value": "18 days",
+    "source_quote": "Delivery within 18 days of PO.",
+    "page_number": 1
+  },
+  "payment_terms_wording": {
+    "value": "Payment within 30 days of delivery.",
+    "source_quote": "Payment within 30 days of delivery.",
+    "page_number": 1
+  },
+  "payment_period": {
+    "value": "30 days",
+    "source_quote": "Payment within 30 days of delivery.",
+    "page_number": 1
+  },
+  "advance_payment_pct": {
+    "value": "10",
+    "source_quote": "10% advance payable with the purchase order.",
+    "page_number": 1
+  },
+  "penalty_wording": {
+    "value": "Late delivery penalty of 0.5% per week of delay.",
+    "source_quote": "Late delivery penalty of 0.5% per week of delay.",
+    "page_number": 1
+  },
+  "penalty_rate_pct": {
+    "value": "0.5",
+    "source_quote": "Late delivery penalty of 0.5% per week of delay.",
+    "page_number": 1
+  },
+  "penalty_calculation_basis": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "penalty_period": {
+    "value": "per week",
+    "source_quote": "Late delivery penalty of 0.5% per week of delay.",
+    "page_number": 1
+  },
+  "penalty_full_weeks_only": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "validity_period": {
+    "value": "30 days",
+    "source_quote": "This quotation is valid for 30 days from the date above.",
+    "page_number": 1
+  }
+}

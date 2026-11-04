@@ -1,0 +1,136 @@
+{
+  "supplier_name": {
+    "value": "Padma Textile Mills Ltd",
+    "source_quote": "Padma Textile Mills Ltd",
+    "page_number": 1
+  },
+  "tin": {
+    "value": "101458013391",
+    "source_quote": "Supplier TIN: 101458013391",
+    "page_number": 1
+  },
+  "bin": {
+    "value": "000170141-0101",
+    "source_quote": "BIN: 000170141-0101",
+    "page_number": 1
+  },
+  "line_items": [
+    {
+      "item_code": {
+        "value": "A",
+        "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+        "page_number": 1
+      },
+      "description": {
+        "value": "Cotton twill fabric, 280 gsm",
+        "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+        "page_number": 1
+      },
+      "quantity": {
+        "value": "12,000",
+        "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+        "page_number": 1
+      },
+      "unit": {
+        "value": "metre",
+        "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+        "page_number": 1
+      },
+      "unit_price_bdt": {
+        "value": "472.00",
+        "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+        "page_number": 1
+      },
+      "line_total_bdt": {
+        "value": "5,664,000.00",
+        "source_quote": "A Cotton twill fabric, 280 gsm 12,000 metre 472.00 5,664,000.00",
+        "page_number": 1
+      },
+      "vat_included_in_price": {
+        "value": null,
+        "source_quote": null,
+        "page_number": null
+      }
+    }
+  ],
+  "subtotal_bdt": {
+    "value": "5,664,000.00",
+    "source_quote": "Subtotal 5,664,000.00",
+    "page_number": 1
+  },
+  "vat_rate_pct": {
+    "value": "15",
+    "source_quote": "VAT 15% 849,600.00",
+    "page_number": 1
+  },
+  "vat_amount_bdt": {
+    "value": "849,600.00",
+    "source_quote": "VAT 15% 849,600.00",
+    "page_number": 1
+  },
+  "grand_total_bdt": {
+    "value": "6,513,600.00",
+    "source_quote": "Total 6,513,600.00",
+    "page_number": 1
+  },
+  "vat_shown_separately": {
+    "value": "yes",
+    "source_quote": "VAT 15% 849,600.00",
+    "page_number": 1
+  },
+  "vat_price_basis": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "delivery_period": {
+    "value": "24 days",
+    "source_quote": "Delivery within 24 days of receiving the purchase order.",
+    "page_number": 1
+  },
+  "payment_terms_wording": {
+    "value": "Balance payable within 45 days after delivery and acceptance of goods.",
+    "source_quote": "Balance payable within 45 days after delivery and acceptance of goods.",
+    "page_number": 1
+  },
+  "payment_period": {
+    "value": "45 days",
+    "source_quote": "Balance payable within 45 days after delivery and acceptance of goods.",
+    "page_number": 1
+  },
+  "advance_payment_pct": {
+    "value": "10",
+    "source_quote": "10% advance payable with the purchase order.",
+    "page_number": 1
+  },
+  "penalty_wording": {
+    "value": "Late delivery penalty: 1% of order value for each full week of delay.",
+    "source_quote": "Late delivery penalty: 1% of order value for each full week of delay.",
+    "page_number": 1
+  },
+  "penalty_rate_pct": {
+    "value": "1",
+    "source_quote": "Late delivery penalty: 1% of order value for each full week of delay.",
+    "page_number": 1
+  },
+  "penalty_calculation_basis": {
+    "value": "order value",
+    "source_quote": "Late delivery penalty: 1% of order value for each full week of delay.",
+    "page_number": 1
+  },
+  "penalty_period": {
+    "value": "each full week of delay",
+    "source_quote": "Late delivery penalty: 1% of order value for each full week of delay.",
+    "page_number": 1
+  },
+  "penalty_full_weeks_only": {
+    "value": "yes",
+    "source_quote": "Late delivery penalty: 1% of order value for each full week of delay.",
+    "page_number": 1
+  },
+  "validity_period": {
+    "value": "45 days",
+    "source_quote": "This quotation is valid for 45 days from the date above.",
+    "page_number": 1
+  }
+}

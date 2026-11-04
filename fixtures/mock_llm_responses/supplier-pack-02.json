@@ -1,0 +1,136 @@
+{
+  "supplier_name": {
+    "value": "Jamuna Trims and Accessories",
+    "source_quote": "Jamuna Trims and Accessories",
+    "page_number": 1
+  },
+  "tin": {
+    "value": "102458023391",
+    "source_quote": "Supplier TIN: 102458023391",
+    "page_number": 1
+  },
+  "bin": {
+    "value": "000270241-0101",
+    "source_quote": "BIN: 000270241-0101",
+    "page_number": 1
+  },
+  "line_items": [
+    {
+      "item_code": {
+        "value": "B",
+        "source_quote": "B Metal zipper, 18 cm 20,000 piece 36.00 720,000.00",
+        "page_number": 1
+      },
+      "description": {
+        "value": "Metal zipper, 18 cm",
+        "source_quote": "B Metal zipper, 18 cm 20,000 piece 36.00 720,000.00",
+        "page_number": 1
+      },
+      "quantity": {
+        "value": "20,000",
+        "source_quote": "B Metal zipper, 18 cm 20,000 piece 36.00 720,000.00",
+        "page_number": 1
+      },
+      "unit": {
+        "value": "piece",
+        "source_quote": "B Metal zipper, 18 cm 20,000 piece 36.00 720,000.00",
+        "page_number": 1
+      },
+      "unit_price_bdt": {
+        "value": "36.00",
+        "source_quote": "B Metal zipper, 18 cm 20,000 piece 36.00 720,000.00",
+        "page_number": 1
+      },
+      "line_total_bdt": {
+        "value": "720,000.00",
+        "source_quote": "B Metal zipper, 18 cm 20,000 piece 36.00 720,000.00",
+        "page_number": 1
+      },
+      "vat_included_in_price": {
+        "value": null,
+        "source_quote": null,
+        "page_number": null
+      }
+    }
+  ],
+  "subtotal_bdt": {
+    "value": "720,000.00",
+    "source_quote": "Subtotal 720,000.00",
+    "page_number": 1
+  },
+  "vat_rate_pct": {
+    "value": "15",
+    "source_quote": "VAT 15% 108,000.00",
+    "page_number": 1
+  },
+  "vat_amount_bdt": {
+    "value": "108,000.00",
+    "source_quote": "VAT 15% 108,000.00",
+    "page_number": 1
+  },
+  "grand_total_bdt": {
+    "value": "828,000.00",
+    "source_quote": "Total 828,000.00",
+    "page_number": 1
+  },
+  "vat_shown_separately": {
+    "value": "yes",
+    "source_quote": "VAT 15% 108,000.00",
+    "page_number": 1
+  },
+  "vat_price_basis": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "delivery_period": {
+    "value": "21 days",
+    "source_quote": "2. Delivery. Goods will be delivered at your factory within 21 days from the date of PO.",
+    "page_number": 1
+  },
+  "payment_terms_wording": {
+    "value": "Full payment within 30 days of delivery.",
+    "source_quote": "Full payment within 30 days of delivery.",
+    "page_number": 1
+  },
+  "payment_period": {
+    "value": "30 days",
+    "source_quote": "Full payment within 30 days of delivery.",
+    "page_number": 1
+  },
+  "advance_payment_pct": {
+    "value": "0",
+    "source_quote": "No advance payment required.",
+    "page_number": 1
+  },
+  "penalty_wording": {
+    "value": "For late delivery the supplier shall pay 0.75% of the order value per week of delay.",
+    "source_quote": "For late delivery the supplier shall pay 0.75% of the order value per week of delay.",
+    "page_number": 1
+  },
+  "penalty_rate_pct": {
+    "value": "0.75",
+    "source_quote": "For late delivery the supplier shall pay 0.75% of the order value per week of delay.",
+    "page_number": 1
+  },
+  "penalty_calculation_basis": {
+    "value": "order value",
+    "source_quote": "For late delivery the supplier shall pay 0.75% of the order value per week of delay.",
+    "page_number": 1
+  },
+  "penalty_period": {
+    "value": "per week",
+    "source_quote": "For late delivery the supplier shall pay 0.75% of the order value per week of delay.",
+    "page_number": 1
+  },
+  "penalty_full_weeks_only": {
+    "value": null,
+    "source_quote": null,
+    "page_number": null
+  },
+  "validity_period": {
+    "value": "30 days",
+    "source_quote": "This quotation is valid for 30 days from the date above.",
+    "page_number": 1
+  }
+}
