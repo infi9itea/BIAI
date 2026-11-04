@@ -1,0 +1,6 @@
+tests/
+evaluation/
+docs/
+scripts/
+.venv/
+outputs/

@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Supplier Document Checker – Demo</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f7f6f2;--card:#fff;--fg:#1d1d1b;--mut:#6b6b66;--bd:#dedcd4;--ok:#1a7f4b;--no:#c23b2e;--rv:#b7791f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171716;--card:#222220;--fg:#eeeeea;--mut:#9a9a93;--bd:#383835;--ok:#4cc38a;--no:#f0766a;--rv:#e5b04a}}
+:root[data-theme="dark"]{--bg:#171716;--card:#222220;--fg:#eeeeea;--mut:#9a9a93;--bd:#383835;--ok:#4cc38a;--no:#f0766a;--rv:#e5b04a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:920px;margin:0 auto;padding:20px 16px 48px}h1{font-size:22px;margin:0 0 4px}p.s{color:var(--mut);margin:0 0 16px}
+.sum{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.chip{padding:4px 12px;border-radius:99px;border:1px solid var(--bd);background:var(--card);font-size:13px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;margin-bottom:10px}
+.hd{display:flex;gap:10px;align-items:center;padding:12px 14px;cursor:pointer;width:100%;background:none;border:0;color:inherit;font:inherit;text-align:left}
+.b{font-weight:600;font-size:12px;padding:3px 10px;border-radius:6px;color:#fff;white-space:nowrap}
+.APPROVE{background:var(--ok)}.REJECT{background:var(--no)}.NEEDS_REVIEW{background:var(--rv)}
+.nm{font-weight:600}.rs{color:var(--mut);font-size:13px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bd{display:none;padding:0 14px 14px;border-top:1px solid var(--bd)}.open .bd{display:block}
+h3{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut);margin:14px 0 6px}
+.f{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px}.f div{font-size:13px;background:var(--bg);padding:6px 8px;border-radius:6px;overflow-wrap:anywhere}.f b{display:block;color:var(--mut);font-weight:500;font-size:11px}
+.r{padding:8px 0;border-bottom:1px solid var(--bd);font-size:13px}.r:last-child{border:0}.st{font-weight:700;font-size:11px;margin-right:6px}
+.FAIL{color:var(--no)}.UNCERTAIN{color:var(--rv)}.PASS{color:var(--ok)}
+q{display:block;margin:4px 0 0 0;padding-left:8px;border-left:2px solid var(--bd);color:var(--mut);font-style:normal;quotes:none}
+.pre{white-space:pre-wrap;font-size:13px}.note{font-size:12px;color:var(--mut);margin-top:20px}
+label{font-size:13px;color:var(--mut)}
+</style></head><body><main>
+<h1>Supplier Document Checker</h1>
+<p class="s">Aamar Garments Ltd (fictional). Pick a sample pack, or upload your own quotation PDF. The model only extracts quotes; Python verifies them and makes the decision.</p>
+<div class="card" style="padding:14px"><h3 style="margin-top:0">Sample packs (replay, no API key)</h3><div id="samples" class="sum"></div>
+<h3>Upload a PDF (live Gemini)</h3><input type="file" id="file" accept="application/pdf"> <span id="live" class="note"></span></div>
+<div id="status" class="note"></div><div id="list"></div>
+<p class="note">Not a production system: no authentication, small synthetic test set. Failures fail closed to NEEDS REVIEW.</p>
+</main><script>
+const esc=s=>String(s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+const $=id=>document.getElementById(id);
+function val(f){return f&&f.state?(f.value||f.state):null}
+function render(x){
+ const d=x.decision,rules=x.rule_results.filter(r=>r.status!=='NOT_APPLICABLE'),bad=rules.filter(r=>r.status!=='PASS'),ok=rules.filter(r=>r.status==='PASS');
+ const fields=Object.entries(x.extracted||{}).filter(([k,v])=>!Array.isArray(v)&&val(v)).map(([k,v])=>[k,val(v)]);
+ const rr=r=>`<div class="r"><span class="st ${r.status}">${r.status}</span><b>${r.rule_id}</b> ${esc(r.description)}<div style="color:var(--mut)">${esc(r.detail)}</div>${(r.evidence_refs||[]).slice(0,2).map(q=>`<q>“${esc(q.source_quote)}” (p.${q.page_number})</q>`).join('')}</div>`;
+ const el=document.createElement('div');el.className='card open';
+ el.innerHTML=`<button class="hd"><span class="b ${d}">${d.replace('_',' ')}</span><span class="nm">${esc(x.pack_filename.replace('.pdf',''))}</span></button><div class="bd">
+ <h3>Why</h3><div class="pre">${esc(x.reason)}</div>
+ <h3>Extracted fields</h3><div class="f">${fields.map(([k,v])=>`<div><b>${esc(k)}</b>${esc(v)}</div>`).join('')}</div>
+ ${bad.length?`<h3>Rules raised</h3>${bad.map(rr).join('')}`:''}
+ <h3>Rules passed (${ok.length})</h3>${ok.map(r=>`<div class="r"><span class="st PASS">PASS</span><b>${r.rule_id}</b> ${esc(r.description)}</div>`).join('')}</div>`;
+ el.querySelector('.hd').onclick=()=>el.classList.toggle('open');
+ $('list').prepend(el);
+}
+async function go(p,opts,label){
+ $('status').textContent='Checking '+label+'…';
+ try{const r=await fetch(p,opts),j=await r.json();
+  if(!r.ok)throw new Error(j.error||r.status);render(j.result);$('status').textContent=j.mode==='live'?'Live Gemini run.':'Replay of saved extraction.';
+ }catch(e){$('status').textContent='Error: '+e.message}
+}
+fetch('/api/check').then(r=>r.json()).then(j=>{
+ $('samples').innerHTML=j.samples.map(s=>`<button class="chip" data-s="${s}" style="cursor:pointer;color:inherit">${s.replace('supplier-','')}</button>`).join('');
+ $('samples').onclick=e=>{const s=e.target.dataset.s;if(s)go('/api/check?sample='+s,{},s)};
+ $('live').textContent=j.live?'':'(live upload disabled: no API key on server)';$('file').disabled=!j.live;
+}).catch(()=>$('status').textContent='API unreachable');
+$('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;
+ if(f.size>4*1024*1024){$('status').textContent='PDF must be under 4 MB.';return}
+ go('/api/check?name='+encodeURIComponent(f.name),{method:'POST',headers:{'Content-Type':'application/pdf'},body:await f.arrayBuffer()},f.name)};
+</script></body></html>
