@@ -1,0 +1,794 @@
+{
+  "pack_filename": "supplier-pack-07.pdf",
+  "processing_status": "OK",
+  "processing_error_detail": null,
+  "extracted": {
+    "supplier_name": {
+      "state": "FOUND",
+      "value": "Rupsha Zipper Factory",
+      "evidence": {
+        "raw_value": "Rupsha Zipper Factory",
+        "normalized_value": "Rupsha Zipper Factory",
+        "source_quote": "Rupsha Zipper Factory",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "tin": {
+      "state": "FOUND",
+      "value": "107458073391",
+      "evidence": {
+        "raw_value": "107458073391",
+        "normalized_value": "107458073391",
+        "source_quote": "Supplier TIN: 107458073391",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "bin": {
+      "state": "FOUND",
+      "value": "000770741-0101",
+      "evidence": {
+        "raw_value": "000770741-0101",
+        "normalized_value": "000770741-0101",
+        "source_quote": "BIN: 000770741-0101",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "line_items": [
+      {
+        "item_code": {
+          "state": "FOUND",
+          "value": "B",
+          "evidence": {
+            "raw_value": "B",
+            "normalized_value": "B",
+            "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+            "page_number": 1,
+            "normalization_method": "text as written",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "description": {
+          "state": "FOUND",
+          "value": "Metal zipper, 18 cm",
+          "evidence": {
+            "raw_value": "Metal zipper, 18 cm",
+            "normalized_value": "Metal zipper, 18 cm",
+            "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+            "page_number": 1,
+            "normalization_method": "text as written",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "quantity": {
+          "state": "FOUND",
+          "value": "16500",
+          "evidence": {
+            "raw_value": "16,500",
+            "normalized_value": "16500",
+            "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+            "page_number": 1,
+            "normalization_method": "decimal",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "unit": {
+          "state": "FOUND",
+          "value": "piece",
+          "evidence": {
+            "raw_value": "piece",
+            "normalized_value": "piece",
+            "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+            "page_number": 1,
+            "normalization_method": "text as written",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "unit_price_bdt": {
+          "state": "FOUND",
+          "value": "35.00",
+          "evidence": {
+            "raw_value": "35.00",
+            "normalized_value": "35.00",
+            "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+            "page_number": 1,
+            "normalization_method": "decimal",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "line_total_bdt": {
+          "state": "FOUND",
+          "value": "577500.00",
+          "evidence": {
+            "raw_value": "577,500.00",
+            "normalized_value": "577500.00",
+            "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+            "page_number": 1,
+            "normalization_method": "decimal",
+            "verification_status": "VERIFIED"
+          },
+          "absence_evidence": null
+        },
+        "vat_included_in_price": {
+          "state": "UNKNOWN",
+          "value": null,
+          "evidence": null,
+          "absence_evidence": null
+        },
+        "item_code_match": "YES",
+        "description_match": "YES",
+        "unit_match": "YES"
+      }
+    ],
+    "subtotal_bdt": {
+      "state": "FOUND",
+      "value": "577500.00",
+      "evidence": {
+        "raw_value": "577,500.00",
+        "normalized_value": "577500.00",
+        "source_quote": "Subtotal 577,500.00",
+        "page_number": 1,
+        "normalization_method": "decimal",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "vat_rate_pct": {
+      "state": "FOUND",
+      "value": "15",
+      "evidence": {
+        "raw_value": "15",
+        "normalized_value": "15",
+        "source_quote": "VAT 15% 86,625.00",
+        "page_number": 1,
+        "normalization_method": "percentage points as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "vat_amount_bdt": {
+      "state": "FOUND",
+      "value": "86625.00",
+      "evidence": {
+        "raw_value": "86,625.00",
+        "normalized_value": "86625.00",
+        "source_quote": "VAT 15% 86,625.00",
+        "page_number": 1,
+        "normalization_method": "decimal",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "grand_total_bdt": {
+      "state": "FOUND",
+      "value": "664125.00",
+      "evidence": {
+        "raw_value": "664,125.00",
+        "normalized_value": "664125.00",
+        "source_quote": "Total 664,125.00",
+        "page_number": 1,
+        "normalization_method": "decimal",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "vat_shown_separately": {
+      "state": "FOUND",
+      "value": true,
+      "evidence": {
+        "raw_value": "yes",
+        "normalized_value": "true",
+        "source_quote": "VAT 15% 86,625.00",
+        "page_number": 1,
+        "normalization_method": "yes/no",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "vat_price_basis": {
+      "state": "FOUND",
+      "value": "subtotal",
+      "evidence": {
+        "raw_value": null,
+        "normalized_value": "subtotal",
+        "source_quote": "Subtotal 577,500.00 VAT 15% 86,625.00 Total 664,125.00",
+        "page_number": 1,
+        "normalization_method": "AMB-15: plain totals block (Subtotal row, VAT row, Total row, contiguous) read as VAT on the whole subtotal; established by layout, not by wording",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "delivery_original_wording": {
+      "state": "FOUND",
+      "value": "22 days",
+      "evidence": {
+        "raw_value": "22 days",
+        "normalized_value": "22 days",
+        "source_quote": "Delivery within 22 days of PO.",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "delivery_days": {
+      "state": "FOUND",
+      "value": 22,
+      "evidence": {
+        "raw_value": "22 days",
+        "normalized_value": "22",
+        "source_quote": "Delivery within 22 days of PO.",
+        "page_number": 1,
+        "normalization_method": "explicit days",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "payment": {
+      "state": "FOUND",
+      "original_wording": "Payment within 45 days of delivery.",
+      "min_days": 45,
+      "max_days": 45,
+      "anchor": "delivery",
+      "discretionary": false,
+      "evidence": {
+        "raw_value": "Payment within 45 days of delivery.",
+        "normalized_value": "45 to 45 days",
+        "source_quote": "Payment within 45 days of delivery.",
+        "page_number": 1,
+        "normalization_method": "explicit days",
+        "verification_status": "VERIFIED"
+      }
+    },
+    "advance_payment_pct": {
+      "state": "FOUND",
+      "value": "0",
+      "evidence": {
+        "raw_value": "0",
+        "normalized_value": "0",
+        "source_quote": "No advance payment required.",
+        "page_number": 1,
+        "normalization_method": "percentage points as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "advance_original_wording": "No advance payment required.",
+    "penalty": {
+      "state": "FOUND",
+      "original_wording": "Late delivery penalty: 0.5% of order value per week.",
+      "rate_pct": "0.5",
+      "calculation_basis": "order value",
+      "period_unit": "week",
+      "full_weeks_only": null,
+      "evidence": {
+        "raw_value": "Late delivery penalty: 0.5% of order value per week.",
+        "normalized_value": null,
+        "source_quote": "Late delivery penalty: 0.5% of order value per week.",
+        "page_number": 1,
+        "normalization_method": "clause wording",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "validity_original_wording": {
+      "state": "FOUND",
+      "value": "35 days",
+      "evidence": {
+        "raw_value": "35 days",
+        "normalized_value": "35 days",
+        "source_quote": "This quotation is valid for 35 days from the date above.",
+        "page_number": 1,
+        "normalization_method": "text as written",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "validity_days": {
+      "state": "FOUND",
+      "value": 35,
+      "evidence": {
+        "raw_value": "35 days",
+        "normalized_value": "35",
+        "source_quote": "This quotation is valid for 35 days from the date above.",
+        "page_number": 1,
+        "normalization_method": "explicit days",
+        "verification_status": "VERIFIED"
+      },
+      "absence_evidence": null
+    },
+    "claimed_without_evidence": []
+  },
+  "arithmetic_checks": [
+    {
+      "check_name": "line_recalc",
+      "item_id": "line-1",
+      "calculated": "577500.00",
+      "printed": "577500.00",
+      "status": "PASS",
+      "detail": "line-1 quantity × unit price: calculated 577500.00 vs printed 577500.00 (difference 0.00, tolerance 0.01)",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 printed line total",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        }
+      ],
+      "assumptions_applied": [
+        "AMB-09"
+      ]
+    },
+    {
+      "check_name": "independent_subtotal",
+      "item_id": null,
+      "calculated": "577500.00",
+      "printed": "577500.00",
+      "status": "PASS",
+      "detail": "independent subtotal (sum of recalculated lines): calculated 577500.00 vs printed 577500.00 (difference 0.00, tolerance 0.01)",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed subtotal",
+          "source_quote": "Subtotal 577,500.00",
+          "page_number": 1
+        }
+      ],
+      "assumptions_applied": [
+        "AMB-09"
+      ]
+    },
+    {
+      "check_name": "vat",
+      "item_id": null,
+      "calculated": "86625.00",
+      "printed": "86625.00",
+      "status": "PASS",
+      "detail": "VAT (independent subtotal × printed rate): calculated 86625.00 vs printed 86625.00 (difference 0.00, tolerance 0.01)",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT rate",
+          "source_quote": "VAT 15% 86,625.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT price basis",
+          "source_quote": "Subtotal 577,500.00 VAT 15% 86,625.00 Total 664,125.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT amount",
+          "source_quote": "VAT 15% 86,625.00",
+          "page_number": 1
+        }
+      ],
+      "assumptions_applied": [
+        "AMB-15",
+        "AMB-09"
+      ]
+    },
+    {
+      "check_name": "grand",
+      "item_id": null,
+      "calculated": "664125.00",
+      "printed": "664125.00",
+      "status": "PASS",
+      "detail": "grand total (independent subtotal + expected VAT): calculated 664125.00 vs printed 664125.00 (difference 0.00, tolerance 0.01)",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT rate",
+          "source_quote": "VAT 15% 86,625.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT price basis",
+          "source_quote": "Subtotal 577,500.00 VAT 15% 86,625.00 Total 664,125.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed grand total",
+          "source_quote": "Total 664,125.00",
+          "page_number": 1
+        }
+      ],
+      "assumptions_applied": [
+        "AMB-15",
+        "AMB-09"
+      ]
+    }
+  ],
+  "rule_results": [
+    {
+      "rule_id": "R-01",
+      "description": "Unit price is more than 3% above the maximum unit price in the purchase request.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": "line-1",
+      "detail": "line-1 (item B): supplier price 35.00 vs PR maximum 38.00; excess ratio -0.0789 (a fraction); VAT is a separate line, so the unit price is taken as VAT-exclusive",
+      "triggering_value": "35.00 BDT",
+      "evidence_refs": [
+        {
+          "label": "line-1 unit price",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT shown separately",
+          "source_quote": "VAT 15% 86,625.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-12",
+        "AMB-02",
+        "AMB-06"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-01",
+      "description": "Unit price is above the maximum, but by no more than 3%.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": "line-1",
+      "detail": "line-1 (item B): supplier price 35.00 vs PR maximum 38.00; excess ratio -0.0789 (a fraction); VAT is a separate line, so the unit price is taken as VAT-exclusive",
+      "triggering_value": "35.00 BDT",
+      "evidence_refs": [
+        {
+          "label": "line-1 unit price",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT shown separately",
+          "source_quote": "VAT 15% 86,625.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-12",
+        "AMB-02",
+        "AMB-06"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-02",
+      "description": "Quantity differs from the quantity requested by more than 5%.",
+      "status": "FAIL",
+      "severity": "REVIEW",
+      "item_id": "line-1",
+      "detail": "line-1 (item B): quoted quantity 16500 vs requested 20000; difference ratio 0.1750 (a fraction)",
+      "triggering_value": "16500",
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-06"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "R-02",
+      "description": "Advance payment is more than 20%.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": null,
+      "detail": "advance payment 0 percentage points vs limit 20",
+      "triggering_value": "0%",
+      "evidence_refs": [
+        {
+          "label": "advance payment",
+          "source_quote": "No advance payment required.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "R-03",
+      "description": "The contract has no late-delivery penalty clause.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": null,
+      "detail": "a late-delivery penalty clause is present",
+      "triggering_value": null,
+      "evidence_refs": [
+        {
+          "label": "penalty clause",
+          "source_quote": "Late delivery penalty: 0.5% of order value per week.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-04"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "R-04",
+      "description": "The supplier's TIN or BIN is missing.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": null,
+      "detail": "TIN and BIN are both present",
+      "triggering_value": null,
+      "evidence_refs": [
+        {
+          "label": "TIN",
+          "source_quote": "Supplier TIN: 107458073391",
+          "page_number": 1
+        },
+        {
+          "label": "BIN",
+          "source_quote": "BIN: 000770741-0101",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "R-05",
+      "description": "Delivery is promised later than 45 days after the purchase order.",
+      "status": "PASS",
+      "severity": "REJECT",
+      "item_id": null,
+      "detail": "delivery in 22 days vs limit 45 (strictly greater rejects)",
+      "triggering_value": "22 days",
+      "evidence_refs": [
+        {
+          "label": "delivery days",
+          "source_quote": "Delivery within 22 days of PO.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-01"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-03",
+      "description": "Payment terms are unclear, or outside 30 to 60 days after delivery.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "payment 45 to 45 days after delivery vs acceptable 30 to 60 days (inclusive)",
+      "triggering_value": "45 to 45 days",
+      "evidence_refs": [
+        {
+          "label": "payment terms",
+          "source_quote": "Payment within 45 days of delivery.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-03",
+        "AMB-13"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-04",
+      "description": "Delivery is promised in 31 to 45 days.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "delivery in 22 days vs review band 31 to 45 days (inclusive)",
+      "triggering_value": "22 days",
+      "evidence_refs": [
+        {
+          "label": "delivery days",
+          "source_quote": "Delivery within 22 days of PO.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-01"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-05",
+      "description": "VAT is not shown separately at 15%.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "VAT shown separately at 15%",
+      "triggering_value": "15%",
+      "evidence_refs": [
+        {
+          "label": "VAT shown separately",
+          "source_quote": "VAT 15% 86,625.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT rate",
+          "source_quote": "VAT 15% 86,625.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-06",
+      "description": "The numbers do not add up (for example line total or subtotal is wrong).",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "all 4 arithmetic checks agree with the printed amounts",
+      "triggering_value": null,
+      "evidence_refs": [
+        {
+          "label": "line-1 quantity",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 unit_price_bdt",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "line-1 printed line total",
+          "source_quote": "B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed subtotal",
+          "source_quote": "Subtotal 577,500.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT rate",
+          "source_quote": "VAT 15% 86,625.00",
+          "page_number": 1
+        },
+        {
+          "label": "VAT price basis",
+          "source_quote": "Subtotal 577,500.00 VAT 15% 86,625.00 Total 664,125.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed VAT amount",
+          "source_quote": "VAT 15% 86,625.00",
+          "page_number": 1
+        },
+        {
+          "label": "printed grand total",
+          "source_quote": "Total 664,125.00",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-09",
+        "AMB-15"
+      ],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-07",
+      "description": "The quotation is valid for less than 30 days.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "quotation valid for 35 days vs minimum 30 days",
+      "triggering_value": "35 days",
+      "evidence_refs": [
+        {
+          "label": "quotation validity",
+          "source_quote": "This quotation is valid for 35 days from the date above.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [],
+      "not_applicable_reason": null
+    },
+    {
+      "rule_id": "NR-08",
+      "description": "The late-delivery penalty must be at least 0.5% of order value per week of delay.",
+      "status": "PASS",
+      "severity": "REVIEW",
+      "item_id": null,
+      "detail": "penalty 0.5 percentage points per week of order value vs minimum 0.5",
+      "triggering_value": "0.5% per week",
+      "evidence_refs": [
+        {
+          "label": "penalty clause",
+          "source_quote": "Late delivery penalty: 0.5% of order value per week.",
+          "page_number": 1
+        }
+      ],
+      "absence_evidence": [],
+      "assumptions_applied": [
+        "AMB-14",
+        "AMB-04"
+      ],
+      "not_applicable_reason": null
+    }
+  ],
+  "decision": "NEEDS_REVIEW",
+  "reason": "NEEDS_REVIEW: a person must check:\n- NR-02 [line-1] FAIL: line-1 (item B): quoted quantity 16500 vs requested 20000; difference ratio 0.1750 (a fraction) | evidence: \"B Metal zipper, 18 cm 16,500 piece 35.00 577,500.00\" (page 1)",
+  "assumptions_applied": [
+    "AMB-01",
+    "AMB-02",
+    "AMB-03",
+    "AMB-04",
+    "AMB-06",
+    "AMB-09",
+    "AMB-12",
+    "AMB-13",
+    "AMB-14",
+    "AMB-15"
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "run_id": "live-20261104T184944Z",
+  "mode": "live",
+  "started_utc": "2026-11-04T18:49:44.811666+00:00",
+  "finished_utc": "2026-11-04T18:52:23.647462+00:00",
+  "partial_run": false,
+  "model": {
+    "requested": "gemini-3.5-flash-lite",
+    "reported_by_api": [
+      "gemini-3.5-flash-lite"
+    ],
+    "note": null
+  },
+  "generation_config": {
+    "temperature": 0,
+    "response_mime_type": "application/json",
+    "system_instruction_sha256": "c8998d6826a80c2fc52049918c800e5c4f2fcf207b4fa7fc5c907505f548a031",
+    "response_schema_sha256": "499bfba0a6ef0b7ba894e9760c4bd4296d79865a791d6973535a181fe10ea00e",
+    "max_attempts": 2,
+    "retry_delay_s": 2
+  },
+  "prompt": {
+    "system_instruction_sha256": "c8998d6826a80c2fc52049918c800e5c4f2fcf207b4fa7fc5c907505f548a031",
+    "contents_sha256_per_pack": {
+      "supplier-pack-01.pdf": [
+        "483bf5953ad476b7cd5a8f3a04099a96b892a10f537e845b60457b430077eec2"
+      ],
+      "supplier-pack-02.pdf": [
+        "396d8230a81149aedeff36153e7328cf3e645f7d6cb1486a63ebcb090ef8ed78"
+      ],
+      "supplier-pack-03.pdf": [
+        "8a8997e04ee099e18548bdec868c2f1d0d4ae918d8fbaed3b65c69bd4643d42e"
+      ],
+      "supplier-pack-04.pdf": [
+        "8ffc8971a455c00589d2497ead471b3168ff31e4964147c7e2d32115af97cd12"
+      ],
+      "supplier-pack-05.pdf": [
+        "d7c878f840c48fe873c1312e438f8d5373db4ed826c0d6f801c3d741d0180dee"
+      ],
+      "supplier-pack-06.pdf": [
+        "1483835220b5dc8eadf66cc8fb163a3e7a3e5f0a599bc25a21f191072d81af45"
+      ],
+      "supplier-pack-07.pdf": [
+        "23097d15f53d8e5ca17b722ea95096cc08cdcb316a07116914ff76a10958ca43"
+      ],
+      "supplier-pack-08.pdf": [
+        "afa579401e50da854a15ef897ec2736b94b64e1e23016d276a3d88912c1247e7"
+      ],
+      "supplier-pack-09.pdf": [
+        "82ba78795ff268759014429178104f3f626b19270a542f37190006b7b5408bc9"
+      ],
+      "supplier-pack-10.pdf": [
+        "9595afcc383e6a16c14ba600cf64b83a6a9cc26943c022b1006d47f0ba104055"
+      ]
+    }
+  },
+  "calls": {
+    "supplier-pack-01.pdf": [
+      {
+        "ok": true,
+        "error": null,
+        "latency_s": 14.065,
+        "reported_model_version": "gemini-3.5-flash-lite",
+        "usage": {
+          "prompt_token_count": 1738,
+          "candidates_token_count": 1633,
+          "thoughts_token_count": null,
+          "total_token_count": 3371
+        },
+        "started_utc": "2026-11-04T18:49:44.868000+00:00"
+      }
+    ],
+    "supplier-pack-02.pdf": [
+      {
+        "ok": true,
+        "error": null,
+        "latency_s": 14.704,
+        "reported_model_version": "gemini-3.5-flash-lite",
+        "usage": {
+          "prompt_token_count": 1730,
+          "candidates_token_count": 1572,
+          "thoughts_token_count": null,
+          "total_token_count": 3302
+        },
+        "started_utc": "2026-11-04T18:49:59.033042+00:00"
+      }
+    ],
+    "supplier-pack-03.pdf": [
+      {
+        "ok": false,
+        "error": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "latency_s": 3.601,
+        "reported_model_version": null,
+        "usage": null,
+        "started_utc": "2026-11-04T18:50:13.832529+00:00"
+      },
+      {
+        "ok": true,
+        "error": null,
+        "latency_s": 14.494,
+        "reported_model_version": "gemini-3.5-flash-lite",
+        "usage": {
+          "prompt_token_count": 1717,
+          "candidates_token_count": 1550,
+          "thoughts_token_count": null,
+          "total_token_count": 3267
+        },
+        "started_utc": "2026-11-04T18:50:19.435487+00:00"
+      }
+    ],
+    "supplier-pack-04.pdf": [
+      {
+        "ok": true,
+        "error": null,
+        "latency_s": 10.506,
+        "reported_model_version": "gemini-3.5-flash-lite",
+        "usage": {
+          "prompt_token_count": 1717,
+          "candidates_token_count": 1543,
+          "thoughts_token_count": null,
+          "total_token_count": 3260
+        },
+        "started_utc": "2026-11-04T18:50:34.000982+00:00"
+      }
+    ],
+    "supplier-pack-05.pdf": [
+      {
+        "ok": false,
+        "error": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "latency_s": 4.726,
+        "reported_model_version": null,
+        "usage": null,
+        "started_utc": "2026-11-04T18:50:44.578833+00:00"
+      },
+      {
+        "ok": true,
+        "error": null,
+        "latency_s": 13.332,
+        "reported_model_version": "gemini-3.5-flash-lite",
+        "usage": {
+          "prompt_token_count": 1726,
+          "candidates_token_count": 1518,
+          "thoughts_token_count": null,
+          "total_token_count": 3244
+        },
+        "started_utc": "2026-11-04T18:50:51.306889+00:00"
+      }
+    ],
+    "supplier-pack-06.pdf": [
+      {
+        "ok": false,
+        "error": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "latency_s": 2.542,
+        "reported_model_version": null,
+        "usage": null,
+        "started_utc": "2026-11-04T18:51:04.708291+00:00"
+      },
+      {
+        "ok": true,
+        "error": null,
+        "latency_s": 16.568,
+        "reported_model_version": "gemini-3.5-flash-lite",
+        "usage": {
+          "prompt_token_count": 1706,
+          "candidates_token_count": 1502,
+          "thoughts_token_count": null,
+          "total_token_count": 3208
+        },
+        "started_utc": "2026-11-04T18:51:09.251466+00:00"
+      }
+    ],
+    "supplier-pack-07.pdf": [
+      {
+        "ok": true,
+        "error": null,
+        "latency_s": 12.384,
+        "reported_model_version": "gemini-3.5-flash-lite",
+        "usage": {
+          "prompt_token_count": 1712,
+          "candidates_token_count": 1520,
+          "thoughts_token_count": null,
+          "total_token_count": 3232
+        },
+        "started_utc": "2026-11-04T18:51:25.888155+00:00"
+      }
+    ],
+    "supplier-pack-08.pdf": [
+      {
+        "ok": true,
+        "error": null,
+        "latency_s": 13.776,
+        "reported_model_version": "gemini-3.5-flash-lite",
+        "usage": {
+          "prompt_token_count": 1687,
+          "candidates_token_count": 1418,
+          "thoughts_token_count": null,
+          "total_token_count": 3105
+        },
+        "started_utc": "2026-11-04T18:51:38.346073+00:00"
+      }
+    ],
+    "supplier-pack-09.pdf": [
+      {
+        "ok": true,
+        "error": null,
+        "latency_s": 16.087,
+        "reported_model_version": "gemini-3.5-flash-lite",
+        "usage": {
+          "prompt_token_count": 1727,
+          "candidates_token_count": 1568,
+          "thoughts_token_count": null,
+          "total_token_count": 3295
+        },
+        "started_utc": "2026-11-04T18:51:52.193246+00:00"
+      }
+    ],
+    "supplier-pack-10.pdf": [
+      {
+        "ok": true,
+        "error": null,
+        "latency_s": 15.23,
+        "reported_model_version": "gemini-3.5-flash-lite",
+        "usage": {
+          "prompt_token_count": 1694,
+          "candidates_token_count": 1452,
+          "thoughts_token_count": null,
+          "total_token_count": 3146
+        },
+        "started_utc": "2026-11-04T18:52:08.352897+00:00"
+      }
+    ]
+  },
+  "environment": {
+    "python": "3.14.2",
+    "platform": "Linux-6.8.0-1064-azure-x86_64-with-glibc2.39",
+    "google_genai": "2.34.0"
+  },
+  "git": {
+    "commit": "36147423f0cdd06debcf34880b4fe96ddc25e852",
+    "dirty": false,
+    "ground_truth_last_commit": {
+      "decision": "2d610582d30319a685f39de5e98004587b708b6d 2026-11-04T07:58:10Z",
+      "field": "7ddc6c6e1cdcaf8837690457c8a68985259459f7 2026-11-04T15:36:07+06:00"
+    },
+    "ground_truth_modified_in_working_tree": false
+  },
+  "input_sha256": {
+    "ground_truth.json": "bb04775a34f9ec18416b43f9740f898d454d66dd3ee36a326ae427b0f73cffe7",
+    "field_ground_truth.json": "0fd891ed8eb5c0d89abe21fe74486c455f2a697042888457cc5ac519d281687b",
+    "purchase-request.csv": "d2eb7b15fc6312ec5d87d5bc6de27ee2ad8ebb4db03b1d9f73ce42e9df634975",
+    "company-rules.md": "0fcfcf5c9ece4a01c05e71a0481351a39467d4bb9a4ec1169e68f6ef33bef1a5",
+    "supplier-pack-01.pdf": "973d6250733bc9bd5a497db5d1611f271192789f05e1e3c22e7a675fdd988c68",
+    "supplier-pack-02.pdf": "91d6d71b8df7e6288fb3719f46ff9290b2417d03eb8dc4dfb2581c309de434f0",
+    "supplier-pack-03.pdf": "315870f07e3b4de40f12380b0c163fcc87df87757da48979360b8e90689179c4",
+    "supplier-pack-04.pdf": "d187b72a03d5e93d7aa8562abd7f0ed8cd5c08852e619b393d9a5724673e26c9",
+    "supplier-pack-05.pdf": "cad4d465398dafe31e45c8b099617f004bf71cd2d2ec9f5e36d9542d4efa6bbc",
+    "supplier-pack-06.pdf": "92ce3d956151b53a5d224096823493cbe4d9f9e2e8dde84c3693edfcff40bbf0",
+    "supplier-pack-07.pdf": "9d81eaf2c58fd5000b5d3a0756295845520e9fb4fda31496bc4f017d79cd7722",
+    "supplier-pack-08.pdf": "319ef3280efc209db3f4a6153b7e6943d61bc0d9f05520c7dec6d541597cfd29",
+    "supplier-pack-09.pdf": "b6ca30469ceb53c8cff569d47a394bd283e8472ab4f04025bf51ba658c97289b",
+    "supplier-pack-10.pdf": "4214b79d067a151b04f240e6d7633722cb1eabc3d15ab24e680ccb6845e2b991"
+  },
+  "source_sha256": {
+    "pipeline": {
+      "main.py": "cea35690c659a0ffff5aab457f66cc402fc46ca8a608bc7b8b8f089e31e94966",
+      "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/arithmetic.py": "915d6c58d86052f10c25865c3037cc5a34cef3b2baac84c670e1a4545bbb272a",
+      "src/extractor.py": "15b2b60ea6acecb7cbafe45173582884626d9fbc4d8d709ee57808243e8c57b5",
+      "src/fixture_check.py": "0570df2cae57f1b7cfdf9569ca34198193cd65b48272024335e9f07f278f9427",
+      "src/models.py": "42587601efa82c502fb598f29ec6d3ee86da9e6990f14f8b55b081dd334d308e",
+      "src/parsing.py": "dfa6acc6999e6852c21c27b9f351bd1c15c01c679ef88cd81d965f6979e7a6d4",
+      "src/pdf_reader.py": "7302a854b77c2f333b8d39eabee7bc671271b320c2cd3db0977fa0b95489c6eb",
+      "src/reporter.py": "11864512a71b8eac7237f8bd94f1425fe97ac0294e435b14df0102e1d7d2edd4",
+      "src/rule_engine.py": "92324c869129febbc6151618330b89bf7e42589592e11e940a98db348394c8db",
+      "src/state.py": "02e2a22f11c8fe20679933bb23cba918314e962f911971dd1e7222fd14616715",
+      "src/verifier.py": "9d973bde4f1bd6357e887c66e4b2a6ed09c1741eec8302e024863160735fb0a7",
+      "src/workflow.py": "f23cbb00ecb15d878a5ed7bcb206cb0b00c2cda902e65d78935b7fb84811f4fb"
+    },
+    "evaluation": {
+      "evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evaluation/evaluate.py": "674d63cc4f4799d4ab1b410d528f0f3b298cdf99842b586493df688d86c59e43",
+      "evaluation/scoring.py": "3a7847af8ec7c636cba00a07335b0e7ce59b47eec43af871c88cff8c7795fe53"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "pack": "supplier-pack-06.pdf",
+  "attempts": [
+    {
+      "requested_model": "gemini-3.5-flash-lite",
+      "contents_sha256": "1483835220b5dc8eadf66cc8fb163a3e7a3e5f0a599bc25a21f191072d81af45",
+      "system_instruction_sha256": "c8998d6826a80c2fc52049918c800e5c4f2fcf207b4fa7fc5c907505f548a031",
+      "temperature": 0.0,
+      "response_mime_type": "application/json",
+      "response_schema_sha256": "499bfba0a6ef0b7ba894e9760c4bd4296d79865a791d6973535a181fe10ea00e",
+      "started_utc": "2026-11-04T18:51:04.708291+00:00",
+      "ok": false,
+      "error": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "latency_s": 2.542
+    },
+    {
+      "requested_model": "gemini-3.5-flash-lite",
+      "contents_sha256": "1483835220b5dc8eadf66cc8fb163a3e7a3e5f0a599bc25a21f191072d81af45",
+      "system_instruction_sha256": "c8998d6826a80c2fc52049918c800e5c4f2fcf207b4fa7fc5c907505f548a031",
+      "temperature": 0.0,
+      "response_mime_type": "application/json",
+      "response_schema_sha256": "499bfba0a6ef0b7ba894e9760c4bd4296d79865a791d6973535a181fe10ea00e",
+      "started_utc": "2026-11-04T18:51:09.251466+00:00",
+      "ok": true,
+      "latency_s": 16.568,
+      "response_text": "{\n  \"supplier_name\": {\n    \"value\": \"Teesta Fabrics Ltd\",\n    \"source_quote\": \"Teesta Fabrics Ltd\",\n    \"page_number\": 1\n  },\n  \"tin\": {\n    \"value\": \"106458063391\",\n    \"source_quote\": \"Supplier TIN: 106458063391\",\n    \"page_number\": 1\n  },\n  \"bin\": {\n    \"value\": \"000670641-0101\",\n    \"source_quote\": \"BIN: 000670641-0101\",\n    \"page_number\": 1\n  },\n  \"line_items\": [\n    {\n      \"item_code\": {\n        \"value\": \"A\",\n        \"source_quote\": \"A Cotton twill fabric, 280 gsm 12,000 metre 465.00 5,580,000.00\",\n        \"page_number\": 1\n      },\n      \"description\": {\n        \"value\": \"Cotton twill fabric, 280 gsm\",\n        \"source_quote\": \"A Cotton twill fabric, 280 gsm 12,000 metre 465.00 5,580,000.00\",\n        \"page_number\": 1\n      },\n      \"quantity\": {\n        \"value\": \"12,000\",\n        \"source_quote\": \"A Cotton twill fabric, 280 gsm 12,000 metre 465.00 5,580,000.00\",\n        \"page_number\": 1\n      },\n      \"unit\": {\n        \"value\": \"metre\",\n        \"source_quote\": \"A Cotton twill fabric, 280 gsm 12,000 metre 465.00 5,580,000.00\",\n        \"page_number\": 1\n      },\n      \"unit_price_bdt\": {\n        \"value\": \"465.00\",\n        \"source_quote\": \"A Cotton twill fabric, 280 gsm 12,000 metre 465.00 5,580,000.00\",\n        \"page_number\": 1\n      },\n      \"line_total_bdt\": {\n        \"value\": \"5,580,000.00\",\n        \"source_quote\": \"A Cotton twill fabric, 280 gsm 12,000 metre 465.00 5,580,000.00\",\n        \"page_number\": 1\n      },\n      \"vat_included_in_price\": {\n        \"value\": null,\n        \"source_quote\": null,\n        \"page_number\": null\n      }\n    }\n  ],\n  \"subtotal_bdt\": {\n    \"value\": \"5,580,000.00\",\n    \"source_quote\": \"Subtotal 5,580,000.00\",\n    \"page_number\": 1\n  },\n  \"vat_rate_pct\": {\n    \"value\": \"15\",\n    \"source_quote\": \"VAT 15% 837,000.00\",\n    \"page_number\": 1\n  },\n  \"vat_amount_bdt\": {\n    \"value\": \"837,000.00\",\n    \"source_quote\": \"VAT 15% 837,000.00\",\n    \"page_number\": 1\n  },\n  \"grand_total_bdt\": {\n    \"value\": \"6,417,000.00\",\n    \"source_quote\": \"Total 6,417,000.00\",\n    \"page_number\": 1\n  },\n  \"vat_shown_separately\": {\n    \"value\": \"yes\",\n    \"source_quote\": \"VAT 15% 837,000.00\",\n    \"page_number\": 1\n  },\n  \"vat_price_basis\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"delivery_period\": {\n    \"value\": \"27 days\",\n    \"source_quote\": \"Delivery within 27 days of PO.\",\n    \"page_number\": 1\n  },\n  \"payment_terms_wording\": {\n    \"value\": \"Balance within 60 days of delivery.\",\n    \"source_quote\": \"Balance within 60 days of delivery.\",\n    \"page_number\": 1\n  },\n  \"payment_period\": {\n    \"value\": \"60 days\",\n    \"source_quote\": \"Balance within 60 days of delivery.\",\n    \"page_number\": 1\n  },\n  \"advance_payment_pct\": {\n    \"value\": \"10\",\n    \"source_quote\": \"10% advance payable with the purchase order.\",\n    \"page_number\": 1\n  },\n  \"penalty_wording\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"penalty_rate_pct\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"penalty_calculation_basis\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"penalty_period\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"penalty_full_weeks_only\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"validity_period\": {\n    \"value\": \"30 days\",\n    \"source_quote\": \"This quotation is valid for 30 days from the date above.\",\n    \"page_number\": 1\n  }\n}",
+      "reported_model_version": "gemini-3.5-flash-lite",
+      "response_id": "nX7raryvKc7s3LUP7ZnmsAc",
+      "usage": {
+        "prompt_token_count": 1706,
+        "candidates_token_count": 1502,
+        "thoughts_token_count": null,
+        "total_token_count": 3208
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "pack": "supplier-pack-10.pdf",
+  "attempts": [
+    {
+      "requested_model": "gemini-3.5-flash-lite",
+      "contents_sha256": "9595afcc383e6a16c14ba600cf64b83a6a9cc26943c022b1006d47f0ba104055",
+      "system_instruction_sha256": "c8998d6826a80c2fc52049918c800e5c4f2fcf207b4fa7fc5c907505f548a031",
+      "temperature": 0.0,
+      "response_mime_type": "application/json",
+      "response_schema_sha256": "499bfba0a6ef0b7ba894e9760c4bd4296d79865a791d6973535a181fe10ea00e",
+      "started_utc": "2026-11-04T18:52:08.352897+00:00",
+      "ok": true,
+      "latency_s": 15.23,
+      "response_text": "{\n  \"supplier_name\": {\n    \"value\": \"Kushiyara Box Industries\",\n    \"source_quote\": \"Kushiyara Box Industries\",\n    \"page_number\": 1\n  },\n  \"tin\": {\n    \"value\": \"110458103391\",\n    \"source_quote\": \"Supplier TIN: 110458103391\",\n    \"page_number\": 1\n  },\n  \"bin\": {\n    \"value\": \"001071041-0101\",\n    \"source_quote\": \"BIN: 001071041-0101\",\n    \"page_number\": 1\n  },\n  \"line_items\": [\n    {\n      \"item_code\": {\n        \"value\": \"E\",\n        \"source_quote\": \"E Carton box, 5-ply 3,000 piece 94.00 282,000.00\",\n        \"page_number\": 1\n      },\n      \"description\": {\n        \"value\": \"Carton box, 5-ply\",\n        \"source_quote\": \"E Carton box, 5-ply 3,000 piece 94.00 282,000.00\",\n        \"page_number\": 1\n      },\n      \"quantity\": {\n        \"value\": \"3,000\",\n        \"source_quote\": \"E Carton box, 5-ply 3,000 piece 94.00 282,000.00\",\n        \"page_number\": 1\n      },\n      \"unit\": {\n        \"value\": \"piece\",\n        \"source_quote\": \"E Carton box, 5-ply 3,000 piece 94.00 282,000.00\",\n        \"page_number\": 1\n      },\n      \"unit_price_bdt\": {\n        \"value\": \"94.00\",\n        \"source_quote\": \"E Carton box, 5-ply 3,000 piece 94.00 282,000.00\",\n        \"page_number\": 1\n      },\n      \"line_total_bdt\": {\n        \"value\": \"282,000.00\",\n        \"source_quote\": \"E Carton box, 5-ply 3,000 piece 94.00 282,000.00\",\n        \"page_number\": 1\n      },\n      \"vat_included_in_price\": {\n        \"value\": \"yes\",\n        \"source_quote\": \"VAT included\",\n        \"page_number\": 1\n      }\n    }\n  ],\n  \"subtotal_bdt\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"vat_rate_pct\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"vat_amount_bdt\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"grand_total_bdt\": {\n    \"value\": \"282,000.00\",\n    \"source_quote\": \"Total (all taxes included) 282,000.00\",\n    \"page_number\": 1\n  },\n  \"vat_shown_separately\": {\n    \"value\": \"no\",\n    \"source_quote\": \"Total (all taxes included)\",\n    \"page_number\": 1\n  },\n  \"vat_price_basis\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"delivery_period\": {\n    \"value\": \"60 days\",\n    \"source_quote\": \"Delivery within 60 days of PO.\",\n    \"page_number\": 1\n  },\n  \"payment_terms_wording\": {\n    \"value\": \"Payment within 45 days of delivery.\",\n    \"source_quote\": \"Payment within 45 days of delivery.\",\n    \"page_number\": 1\n  },\n  \"payment_period\": {\n    \"value\": \"45 days\",\n    \"source_quote\": \"Payment within 45 days of delivery.\",\n    \"page_number\": 1\n  },\n  \"advance_payment_pct\": {\n    \"value\": \"10\",\n    \"source_quote\": \"10% advance payable with the purchase order.\",\n    \"page_number\": 1\n  },\n  \"penalty_wording\": {\n    \"value\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"source_quote\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_rate_pct\": {\n    \"value\": \"0.5\",\n    \"source_quote\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_calculation_basis\": {\n    \"value\": \"order value\",\n    \"source_quote\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_period\": {\n    \"value\": \"per week\",\n    \"source_quote\": \"Late delivery penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_full_weeks_only\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"validity_period\": {\n    \"value\": \"30 days\",\n    \"source_quote\": \"This quotation is valid for 30 days from the date above.\",\n    \"page_number\": 1\n  }\n}",
+      "reported_model_version": "gemini-3.5-flash-lite",
+      "response_id": "2H7rarjqMdna4t4P64uZsAU",
+      "usage": {
+        "prompt_token_count": 1694,
+        "candidates_token_count": 1452,
+        "thoughts_token_count": null,
+        "total_token_count": 3146
+      }
+    }
+  ]
+}

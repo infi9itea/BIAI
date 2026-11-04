@@ -1,0 +1,37 @@
+{
+  "pack": "supplier-pack-03.pdf",
+  "attempts": [
+    {
+      "requested_model": "gemini-3.5-flash-lite",
+      "contents_sha256": "8a8997e04ee099e18548bdec868c2f1d0d4ae918d8fbaed3b65c69bd4643d42e",
+      "system_instruction_sha256": "c8998d6826a80c2fc52049918c800e5c4f2fcf207b4fa7fc5c907505f548a031",
+      "temperature": 0.0,
+      "response_mime_type": "application/json",
+      "response_schema_sha256": "499bfba0a6ef0b7ba894e9760c4bd4296d79865a791d6973535a181fe10ea00e",
+      "started_utc": "2026-11-04T18:50:13.832529+00:00",
+      "ok": false,
+      "error": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "latency_s": 3.601
+    },
+    {
+      "requested_model": "gemini-3.5-flash-lite",
+      "contents_sha256": "8a8997e04ee099e18548bdec868c2f1d0d4ae918d8fbaed3b65c69bd4643d42e",
+      "system_instruction_sha256": "c8998d6826a80c2fc52049918c800e5c4f2fcf207b4fa7fc5c907505f548a031",
+      "temperature": 0.0,
+      "response_mime_type": "application/json",
+      "response_schema_sha256": "499bfba0a6ef0b7ba894e9760c4bd4296d79865a791d6973535a181fe10ea00e",
+      "started_utc": "2026-11-04T18:50:19.435487+00:00",
+      "ok": true,
+      "latency_s": 14.494,
+      "response_text": "{\n  \"supplier_name\": {\n    \"value\": \"Karnaphuli Yarn Traders\",\n    \"source_quote\": \"Karnaphuli Yarn Traders\",\n    \"page_number\": 1\n  },\n  \"tin\": {\n    \"value\": \"103458033391\",\n    \"source_quote\": \"Supplier TIN: 103458033391\",\n    \"page_number\": 1\n  },\n  \"bin\": {\n    \"value\": \"000370341-0101\",\n    \"source_quote\": \"BIN: 000370341-0101\",\n    \"page_number\": 1\n  },\n  \"line_items\": [\n    {\n      \"item_code\": {\n        \"value\": \"C\",\n        \"source_quote\": \"C Polyester sewing thread, cone 800 cone 229.00 183,200.00\",\n        \"page_number\": 1\n      },\n      \"description\": {\n        \"value\": \"Polyester sewing thread, cone\",\n        \"source_quote\": \"C Polyester sewing thread, cone 800 cone 229.00 183,200.00\",\n        \"page_number\": 1\n      },\n      \"quantity\": {\n        \"value\": \"800\",\n        \"source_quote\": \"C Polyester sewing thread, cone 800 cone 229.00 183,200.00\",\n        \"page_number\": 1\n      },\n      \"unit\": {\n        \"value\": \"cone\",\n        \"source_quote\": \"C Polyester sewing thread, cone 800 cone 229.00 183,200.00\",\n        \"page_number\": 1\n      },\n      \"unit_price_bdt\": {\n        \"value\": \"229.00\",\n        \"source_quote\": \"C Polyester sewing thread, cone 800 cone 229.00 183,200.00\",\n        \"page_number\": 1\n      },\n      \"line_total_bdt\": {\n        \"value\": \"183,200.00\",\n        \"source_quote\": \"C Polyester sewing thread, cone 800 cone 229.00 183,200.00\",\n        \"page_number\": 1\n      },\n      \"vat_included_in_price\": {\n        \"value\": null,\n        \"source_quote\": null,\n        \"page_number\": null\n      }\n    }\n  ],\n  \"subtotal_bdt\": {\n    \"value\": \"183,200.00\",\n    \"source_quote\": \"Subtotal 183,200.00\",\n    \"page_number\": 1\n  },\n  \"vat_rate_pct\": {\n    \"value\": \"15\",\n    \"source_quote\": \"VAT 15% 27,480.00\",\n    \"page_number\": 1\n  },\n  \"vat_amount_bdt\": {\n    \"value\": \"27,480.00\",\n    \"source_quote\": \"VAT 15% 27,480.00\",\n    \"page_number\": 1\n  },\n  \"grand_total_bdt\": {\n    \"value\": \"210,680.00\",\n    \"source_quote\": \"Total 210,680.00\",\n    \"page_number\": 1\n  },\n  \"vat_shown_separately\": {\n    \"value\": \"yes\",\n    \"source_quote\": \"VAT 15% 27,480.00\",\n    \"page_number\": 1\n  },\n  \"vat_price_basis\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"delivery_period\": {\n    \"value\": \"20 days\",\n    \"source_quote\": \"2. Delivery. Delivery within 20 days of PO.\",\n    \"page_number\": 1\n  },\n  \"payment_terms_wording\": {\n    \"value\": \"Balance within 40 days of delivery.\",\n    \"source_quote\": \"Balance within 40 days of delivery.\",\n    \"page_number\": 1\n  },\n  \"payment_period\": {\n    \"value\": \"40 days\",\n    \"source_quote\": \"Balance within 40 days of delivery.\",\n    \"page_number\": 1\n  },\n  \"advance_payment_pct\": {\n    \"value\": \"15\",\n    \"source_quote\": \"1. Payment. 15% advance payable with the purchase order.\",\n    \"page_number\": 1\n  },\n  \"penalty_wording\": {\n    \"value\": \"Delay. Delay in delivery will attract a penalty of 0.5% of order value per week.\",\n    \"source_quote\": \"3. Delay. Delay in delivery will attract a penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_rate_pct\": {\n    \"value\": \"0.5\",\n    \"source_quote\": \"3. Delay. Delay in delivery will attract a penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_calculation_basis\": {\n    \"value\": \"order value\",\n    \"source_quote\": \"3. Delay. Delay in delivery will attract a penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_period\": {\n    \"value\": \"per week\",\n    \"source_quote\": \"3. Delay. Delay in delivery will attract a penalty of 0.5% of order value per week.\",\n    \"page_number\": 1\n  },\n  \"penalty_full_weeks_only\": {\n    \"value\": null,\n    \"source_quote\": null,\n    \"page_number\": null\n  },\n  \"validity_period\": {\n    \"value\": \"30 days\",\n    \"source_quote\": \"4. Validity. This quotation is valid for 30 days from the date above.\",\n    \"page_number\": 1\n  }\n}",
+      "reported_model_version": "gemini-3.5-flash-lite",
+      "response_id": "a37ravH2N73Lz7sPv5C-uAc",
+      "usage": {
+        "prompt_token_count": 1717,
+        "candidates_token_count": 1550,
+        "thoughts_token_count": null,
+        "total_token_count": 3267
+      }
+    }
+  ]
+}
