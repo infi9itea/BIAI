@@ -81,11 +81,17 @@ def _summary() -> dict:
         res = st["run"](DATA / f"{name}.pdf", st["pr"], client=client)
         raised = sorted(r.rule_id for r in res.rule_results if r.status.value in ("FAIL", "UNCERTAIN"))
         exp = key.get(f"{name}.pdf", {})
-        rows.append({"pack": name, "decision": res.decision.value, "expected": exp.get("expected_decision"),
+        doc = json.loads(res.model_dump_json()).get("extracted") or {}
+        pick = lambda k: (doc.get(k) or {}).get("value")  # noqa: E731
+        rows.append({"pack": name, "supplier": pick("supplier_name"), "total": pick("grand_total_bdt"),
+                     "decision": res.decision.value, "expected": exp.get("expected_decision"),
                      "decision_match": res.decision.value == exp.get("expected_decision"), "raised": raised,
                      "expected_rules": sorted(exp.get("rule_ids", [])),
                      "rules_match": raised == sorted(exp.get("rule_ids", []))})
-    return {"rows": rows}
+    rules = {}
+    for r in res.rule_results:  # last pack's results carry every rule id, severity and description
+        rules.setdefault(r.rule_id, {"id": r.rule_id, "severity": r.severity.value, "description": r.description})
+    return {"rows": rows, "rules": sorted(rules.values(), key=lambda r: (r["severity"] != "REJECT", r["id"]))}
 
 
 def _live_denied(environ):
@@ -118,6 +124,14 @@ def _app(environ, start_response):
         return _json(start_response, 200, info)
 
     if method == "GET":
+        pdf = (q.get("pdf") or [None])[0]
+        if pdf:
+            if pdf not in _samples():
+                return _json(start_response, 404, {"error": "unknown sample"})
+            body = (DATA / f"{pdf}.pdf").read_bytes()
+            start_response("200 OK", [("Content-Type", "application/pdf"), ("Content-Length", str(len(body))),
+                                      ("Content-Disposition", f'inline; filename="{pdf}.pdf"')])
+            return [body]
         if q.get("summary"):
             return _json(start_response, 200, _summary())
         name = (q.get("sample") or [None])[0]

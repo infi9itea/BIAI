@@ -41,7 +41,7 @@ def no_key(monkeypatch):
 
 def test_root_serves_the_page():
     status, headers, raw = call(path="/")
-    assert status == 200 and headers["Content-Type"].startswith("text/html") and b"Supplier Document Checker" in raw
+    assert status == 200 and headers["Content-Type"].startswith("text/html") and b"Supplier Quote Checker" in raw
 
 
 def test_unknown_path_is_404():
@@ -96,3 +96,19 @@ def test_post_rejects_non_pdf_and_oversize(monkeypatch):
 
 def test_wrong_method_is_405():
     assert jcall("DELETE")[0] == 405
+
+
+def test_sample_pdf_is_served_inline():
+    status, headers, raw = call(query="pdf=supplier-pack-05")
+    assert status == 200 and headers["Content-Type"] == "application/pdf" and raw.startswith(b"%PDF")
+
+
+def test_pdf_only_for_known_samples():
+    assert jcall(query="pdf=../README")[0] == 404
+
+
+def test_summary_has_supplier_total_and_rule_list():
+    _, data = jcall(query="summary=1")
+    assert all(r["supplier"] and r["total"] for r in data["rows"])
+    ids = [r["id"] for r in data["rules"]]
+    assert "R-02" in ids and "NR-08" in ids and len(ids) == len(set(ids))

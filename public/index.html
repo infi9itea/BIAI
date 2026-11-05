@@ -1,86 +1,171 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Supplier Document Checker – Demo</title>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplier Quote Checker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f7f6f2;--card:#fff;--fg:#1d1d1b;--mut:#6b6b66;--bd:#dedcd4;--ok:#1a7f4b;--no:#c23b2e;--rv:#b7791f}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171716;--card:#222220;--fg:#eeeeea;--mut:#9a9a93;--bd:#383835;--ok:#4cc38a;--no:#f0766a;--rv:#e5b04a}}
-:root[data-theme="dark"]{--bg:#171716;--card:#222220;--fg:#eeeeea;--mut:#9a9a93;--bd:#383835;--ok:#4cc38a;--no:#f0766a;--rv:#e5b04a}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-main{max-width:920px;margin:0 auto;padding:20px 16px 48px}h1{font-size:22px;margin:0 0 4px}p.s{color:var(--mut);margin:0 0 16px}
-.sum{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.chip{padding:4px 12px;border-radius:99px;border:1px solid var(--bd);background:var(--card);font-size:13px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;margin-bottom:10px}
-.hd{display:flex;gap:10px;align-items:center;padding:12px 14px;cursor:pointer;width:100%;background:none;border:0;color:inherit;font:inherit;text-align:left}
-.b{font-weight:600;font-size:12px;padding:3px 10px;border-radius:6px;color:#fff;white-space:nowrap}
-.APPROVE{background:var(--ok)}.REJECT{background:var(--no)}.NEEDS_REVIEW{background:#8a5300}
-.nm{font-weight:600}.rs{color:var(--mut);font-size:13px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bd{display:none;padding:0 14px 14px;border-top:1px solid var(--bd)}.open .bd{display:block}
-h3{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut);margin:14px 0 6px}
-.f{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px}.f div{font-size:13px;background:var(--bg);padding:6px 8px;border-radius:6px;overflow-wrap:anywhere}.f b{display:block;color:var(--mut);font-weight:500;font-size:11px}
-.r{padding:8px 0;border-bottom:1px solid var(--bd);font-size:13px}.r:last-child{border:0}.st{font-weight:700;font-size:11px;margin-right:6px}
-.FAIL{color:var(--no)}.UNCERTAIN{color:var(--rv)}.PASS{color:var(--ok)}
-q{display:block;margin:4px 0 0 0;padding-left:8px;border-left:2px solid var(--bd);color:var(--mut);font-style:normal;quotes:none}
-.pre{white-space:pre-wrap;font-size:13px}.note{font-size:12px;color:var(--mut);margin-top:20px}
-label{font-size:13px;color:var(--mut)}
-details{margin-top:4px}summary{cursor:pointer;color:var(--mut);font-size:12px}table{border-collapse:collapse;font-size:12px}td,th{border:1px solid var(--bd);padding:3px 8px;text-align:left}.tw{overflow-x:auto}
-.m{font-size:11px;padding:2px 8px;border-radius:6px;border:1px solid var(--bd);color:var(--mut)}button:disabled,input:disabled{opacity:.5}input[type=text]{padding:4px 8px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg)}
-</style></head><body><main>
-<h1>Supplier Document Checker</h1>
-<p class="s">Aamar Garments Ltd (fictional). The model only extracts quotes; Python verifies each quote against the PDF, recalculates the arithmetic, applies the company rules and decides. Anything uncertain goes to NEEDS REVIEW.</p>
-<div class="card" style="padding:14px"><h3 style="margin-top:0">Sample packs</h3><div id="samples" class="sum"></div>
-<label id="liveRow"><input type="checkbox" id="liveSample"> Run sample through live Gemini (default: replay of the saved extraction, no API call)</label>
-<h3>Upload a quotation PDF (live Gemini, max 4 MB)</h3><div class="note" style="margin:0 0 6px">Uploads are checked against the supplied purchase request (PR-2026-114), so an unrelated document will come back NEEDS REVIEW.</div><input type="file" id="file" accept="application/pdf"> <span id="live" class="note"></span>
-<div id="codeRow" style="display:none;margin-top:8px"><label>Access code <input type="text" id="code" autocomplete="off"></label></div>
-<div class="note">Uploaded PDFs are sent to the Gemini API for extraction and are not stored by this app.</div></div>
-<div class="card" style="padding:14px"><h3 style="margin-top:0">All packs vs manual answer key</h3>
-<button id="runAll" class="chip" style="cursor:pointer;color:inherit">Run all 10 (replay)</button>
-<div id="sumOut" class="tw" style="margin-top:8px"></div>
-<div class="note">Replay re-runs the real pipeline on saved model responses. The prompt was developed on these same packs, so this is a regression check, not a measure of accuracy.</div></div>
-<div id="status" class="note" role="status"></div><div id="list"></div>
-<p class="note">Demo only: no authentication, small synthetic test set. Failures fail closed to NEEDS REVIEW.</p>
-</main><script>
-const esc=s=>String(s??'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+:root{--bg:#f4f6f9;--surface:#fff;--ink:#101c28;--mut:#5a6876;--line:#e0e5eb;--accent:#1f4fd0;--accent-ink:#fff;--accent-bg:#eaf0ff;
+--ok:#12704a;--ok-bg:#e6f4ec;--no:#b3302a;--no-bg:#fbeae9;--rv:#935600;--rv-bg:#fdf2de;--r:12px;--shadow:0 1px 2px rgba(16,28,40,.05)}
+@media (prefers-color-scheme:dark){:root{--bg:#0e141b;--surface:#16202a;--ink:#edf1f5;--mut:#9aa8b6;--line:#26323e;--accent:#7b9dff;--accent-ink:#0b1220;--accent-bg:#1a2742;
+--ok:#5fd09b;--ok-bg:#112720;--no:#ff8c84;--no-bg:#2b1715;--rv:#f0b455;--rv-bg:#2a2011;--shadow:none}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Figtree,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input{font:inherit;color:inherit}:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+.top{background:var(--surface);border-bottom:1px solid var(--line)}
+.top>div{max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:12px}
+.logo{width:34px;height:34px;border-radius:9px;background:var(--accent);display:grid;place-items:center;flex:none}
+.top h1{font-size:17px;margin:0;line-height:1.2}.top p{margin:0;color:var(--mut);font-size:13px}
+.pill{margin-left:auto;padding:4px 12px;border-radius:99px;background:var(--accent-bg);color:var(--accent);font-size:13px;font-weight:600;white-space:nowrap}
+.wrap{max-width:1120px;margin:0 auto;padding:22px 20px 56px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;text-align:left;cursor:pointer;box-shadow:var(--shadow)}
+.tile[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.tile b{display:block;font-size:30px;line-height:1.1;letter-spacing:-.02em}.tile span{color:var(--mut);font-size:13px}
+.tile.APPROVE b{color:var(--ok)}.tile.REJECT b{color:var(--no)}.tile.NEEDS_REVIEW b{color:var(--rv)}.tile.key{cursor:default}
+.app{display:grid;grid-template-columns:320px 1fr;gap:18px;align-items:start}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.box h2{font-size:15px;margin:0 0 10px}.muted{color:var(--mut);font-size:13px}
+.list{display:flex;flex-direction:column;gap:6px;max-height:560px;overflow:auto;padding:2px}
+.row{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;background:transparent;border:1px solid var(--line);border-radius:10px;cursor:pointer;text-align:left}
+.row:hover{border-color:var(--accent)}.row[aria-pressed=true]{background:var(--accent-bg);border-color:var(--accent)}
+.row small{display:block;color:var(--mut);font-size:12.5px}.row .t{flex:1;min-width:0}.row .t>*{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.dot.APPROVE{background:var(--ok)}.dot.REJECT{background:var(--no)}.dot.NEEDS_REVIEW{background:var(--rv)}
+.seg{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.seg button{padding:4px 10px;border:1px solid var(--line);border-radius:99px;background:transparent;cursor:pointer;font-size:13px}
+.seg button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.side>.box+.box{margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:9px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:600;cursor:pointer;text-decoration:none;font-size:14px}
+.btn.ghost{background:transparent;color:var(--accent)}.btn:disabled,.row:disabled{opacity:.55;cursor:progress}
+.toggle{display:flex;gap:8px;align-items:flex-start;margin-top:12px;color:var(--mut);font-size:13px}.toggle input{margin-top:3px;accent-color:var(--accent)}
+input[type=file]{position:absolute;opacity:0;width:1px;height:1px}
+#code{padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}#codeRow{display:none;margin-top:10px;font-size:13px}
+#status{min-height:22px;margin:0 0 8px;color:var(--mut);font-size:14px}
+.empty{padding:48px 20px;text-align:center;color:var(--mut)}
+.bar{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin-bottom:12px}.bar h2{font-size:18px;margin:0;flex:1;min-width:200px}
+.verdict{background:var(--surface);border:1px solid var(--line);border-left:8px solid var(--c);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
+.verdict.APPROVE{--c:var(--ok)}.verdict.REJECT{--c:var(--no)}.verdict.NEEDS_REVIEW{--c:var(--rv)}
+.vword{font-size:clamp(28px,5vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.05;margin:0;color:var(--c)}
+.vmeta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 0;color:var(--mut);font-size:14px}
+.tag{padding:2px 10px;border-radius:99px;background:var(--bg);border:1px solid var(--line);font-size:12.5px}
+.vsum{margin:12px 0 0;font-size:16px}
+.issue{margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--bg)}.issue.FAIL{background:var(--no-bg)}.issue.UNCERTAIN{background:var(--rv-bg)}
+.issue b{display:block}.issue p{margin:2px 0 0}
+blockquote{margin:8px 0 0;padding:4px 0 4px 12px;border-left:3px solid var(--line);color:var(--mut);font-size:14px}
+blockquote a{color:var(--accent);margin-left:6px;white-space:nowrap}
+details{margin-top:16px;border-top:1px solid var(--line);padding-top:10px}summary{cursor:pointer;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-top:10px}
+.grid div{background:var(--bg);padding:8px 12px;border-radius:9px;font-size:14px;overflow-wrap:anywhere}.grid span{display:block;color:var(--mut);font-size:12.5px}
+.tw{overflow-x:auto;margin-top:8px}table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--mut);font-weight:500}
+.pass{padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}.pass:last-child{border:0}
+.ok{color:var(--ok);font-weight:600}.bad{color:var(--no);font-weight:600}
+.sec{margin-top:18px}.sec .bar{margin:0 0 8px}
+footer{max-width:1120px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:13px}
+@media (max-width:860px){.app{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.list{max-height:320px}}
+@media (prefers-reduced-motion:no-preference){.verdict{animation:in .2s ease-out}@keyframes in{from{opacity:.5;transform:translateY(3px)}}}
+@media print{.top,.stats,.side,.sec,footer,.noprint{display:none!important}body{background:#fff;color:#000}.app{display:block}.verdict{box-shadow:none}details{display:block}}
+</style></head><body>
+<header class="top"><div>
+<div class="logo" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
+<div><h1>Supplier Quote Checker</h1><p>Approve, reject or send to a person, with the evidence.</p></div>
+<span class="pill" id="mode">Saved answers</span></div></header>
+<div class="wrap">
+<div class="stats" id="stats" aria-label="Summary of the 10 sample quotes"></div>
+<div class="app">
+<aside class="side">
+ <div class="box"><h2>Sample quotes</h2>
+  <div class="seg" id="filters"></div>
+  <div class="list" id="packs" role="group" aria-label="Sample supplier quotes"><p class="muted">Loading…</p></div>
+  <label class="toggle"><input type="checkbox" id="liveSample"><span>Use the live AI for this check. Off by default: the saved AI answer is replayed instantly with no API call.</span></label>
+ </div>
+ <div class="box"><h2>Check your own PDF</h2>
+  <p class="muted" style="margin:0 0 10px">Compared with the supplied purchase request (PR-2026-114), so unrelated PDFs come back as Needs a person. Sent to the AI for reading, not stored. Max 4 MB.</p>
+  <label class="btn ghost" id="pick" for="file" tabindex="0">Choose a PDF</label><input type="file" id="file" accept="application/pdf">
+  <p class="muted" id="live" style="margin:8px 0 0"></p>
+  <div id="codeRow"><label>Access code <input type="text" id="code" autocomplete="off"></label></div>
+ </div>
+</aside>
+<section aria-label="Result"><div id="status" role="status" aria-live="polite"></div>
+ <div id="detail"><div class="box empty">Select a quote to see the decision, the reasons and the evidence.</div></div></section>
+</div>
+<div class="box sec" id="rules"><details style="margin:0;border:0;padding:0"><summary>What the checker looks for</summary><div class="tw" id="rulesOut"></div></details></div>
+<div class="box sec"><div class="bar"><h2>Compare with my answer key</h2><button class="btn ghost" id="csv" disabled>Download CSV</button><button class="btn" id="runAll">Re-run all 10</button></div>
+ <p class="muted" style="margin:0">Each saved AI answer goes through the full checker and is compared with the answer I wrote by hand from the PDFs. The prompt was tuned on these 10 files, so this checks consistency, not accuracy on new documents.</p>
+ <div id="sumOut" class="tw"></div></div>
+</div>
+<footer>The AI only reads and quotes. Plain code verifies each quote, does the maths and decides. When it is unsure, it asks a person.</footer>
+<script>
+window.pdfUrl=window.pdfUrl||((n,p)=>'/api/check?pdf='+encodeURIComponent(n)+'#page='+p);
 const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const WORD={APPROVE:'Approve',REJECT:'Reject',NEEDS_REVIEW:'Needs a person',REVIEW:'Needs a person'};
+const LBL={FAIL:'Rule broken',UNCERTAIN:'Unclear'};
 const val=f=>f&&f.state?(f.value??null):null;
-function fieldsOf(e){
- const out=[],skip=['line_items','payment','penalty','claimed_without_evidence'];
- for(const [k,v] of Object.entries(e||{})){if(skip.includes(k)||Array.isArray(v))continue;const x=val(v);if(x!==null&&x!=='')out.push([k,x])}
- if(e.payment&&e.payment.state==='FOUND')out.push(['payment terms',e.payment.original_wording+' (anchor: '+e.payment.anchor+')']);
- if(e.penalty&&e.penalty.state==='FOUND')out.push(['late-delivery penalty',e.penalty.original_wording]);
- return out}
-function lines(e){const L=(e&&e.line_items)||[];if(!L.length)return'';
- const cols=['item_code','description','quantity','unit','unit_price_bdt','line_total_bdt'];
- return `<h3>Line items</h3><div class="tw"><table><tr>${cols.map(c=>`<th>${c.replace(/_/g,' ')}</th>`).join('')}</tr>${L.map(l=>`<tr>${cols.map(c=>`<td>${esc(val(l[c]))}</td>`).join('')}</tr>`).join('')}</table></div>`}
-const quotes=r=>(r.evidence_refs||[]).map(q=>`<q>“${esc(q.source_quote)}” (p.${q.page_number}${q.label?', '+esc(q.label):''})</q>`).join('');
-function render(x,mode){
+const money=v=>v==null?'':'BDT '+Number(v).toLocaleString('en-US',{maximumFractionDigits:0});
+let ROWS=[],FILTER='ALL',CUR=null,SELECTED=null;
+function fields(e){const out=[],skip=['line_items','payment','penalty','claimed_without_evidence'];
+ for(const [k,v] of Object.entries(e||{})){if(skip.includes(k)||Array.isArray(v))continue;const x=val(v);if(x!==null&&x!=='')out.push([k.replace(/_/g,' '),x])}
+ if(e&&e.payment&&e.payment.state==='FOUND')out.push(['payment terms',e.payment.original_wording]);
+ if(e&&e.penalty&&e.penalty.state==='FOUND')out.push(['late-delivery penalty',e.penalty.original_wording]);return out}
+function items(e){const L=(e&&e.line_items)||[];if(!L.length)return'';const c=['item_code','description','quantity','unit','unit_price_bdt','line_total_bdt'];
+ return `<p style="margin:14px 0 0;font-weight:600">Line items</p><div class="tw"><table><tr>${c.map(k=>`<th>${k.replace(/_/g,' ').replace(' bdt','')}</th>`).join('')}</tr>${L.map(l=>`<tr>${c.map(k=>`<td>${esc(val(l[k]))}</td>`).join('')}</tr>`).join('')}</table></div>`}
+function quotes(r){const n=CUR&&CUR.sample;return (r.evidence_refs||[]).map(q=>`<blockquote>“${esc(q.source_quote)}” <span class="muted">(page ${q.page_number})</span>${n?`<a href="${window.pdfUrl(n,q.page_number)}" target="_blank" rel="noopener">View in PDF</a>`:''}</blockquote>`).join('')}
+function render(x,mode,sample){
+ CUR={result:x,mode,sample};
  const d=x.decision,rules=x.rule_results.filter(r=>r.status!=='NOT_APPLICABLE'),bad=rules.filter(r=>r.status!=='PASS'),ok=rules.filter(r=>r.status==='PASS');
- const rr=r=>`<div class="r"><span class="st ${r.status}">${r.status}</span><b>${r.rule_id}</b> ${esc(r.description)}<div style="color:var(--mut)">${esc(r.detail)}</div>${quotes(r)}</div>`;
- const key=x.pack_filename+'|'+mode;document.querySelectorAll('.card[data-k]').forEach(c=>{if(c.dataset.k===key)c.remove()});
- const el=document.createElement('div');el.className='card open';el.dataset.k=key;
- const fl=fieldsOf(x.extracted);
- el.innerHTML=`<button class="hd"><span class="b ${d}">${d.replace('_',' ')}</span><span class="nm">${esc(x.pack_filename.replace('.pdf',''))}</span><span class="m">${mode==='live'?'LIVE GEMINI':'REPLAY'}</span></button><div class="bd">
- <h3>Why</h3><div class="pre">${esc(x.reason)}</div>
- ${x.processing_status!=='OK'?`<div class="r"><span class="st FAIL">PROCESSING</span>${esc(x.processing_error_detail)}</div>`:''}
- ${bad.length?`<h3>Rules raised</h3>${bad.map(rr).join('')}`:''}
- <h3>Extracted fields</h3><div class="f">${fl.map(([k,v])=>`<div><b>${esc(k.replace(/_/g,' '))}</b>${esc(v)}</div>`).join('')}</div>${lines(x.extracted)}
- <h3>Rules passed (${ok.length}) – with evidence</h3>${ok.map(r=>`<div class="r"><span class="st PASS">PASS</span><b>${r.rule_id}</b> ${esc(r.description)}<details><summary>evidence</summary><div style="color:var(--mut)">${esc(r.detail)}</div>${quotes(r)}</details></div>`).join('')}</div>`;
- el.querySelector('.hd').onclick=()=>el.classList.toggle('open');$('list').prepend(el)}
-const busy=b=>document.querySelectorAll('#samples button,#file').forEach(e=>e.disabled=b||(e.id==='file'&&!window.LIVE));
-async function go(p,opts,label,mode){
- busy(true);$('status').textContent='Checking '+label+(mode==='live'?' with live Gemini (can take 10–40 s)':'')+'…';
+ const name=x.pack_filename.replace('.pdf','').replace('supplier-','');const sup=val((x.extracted||{}).supplier_name);
+ const sum=d==='APPROVE'?`All ${ok.length} checks passed. Nothing needs a person's attention.`:d==='REJECT'?'At least one company rule is clearly broken.':'Something is unclear, so a person should check before this goes ahead.';
+ $('detail').innerHTML=`<div class="bar noprint"><h2>${esc(sup||name)}</h2>
+  ${sample?`<a class="btn ghost" href="${window.pdfUrl(sample,1)}" target="_blank" rel="noopener">Open PDF</a>`:''}
+  <button class="btn ghost" id="print">Print or save as PDF</button><button class="btn ghost" id="json">Download JSON</button></div>
+ <section class="verdict ${d}"><p class="vword">${WORD[d]}</p>
+ <div class="vmeta"><span>${esc(name)}</span><span class="tag">${mode==='live'?'Live AI':'Saved AI answer'}</span>${x.extracted&&val(x.extracted.grand_total_bdt)?`<span>${money(val(x.extracted.grand_total_bdt))}</span>`:''}</div>
+ <p class="vsum">${sum}</p>
+ ${x.processing_status!=='OK'?`<div class="issue FAIL"><b>Could not process this file</b><p>${esc(x.processing_error_detail)}</p></div>`:''}
+ ${bad.map(r=>`<div class="issue ${r.status}"><b>${LBL[r.status]||r.status}: ${esc(r.description)}</b><p>${esc(r.detail)}</p>${quotes(r)}</div>`).join('')}
+ <details><summary>What was found in the document</summary><div class="grid">${fields(x.extracted).map(([k,v])=>`<div><span>${esc(k)}</span>${esc(v)}</div>`).join('')}</div>${items(x.extracted)}</details>
+ <details><summary>Checks that passed (${ok.length})</summary>${ok.map(r=>`<div class="pass"><span class="ok">Passed</span> ${esc(r.description)}${quotes(r)}</div>`).join('')}</details></section>`;
+ $('print').onclick=()=>window.print();
+ $('json').onclick=()=>save(name+'-result.json',JSON.stringify(x,null,2),'application/json');
+ const row=ROWS.find(r=>r.pack===sample);if(row){row.decision=d;drawList();drawStats()}}
+function save(fn,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=fn;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function drawStats(){const c=k=>ROWS.filter(r=>r.decision===k).length,m=ROWS.filter(r=>r.decision_match).length;
+ const t=(k,n,l)=>`<button class="tile ${k}" data-f="${k}" aria-pressed="${FILTER===k}"><b>${n}</b><span>${l}</span></button>`;
+ $('stats').innerHTML=t('APPROVE',c('APPROVE'),'Approve')+t('REJECT',c('REJECT'),'Reject')+t('NEEDS_REVIEW',c('NEEDS_REVIEW'),'Needs a person')+`<div class="tile key"><b>${m}/${ROWS.length}</b><span>Match my answer key</span></div>`;
+ $('filters').innerHTML=[['ALL','All'],['APPROVE','Approve'],['REJECT','Reject'],['NEEDS_REVIEW','Needs a person']].map(([k,l])=>`<button data-f="${k}" aria-pressed="${FILTER===k}">${l}</button>`).join('')}
+function drawList(){const L=ROWS.filter(r=>FILTER==='ALL'||r.decision===FILTER);
+ $('packs').innerHTML=L.length?L.map(r=>`<button class="row" data-s="${r.pack}" aria-pressed="${SELECTED===r.pack}"><span class="dot ${r.decision||''}"></span><span class="t"><div>Pack ${r.pack.slice(-2)}${r.supplier?' · '+esc(r.supplier):''}</div><small>${r.decision?WORD[r.decision]:''}${r.total?' · '+money(r.total):''}</small></span></button>`).join(''):'<p class="muted">No quotes match this filter.</p>'}
+function setFilter(e){const b=e.target.closest('[data-f]');if(!b)return;FILTER=FILTER===b.dataset.f&&b.classList.contains('tile')?'ALL':b.dataset.f;drawStats();drawList()}
+function busy(on){document.querySelectorAll('.row,#runAll').forEach(e=>e.disabled=on);$('file').disabled=on||!window.LIVE}
+async function go(url,opts,label,live,sample){
+ busy(true);$('status').textContent=live?`Checking ${label} with the live AI. This can take 10 to 40 seconds…`:`Checking ${label}…`;
  opts=opts||{};opts.headers={...(opts.headers||{}),'X-Access-Code':$('code').value};
- try{const r=await fetch(p,opts),t=await r.text();let j;try{j=JSON.parse(t)}catch{throw new Error('server returned '+r.status+': '+t.slice(0,200))}
-  if(!r.ok)throw new Error(j.error||r.status);render(j.result,j.mode);$('status').textContent='Done ('+(j.mode==='live'?'live Gemini run':'replay of saved extraction')+').';
- }catch(e){$('status').textContent='Error: '+e.message}finally{busy(false)}}
-fetch('/api/check').then(r=>r.json()).then(j=>{
- window.LIVE=j.live;$('samples').innerHTML=j.samples.map(s=>`<button class="chip" data-s="${s}" style="cursor:pointer;color:inherit">${s.replace('supplier-','')}</button>`).join('');
- $('samples').onclick=e=>{const s=e.target.dataset.s;if(!s)return;const live=$('liveSample').checked;go('/api/check?sample='+s+(live?'&live=1':''),{},s,live?'live':'replay')};
- $('live').textContent=j.live?'':'(live runs disabled: no API key on server)';$('file').disabled=!j.live;$('liveSample').disabled=!j.live;
- $('codeRow').style.display=j.needs_code?'block':'none';
-}).catch(()=>$('status').textContent='API unreachable');
-$('runAll').onclick=async()=>{const b=$('runAll');b.disabled=true;$('sumOut').textContent='Running…';
- try{const r=await fetch('/api/check?summary=1'),j=await r.json();if(!r.ok)throw new Error(j.error);
-  const ok=j.rows.filter(x=>x.decision_match).length,rk=j.rows.filter(x=>x.rules_match).length;
-  $('sumOut').innerHTML=`<table><tr><th>pack</th><th>system</th><th>answer key</th><th>decision</th><th>rules raised</th><th>key rules</th><th>rules</th></tr>${j.rows.map(x=>`<tr><td>${esc(x.pack.replace('supplier-',''))}</td><td>${esc(x.decision)}</td><td>${esc(x.expected)}</td><td>${x.decision_match?'✓':'✗'}</td><td>${esc(x.raised.join(', ')||'–')}</td><td>${esc(x.expected_rules.join(', ')||'–')}</td><td>${x.rules_match?'✓':'✗'}</td></tr>`).join('')}</table><div class="note">Decisions matching key: ${ok}/${j.rows.length}. Rule sets matching key: ${rk}/${j.rows.length}.</div>`;
- }catch(e){$('sumOut').textContent='Error: '+e.message}finally{b.disabled=false}};
-$('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;
- if(f.size>4*1024*1024){$('status').textContent='PDF must be under 4 MB.';return}
- await go('/api/check?name='+encodeURIComponent(f.name),{method:'POST',headers:{'Content-Type':'application/pdf'},body:await f.arrayBuffer()},f.name,'live');e.target.value=''};
+ try{const r=await fetch(url,opts),t=await r.text();let j;try{j=JSON.parse(t)}catch{throw new Error('The server sent an unexpected reply ('+r.status+').')}
+  if(!r.ok)throw new Error(j.error||('Request failed ('+r.status+').'));
+  render(j.result,j.mode,sample);$('status').textContent=''}
+ catch(e){$('status').textContent='Something went wrong: '+e.message+' Try again, or switch the live AI off and pick a saved quote.'}finally{busy(false)}}
+function pick(e){const b=e.target.closest('.row');if(!b)return;SELECTED=b.dataset.s;drawList();const live=$('liveSample').checked;
+ go('/api/check?sample='+SELECTED+(live?'&live=1':''),{},'Pack '+SELECTED.slice(-2),live,SELECTED)}
+function drawKey(j){const m=v=>v?'<span class="ok">Match</span>':'<span class="bad">Differs</span>';
+ const ok=j.rows.filter(x=>x.decision_match).length,rk=j.rows.filter(x=>x.rules_match).length;
+ $('sumOut').innerHTML=`<table><tr><th>Quote</th><th>Supplier</th><th>Checker says</th><th>My key</th><th>Decision</th><th>Rules found</th><th>Rules</th></tr>${j.rows.map(x=>`<tr><td>${x.pack.slice(-2)}</td><td>${esc(x.supplier)}</td><td>${esc(WORD[x.decision])}</td><td>${esc(WORD[x.expected]||x.expected)}</td><td>${m(x.decision_match)}</td><td>${esc(x.raised.join(', ')||'none')}</td><td>${m(x.rules_match)}</td></tr>`).join('')}</table><p style="margin:10px 0 0"><b>${ok} of ${j.rows.length}</b> decisions and <b>${rk} of ${j.rows.length}</b> rule sets match my answer key.</p>`;$('csv').disabled=false}
+async function summary(){try{const r=await fetch('/api/check?summary=1'),j=await r.json();if(!r.ok)throw new Error(j.error);
+  ROWS=j.rows.map(x=>({...x}));drawStats();drawList();drawKey(j);
+  $('rulesOut').innerHTML=`<table><tr><th>Rule</th><th>If it fails</th><th>What it checks</th></tr>${j.rules.map(r=>`<tr><td>${r.id}</td><td>${WORD[r.severity]}</td><td style="white-space:normal">${esc(r.description)}</td></tr>`).join('')}</table>`;return true}
+ catch(e){$('sumOut').textContent='Could not load the comparison: '+e.message;return false}}
+$('stats').onclick=setFilter;$('filters').onclick=setFilter;$('packs').onclick=pick;
+$('runAll').onclick=async()=>{$('runAll').disabled=true;$('sumOut').textContent='Running…';await summary();$('runAll').disabled=false};
+$('csv').onclick=()=>{const q=s=>'"'+String(s??'').replace(/"/g,'""')+'"';
+ save('answer-key-comparison.csv',['pack,supplier,checker,key,decision_match,rules_found,key_rules,rules_match'].concat(ROWS.map(x=>[x.pack,x.supplier,x.decision,x.expected,x.decision_match,x.raised.join(' '),x.expected_rules.join(' '),x.rules_match].map(q).join(','))).join('\n'),'text/csv')};
+$('pick').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('file').click()}};
+$('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;if(f.size>4*1024*1024){$('status').textContent='That PDF is over 4 MB. Choose a smaller one.';return}
+ SELECTED=null;drawList();await go('/api/check?name='+encodeURIComponent(f.name),{method:'POST',headers:{'Content-Type':'application/pdf'},body:await f.arrayBuffer()},f.name,true,null);e.target.value=''};
+fetch('/api/check').then(r=>r.json()).then(async j=>{window.LIVE=j.live;
+ $('live').textContent=j.live?'':'Live AI is switched off on this server, so uploads are disabled.';$('file').disabled=!j.live;$('liveSample').disabled=!j.live;
+ if(!j.live)$('pick').style.opacity='.5';$('codeRow').style.display=j.needs_code?'block':'none';$('mode').textContent=j.live?'Live AI ready':'Saved answers';
+ if(!await summary()){ROWS=j.samples.map(s=>({pack:s}));drawStats();drawList()}
+ if(ROWS.length){const first=ROWS[0].pack;SELECTED=first;drawList();go('/api/check?sample='+first,{},'Pack '+first.slice(-2),false,first)}
+}).catch(()=>$('status').textContent='Could not reach the server. Reload the page.');
 </script></body></html>
